@@ -1,0 +1,39 @@
+# 
+# RevolveR CMF Indexing Rules 
+#
+# v.2.0.0.0
+#
+
+User-agent: *
+
+# Main nodes
+Disallow: /pick/
+Disallow: /user/
+Disallow: /setup/
+
+Disallow: /user/auth/
+Disallow: /user/register/
+Disallow: /user/recovery/
+
+# Main directories
+Disallow: /Kernel/
+Disallow: /Extensions/
+Disallow: /Interface/
+Disallow: /Templates/
+
+# Caches
+Disallow: /public/cache/
+Disallow: /private/
+Disallow: /cache/
+
+# Secure route
+Disallow: /secure/
+
+# Search route
+Disallow: /search/
+
+# Search preview
+Disallow: /preview/
+
+# Prevent index
+Disallow: /index.php

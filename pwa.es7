@@ -1,0 +1,142 @@
+
+const CACHE_NAME = 'RevolveR_Cache';
+
+self.addEventListener('appinstalled', (evt) => {
+
+  console.log('Cache installed: Success');
+
+});
+
+self.addEventListener('activate', function(e) {
+
+  console.log('Cache service: worker activation');
+
+  e.waitUntil(
+
+    caches.keys().then(function(keyList) {
+
+      keyList.map(function(key) {
+
+          if( key !== CACHE_NAME ) {
+
+              console.log('Cache service: old cache removed', key);
+
+              return caches.delete(key);
+
+          }
+
+      })
+
+    })
+
+  );
+
+  return self.clients.claim();
+
+});
+
+self.addEventListener('install', function(e) {
+
+  console.log('Cache service worker installation');
+ 
+  fetch('/resources/').then((response) => {
+
+      return response.json();
+
+  }).then((data) => {
+
+    caches.open(CACHE_NAME).then(function(cache) {
+
+      return cache.addAll(data);
+
+    })
+
+  });
+
+  e.waitUntil(
+
+    caches.open(CACHE_NAME).then(function(cache) {
+
+        console.log('Cache service worker caching dependencies');
+
+        return cache.add(self.location.href).catch(function(reason) {
+
+            return console.log(
+
+                'Cache hit: ' + String(reason) + ' ' + self.location.href
+
+            );
+
+        });
+
+    })
+
+  );
+
+});
+
+self.addEventListener('fetch', function(event) {
+
+  if( event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin' ) {
+
+    return null;
+
+  }
+
+  if( event.request.url.includes('/secure/') || event.request.url.includes('/sounds/') || event.request.url.includes('/talk/') ) {
+
+    return null;
+
+  }
+
+  let updateCache = function(request) {
+
+    if( request.method === 'POST' ) {
+
+      return null;
+
+    }
+
+    return caches.open(CACHE_NAME).then(function(cache) {
+
+      return fetch(request).then(function(response) {
+
+        console.log('Cache service add to cache :: '+ response.url);
+
+        return cache.put( request, response );
+
+      });
+
+    });
+
+  };
+
+  event.waitUntil(
+
+    updateCache( event.request )
+
+  );
+
+  event.respondWith(
+
+    fetch(event.request).catch(function(error) {
+
+      console.log( 'Cache service :: unable to establish network connection. Serving content from cache - ' + error );
+
+      return caches.open( CACHE_NAME ).then(function(cache) {
+
+        return cache.match( event.request ).then(function(matching) {
+
+          let report = !matching || matching.status === 404 ? Promise.reject('no-match') : matching;
+
+          return report;
+
+        });
+
+      });
+
+    })
+
+  );
+
+});
