@@ -1,7 +1,7 @@
 <?php
 
-$render_node .= '<nav class="revolver__pagination">';
-$render_node .= '<ul>';
+$RKI->Template::$b[] = '<nav class="revolver__pagination">';
+$RKI->Template::$b[] = '<ul>';
 
 // Links 
 $render_node_links = '';
@@ -84,10 +84,10 @@ for( $i = 1; $i <= $pages_count; $i++ ) {
 
 }
 
-$render_node .= $render_node_prev . $render_node_links . $render_node_next;
+$RKI->Template::$b[] = $render_node_prev . $render_node_links . $render_node_next;
 
-$render_node .= '</ul>';
+$RKI->Template::$b[] = '</ul>';
 
-$render_node .= '</nav>';
+$RKI->Template::$b[] = '</nav>';
 
 ?>

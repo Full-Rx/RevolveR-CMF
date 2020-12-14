@@ -460,19 +460,19 @@ if( (bool)$file_limit ) {
 }
 
 $render_node  = '';
-$render_node .= '<article class="revolver__article article-id-'. $n['id'] .'-edit">';
-$render_node .= '<header class="revolver__article-header">'; 
-$render_node .= '<h2>'. $n['title'] .'<span style="float:right"> &#8226; '. $RKV->lang['language'] .' [ '. $n['language']['code_length_3'] .' :: '. $n['language']['hreflang'] .' ]</span></h2>';
-$render_node .= '</header>';
+$RKI->Template::$b[] = '<article class="revolver__article article-id-'. $n['id'] .'-edit">';
+$RKI->Template::$b[] = '<header class="revolver__article-header">'; 
+$RKI->Template::$b[] = '<h2>'. $n['title'] .'<span style="float:right"> &#8226; '. $RKV->lang['language'] .' [ '. $n['language']['code_length_3'] .' :: '. $n['language']['hreflang'] .' ]</span></h2>';
+$RKI->Template::$b[] = '</header>';
 
 if( isset($n['warning']) ) {
 
-	$render_node .= $n['warning'];	
+	$RKI->Template::$b[] = $n['warning'];	
 
 }
 
-$render_node .= $RKI->HTMLForm::build( $form_parameters, true );
+$RKI->Template::$b[] = $RKI->HTMLForm::build( $form_parameters, true );
 
-$render_node .= '</article>';
+$RKI->Template::$b[] = '</article>';
 
 ?>

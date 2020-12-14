@@ -39,6 +39,8 @@ define('TRANSLATIONS', [
 
 	'EN' => [
 
+		'Setup to home screen'						=> 'Setup to home screen',
+
 		/* Descriptions */
 
 		'User area'									=> 'User area',
@@ -689,6 +691,7 @@ define('TRANSLATIONS', [
 
 	'RU' => [
 
+		'Setup to home screen'						=> 'Добавить ярлык',
 
 		/* Описания */
 

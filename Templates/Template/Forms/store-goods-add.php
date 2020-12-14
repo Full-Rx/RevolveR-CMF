@@ -513,18 +513,18 @@ if( Auth ) {
 
 		}
 
-		$render_node .= '<article class="revolver__article article-id-store-goods-add">';
-		$render_node .= '<header class="revolver__article-header">';
-		$render_node .= '<h1>'. $RKV->lang['Add goods'] .'</h1>';
-		$render_node .= '</header>';
+		$RKI->Template::$b[] = '<article class="revolver__article article-id-store-goods-add">';
+		$RKI->Template::$b[] = '<header class="revolver__article-header">';
+		$RKI->Template::$b[] = '<h1>'. $RKV->lang['Add goods'] .'</h1>';
+		$RKI->Template::$b[] = '</header>';
 
-		$render_node .= '<div class="revolver__article-contents">';
+		$RKI->Template::$b[] = '<div class="revolver__article-contents">';
 
-		$render_node .= $RKI->HTMLForm::build( $form_parameters, true );
+		$RKI->Template::$b[] = $RKI->HTMLForm::build( $form_parameters, true );
 		
-		$render_node .= '</div>';
+		$RKI->Template::$b[] = '</div>';
 
-		$render_node .= '</article>';
+		$RKI->Template::$b[] = '</article>';
 
 
 	}

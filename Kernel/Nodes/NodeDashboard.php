@@ -207,39 +207,12 @@ if( !empty( SV['p'] ) && ROLE === 'Admin' )  {
 
 						switch( $a ) {
 
-							case 'icache':
-
-								$RKI->Notify::set('status', '<div>Interface cache refreshed.</div>', null);
-
-								foreach( $file::getDir('./public/cache/styles/') as $file ) {
-
-										unlink( './public/cache/styles/'. $file );
-
-										$RKI->Notify::set('inactive', '<p>CSS cache erased :: ['. $file .'].</p>', null);
-
-								}
-
-								foreach( $file::getDir('./public/cache/scripts/') as $file ) {
-
-										unlink( './public/cache/scripts/'. $file );
-
-										$RKI->Notify::set('inactive', '<p>ECMA Script cache erased :: ['. $file .'].</p>', null);
-
-								}
-
-								break;
-
 							case 'dbcache':
 
 								$RKI->Notify::set('status', '<div>Data Base cache will be updated when using.</div>', null);
 
-								foreach( $file::getDir('./cache/dbcache/') as $file ) {
-
-										unlink( './cache/dbcache/'. $file );
-
-										$RKI->Notify::set('inactive', '<p>Data Base cache erased :: ['. $file .'].</p>', null);
-
-								}
+								rmdir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache');
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache', 0777);
 
 								break;
 
@@ -247,13 +220,20 @@ if( !empty( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('status', '<div>Template cache will be updated when using.</div>', null);
 
-								foreach( $file::getDir('./cache/tplcache/') as $file ) {
+								rmdir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache');
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache', 0777);
 
-										unlink( './cache/tplcache/'. $file );
+								break;
 
-										$RKI->Notify::set('inactive', '<p>Template cache erased :: ['. $file .'].</p>', null);
+							case 'icache':
 
-								}
+								$RKI->Notify::set('status', '<div>Interface cache refreshed.</div>', null);
+
+								rmdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/scripts');
+								rmdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/styles');
+
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/scripts', 0777);
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/styles', 0777);
 
 								break;
 
@@ -294,13 +274,8 @@ if( !empty( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('notice', '<div>Data Base structure modified.</div>', null);
 
-								foreach( $file::getDir('./cache/dbcache/') as $file ) {
-
-										unlink( './cache/dbcache/'. $file );
-
-										$RKI->Notify::set('inactive', '<p>Data Base cache erased :: ['. $file .'].</p>', null);
-
-								}
+								rmdir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache');
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache', 0777);
 
 								foreach( $DBX_KERNEL_SCHEMA as $tbl_n => $tbl_f ) {
 

@@ -4,7 +4,7 @@
   * 
   * Search Route
   *
-  * v.2.0.0.0
+  * v.2.0.0.4
   *
   *
   *
@@ -138,7 +138,7 @@ if( isset(SV['g']['query']) ) {
 
       $rgxp = '/[^\p{L}[[:punct:]]\s]+/u';
 
-      return $output . '<dfn class="revolver__search-snippet">... '. preg_replace($rgxp , '', $highlight_1) . '<mark>'. $qs .'</mark>'. preg_replace($rgxp, '', $highlight_2) .' ...</dfn></li>';
+      return $output . '<dfn class="revolver__search-snippet">... '. preg_replace($rgxp, '', $highlight_1) . '<mark>'. $qs .'</mark>'. preg_replace($rgxp, '', $highlight_2) .' ...</dfn></li>';
 
   }
 

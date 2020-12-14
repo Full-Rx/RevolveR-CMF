@@ -405,20 +405,20 @@ if( $pages_count > 1 && pagination['allow'] ) {
 	if( !(bool)$nodeLoaded && PASS[ count(PASS) - 2 ] !== 'edit' &&  PASS[ 1 ] !== 'forum' && PASS[ 1 ] !== 'store' ) {
 
 
-		$render_node .= '<article class="revolver__article article-id-404">';
-		$render_node .= '<header class="revolver__article-header">';
-		$render_node .= '<h1>'. $RKV->lang['Route not found'] .'</h1>';
-		$render_node .= '</header>';
+		$RKI->Template::$b[] = '<article class="revolver__article article-id-404">';
+		$RKI->Template::$b[] = '<header class="revolver__article-header">';
+		$RKI->Template::$b[] = '<h1>'. $RKV->lang['Route not found'] .'</h1>';
+		$RKI->Template::$b[] = '</header>';
 
-		$render_node .= '<div class="revolver__article-contents">';
-		$render_node .= '<p>'. $RKV->lang['Route'];
-		$render_node .= ' <b>'. $RKV->request .'</b> '. $RKV->lang['was not found on this host'] .'!</p>';
-		$render_node .= '<p><a href="/">'. $RKV->lang['Begin at homepage'] .'!</a>';
-		$render_node .= '</p></div>';
+		$RKI->Template::$b[] = '<div class="revolver__article-contents">';
+		$RKI->Template::$b[] = '<p>'. $RKV->lang['Route'];
+		$RKI->Template::$b[] = ' <b>'. $RKV->request .'</b> '. $RKV->lang['was not found on this host'] .'!</p>';
+		$RKI->Template::$b[] = '<p><a href="/">'. $RKV->lang['Begin at homepage'] .'!</a>';
+		$RKI->Template::$b[] = '</p></div>';
 
-		$render_node .= '<footer class="revolver__article-footer">';
-		$render_node .= '<nav><ul><li><a title="'. $RKV->lang['Homepage'] .'" href="/">'. $RKV->lang['Homepage'] .'</a></li></ul></nav>';
-		$render_node .= '</footer></article>';
+		$RKI->Template::$b[] = '<footer class="revolver__article-footer">';
+		$RKI->Template::$b[] = '<nav><ul><li><a title="'. $RKV->lang['Homepage'] .'" href="/">'. $RKV->lang['Homepage'] .'</a></li></ul></nav>';
+		$RKI->Template::$b[] = '</footer></article>';
 
 	}
 
@@ -434,7 +434,13 @@ if( $RKV->installed ) {
 
 ?>
 
-<?php print $render_node; ?>
+<?php 
+
+	print implode("\n", $RKI->Template::$b);
+
+    $RKI->Template::$b = []; 
+
+?>
 
 <!-- related -->
 <?php require_once('Related.php'); ?>

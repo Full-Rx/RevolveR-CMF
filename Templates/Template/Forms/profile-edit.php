@@ -16,33 +16,33 @@ if( ACCESS['role'] === 'Admin' ) {
 
 		if( PASS[ 2 ] == $v['id'] ) {
 
-			$render_node .= '<article class="revolver__article">';
-			$render_node .= '<header class="revolver__article-header">'; 
-			$render_node .= '<h1>'. $RKV->lang['Account manage'] .' :: '. $v['nickname'] .'</h1>';
-			$render_node .= '</header>';
-			$render_node .= '<div class="revolver__article-contents">';
-			$render_node .= '<figure class="revolver__user-profile-avatar">';
+			$RKI->Template::$b[] = '<article class="revolver__article">';
+			$RKI->Template::$b[] = '<header class="revolver__article-header">'; 
+			$RKI->Template::$b[] = '<h1>'. $RKV->lang['Account manage'] .' :: '. $v['nickname'] .'</h1>';
+			$RKI->Template::$b[] = '</header>';
+			$RKI->Template::$b[] = '<div class="revolver__article-contents">';
+			$RKI->Template::$b[] = '<figure class="revolver__user-profile-avatar">';
 
 			if( $v['avatar'] === 'default') {
 
-				$render_node .= '<img src="/public/avatars/default.png" alt="'. $v['nickname'] .'" />';
+				$RKI->Template::$b[] = '<img src="/public/avatars/default.png" alt="'. $v['nickname'] .'" />';
 
 			}
 			else {
 
-				$render_node .= '<img src="'. $v['avatar'] .'" alt="'. $v['nickname'] .'" />';
+				$RKI->Template::$b[] = '<img src="'. $v['avatar'] .'" alt="'. $v['nickname'] .'" />';
 
 			}
 
-			$render_node .= '<figcaption>';
+			$RKI->Template::$b[] = '<figcaption>';
 
-			$render_node .= '<p>'. $RKV->lang['User Name'] .': <i>'. $v['nickname'] .'</i></p>';
-			$render_node .= '<p>'. $RKV->lang['User Email'] .': <i>'. $v['email']  .'</i></p>';
-			$render_node .= '<p>'. $RKV->lang['Telephone'] .': <i>'. $v['telephone']  .'</i></p>';
-			$render_node .= '<p>'. $RKV->lang['Permissions'] .': <i>'. $v['permissions'] .'</i></p>';
+			$RKI->Template::$b[] = '<p>'. $RKV->lang['User Name'] .': <i>'. $v['nickname'] .'</i></p>';
+			$RKI->Template::$b[] = '<p>'. $RKV->lang['User Email'] .': <i>'. $v['email']  .'</i></p>';
+			$RKI->Template::$b[] = '<p>'. $RKV->lang['Telephone'] .': <i>'. $v['telephone']  .'</i></p>';
+			$RKI->Template::$b[] = '<p>'. $RKV->lang['Permissions'] .': <i>'. $v['permissions'] .'</i></p>';
 
-			$render_node .= '</figcaption>';
-			$render_node .= '</figure>';
+			$RKI->Template::$b[] = '</figcaption>';
+			$RKI->Template::$b[] = '</figure>';
 
 			$roles_allowed = iterator_to_array(
 
@@ -132,10 +132,10 @@ if( ACCESS['role'] === 'Admin' ) {
 
 			];
 
-			$render_node .= $RKI->HTMLForm::build( $form_parameters );
+			$RKI->Template::$b[] = $RKI->HTMLForm::build( $form_parameters );
 
-			$render_node .= '</div>';
-			$render_node .= '</article>';
+			$RKI->Template::$b[] = '</div>';
+			$RKI->Template::$b[] = '</article>';
 
 		}
 

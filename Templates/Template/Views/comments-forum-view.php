@@ -1,6 +1,6 @@
 <?php
 
-$render_node .= '<section class="revolver__advanced-contents">';
+$RKI->Template::$b[] = '<section class="revolver__advanced-contents">';
 
 $comments = iterator_to_array(
 
@@ -58,17 +58,17 @@ if( $comments ) {
 
 		}
 
-		$render_node .= '<article id="comment-'. $c['id'] .'" class="revolver__comments comments-'. $c['id'] .' '. $class .'">';
+		$RKI->Template::$b[] = '<article id="comment-'. $c['id'] .'" class="revolver__comments comments-'. $c['id'] .' '. $class .'">';
 
-		$render_node .= '<header class="revolver__comments-header">'; 
+		$RKI->Template::$b[] = '<header class="revolver__comments-header">'; 
 
-		$render_node .= '<h2><a href="/forum/'. PASS[ 2 ] .'/'. PASS[ 3 ] .'/#comment-'. $c['id'] .'">&#8226;'. $c['id'] .'</a> '. $RKV->lang['by'] .' <span>'. $comment_user['nickname'] .'</span></h2>';
+		$RKI->Template::$b[] = '<h2><a href="/forum/'. PASS[ 2 ] .'/'. PASS[ 3 ] .'/#comment-'. $c['id'] .'">&#8226;'. $c['id'] .'</a> '. $RKV->lang['by'] .' <span>'. $comment_user['nickname'] .'</span></h2>';
 
-		$render_node .= '<time datetime="'. $RKI->Calendar::formatTime($c['time']) .'">'. $c['time'] .'</time>';
+		$RKI->Template::$b[] = '<time datetime="'. $RKI->Calendar::formatTime($c['time']) .'">'. $c['time'] .'</time>';
 
-		$render_node .= '</header>';
+		$RKI->Template::$b[] = '</header>';
 
-		$render_node .= '<figure class="revolver__comments-avatar">';
+		$RKI->Template::$b[] = '<figure class="revolver__comments-avatar">';
 
 		if( $comment_user['avatar'] === 'default') {
 
@@ -81,9 +81,9 @@ if( $comments ) {
 
 		}
 
-		$render_node .= '<img src="'. $src .'" alt="'. $comment_user['nickname'] .'" />';
+		$RKI->Template::$b[] = '<img src="'. $src .'" alt="'. $comment_user['nickname'] .'" />';
 
-		$render_node .= '</figure>';
+		$RKI->Template::$b[] = '</figure>';
 
 		if( in_array(ROLE, ['Admin', 'Writer']) || USER['name'] === $comment_user['nickname'] ) {
 
@@ -98,7 +98,7 @@ if( $comments ) {
 
 		}
 
-		$render_node .= '<div class="revolver__comments-contents"'. $quick_edit_attr . $quick_edit_data .'>'. $RKI->HTML::Markup( 
+		$RKI->Template::$b[] = '<div class="revolver__comments-contents"'. $quick_edit_attr . $quick_edit_data .'>'. $RKI->HTML::Markup( 
 
 				htmlspecialchars_decode( 
 
@@ -113,19 +113,19 @@ if( $comments ) {
 
 		if( $comment_user['id'] === USER['id'] || in_array(ROLE, ['Admin', 'Writer']) ) {
 
-			$render_node .= '<footer class="revolver__comments-footer"><nav><ul>';
-			$render_node .= '<li class="revolver__quick-edit-handler" title="'. $RKV->lang['qedit'] .'">[ '. $RKV->lang['QEdit'] .' ]</li>';
-			$render_node .= '<li><a title="'. $c['id'] .' '. $RKV->lang['edit'] .'" href="/forum/'. PASS[ 2 ] .'/'. PASS[ 3 ] .'/comment/'.  $c['id'] .'/edit/">'. $RKV->lang['Edit'] .'</a></li>';
-			$render_node .= '</ul></nav></footer>';
+			$RKI->Template::$b[] = '<footer class="revolver__comments-footer"><nav><ul>';
+			$RKI->Template::$b[] = '<li class="revolver__quick-edit-handler" title="'. $RKV->lang['qedit'] .'">[ '. $RKV->lang['QEdit'] .' ]</li>';
+			$RKI->Template::$b[] = '<li><a title="'. $c['id'] .' '. $RKV->lang['edit'] .'" href="/forum/'. PASS[ 2 ] .'/'. PASS[ 3 ] .'/comment/'.  $c['id'] .'/edit/">'. $RKV->lang['Edit'] .'</a></li>';
+			$RKI->Template::$b[] = '</ul></nav></footer>';
 
 		}
 
-		$render_node .= '</article>';
+		$RKI->Template::$b[] = '</article>';
 
 	}
 
 }
 
-$render_node .= '</section>';
+$RKI->Template::$b[] = '</section>';
 
 ?>

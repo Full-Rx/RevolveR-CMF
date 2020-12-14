@@ -40,10 +40,10 @@ if( $RKV->installed ) {
 		// Make templated
 		foreach( $nbc as $c ) {
 
-			$related .= '<div class="revolver__related-group-category-'. $c['id'] .'">';
-			$related .= '<h4>'. $c['title'] .'</h4>';
+			$RKI->Template::$b[] = '<div class="revolver__related-group-category-'. $c['id'] .'">';
+			$RKI->Template::$b[] = '<h4>'. $c['title'] .'</h4>';
 
-			$related .= '<ul>';		
+			$RKI->Template::$b[] = '<ul>';		
 
 			foreach( $c['items'] as $n ) {
 
@@ -51,12 +51,12 @@ if( $RKV->installed ) {
 
 					if( (bool)$n['published'] ) {
 
-						$related .= '<li><a hreflang="'. $RKI->Language::getLanguageData(LANGUAGE)['hreflang'] .'" title="'. $n['description'] .'" href="'. $n['route'] .'">'. $n['title'] .'</a></li>';
+						$RKI->Template::$b[] = '<li><a hreflang="'. $RKI->Language::getLanguageData(LANGUAGE)['hreflang'] .'" title="'. $n['description'] .'" href="'. $n['route'] .'">'. $n['title'] .'</a></li>';
 
 					}
 					else {
 
-						$related .= '<li>'. $n['title'] .'</li>';
+						$RKI->Template::$b[] = '<li>'. $n['title'] .'</li>';
 
 					}
 
@@ -64,8 +64,8 @@ if( $RKV->installed ) {
 			
 			}
 
-			$related .= '</ul>';
-			$related .= '</div>';
+			$RKI->Template::$b[] = '</ul>';
+			$RKI->Template::$b[] = '</div>';
 
 		}
 
@@ -92,27 +92,29 @@ if( $RKV->installed ) {
 
 	if( $blogNodes ) {
 
-		$related .= '<div class="revolver__related-group-category-blog">';
-		$related .= '<h4>'. $RKV->lang['Blog']  .'</h4>';
+		$RKI->Template::$b[] = '<div class="revolver__related-group-category-blog">';
+		$RKI->Template::$b[] = '<h4>'. $RKV->lang['Blog']  .'</h4>';
 
-		$related .= '<ul>';		
+		$RKI->Template::$b[] = '<ul>';		
 
 		foreach( $blogNodes as $n ) {
 
 			if( (bool)$n['published'] ) {
 
-				$related .= '<li><a title="'. $n['description'] .'" href="'. $n['route'] .'">'. $n['title'] .'</a></li>';
+				$RKI->Template::$b[] = '<li><a title="'. $n['description'] .'" href="'. $n['route'] .'">'. $n['title'] .'</a></li>';
 
 			}
 
 		}
 
-		$related .= '</ul>';
-		$related .= '</div>';
+		$RKI->Template::$b[] = '</ul>';
+		$RKI->Template::$b[] = '</div>';
 
 	}
 
-	print $related;
+    print implode("\n", $RKI->Template::$b);
+
+    $RKI->Template::$b = [];
 
 	$comments = iterator_to_array(
 
@@ -126,15 +128,15 @@ if( $RKV->installed ) {
 
 	if( $comments ) {
 
-		$related_comments .= '<div class="revolver__related-group-comments">';
-		$related_comments .= '<h4>'. $RKV->lang['Latest comments'] .'</h4>';
-		$related_comments .= '<ul>';
+		$RKI->Template::$b[] = '<div class="revolver__related-group-comments">';
+		$RKI->Template::$b[] = '<h4>'. $RKV->lang['Latest comments'] .'</h4>';
+		$RKI->Template::$b[] = '<ul>';
 
 		$show_comments = null;
 
 		foreach( $comments as $c => $v ) {
 
-			$comment = substr(
+			$comment = mb_substr(
 
 							strip_tags(
 
@@ -148,11 +150,9 @@ if( $RKV->installed ) {
 
 								)
 
-							), 0, 50
+							), 0, 26, 'utf-8'
 
 						);
-
-			$comment = rtrim($comment, '!,.-');
 
 			if( (bool)$v['comments']['published'] ) {
 
@@ -189,19 +189,21 @@ if( $RKV->installed ) {
 
 			$datetime = $datetime[ 2 ] .'-'. $datetime[ 1 ] .'-'. $datetime[ 0 ] .'T'. ( (bool)strlen( $date[ 1 ] ) ? $date[ 1 ] : '12:00' );
 
-			$related_comments .= '<li class="'. $class .'">#'. $v['comments']['id'] .' :: ';
-			$related_comments .= '<a hreflang="'. $RKI->Language::getLanguageData( $v['nodes']['country'] )['hreflang'] .'" title="'. $v['comments']['time'] .'" href="'. $v['nodes']['route'] .'#comment-'. $v['comments']['id'] .'">'. $comment .'</a>';
-			$related_comments .= '<time datetime="'. $datetime .'">'. $v['comments']['time'] .'</time>';
-			$related_comments .= '<span>'. $RKV->lang['by'] .' '. $v['comments']['user_name'] .'</span>';
-			$related_comments .= '</li>';
+			$RKI->Template::$b[] = '<li class="'. $class .'">#'. $v['comments']['id'] .' :: ';
+			$RKI->Template::$b[] = '<a hreflang="'. $RKI->Language::getLanguageData( $v['nodes']['country'] )['hreflang'] .'" title="'. $v['comments']['time'] .'" href="'. $v['nodes']['route'] .'#comment-'. $v['comments']['id'] .'">'. $comment .'</a>';
+			$RKI->Template::$b[] = '<time datetime="'. $datetime .'">'. $v['comments']['time'] .'</time>';
+			$RKI->Template::$b[] = '<span>'. $RKV->lang['by'] .' '. $v['comments']['user_name'] .'</span>';
+			$RKI->Template::$b[] = '</li>';
 
 		}
 
-		$related_comments .= '</ul></div>';
+		$RKI->Template::$b[] = '</ul></div>';
 
 		if( !$RKV->auth && $show_comments || $RKV->auth ) {
 
-			print $related_comments;
+			print implode("\n", $RKI->Template::$b);
+
+			$RKI->Template::$b = [];
 
 		}
 

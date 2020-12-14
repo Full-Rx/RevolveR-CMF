@@ -116,14 +116,14 @@ if( in_array(ACCESS['role'], ['Admin', 'Writer'], true) ) {
 
 	];
 
-	$render_node .= '<article class="revolver__article article-categories-edit">';
-	$render_node .= '<header class="revolver__article-header">'; 
-	$render_node .= '<h1>'. $RKV->lang['Categories'] .'</h1>';
-	$render_node .= '</header>';
+	$RKI->Template::$b[] = '<article class="revolver__article article-categories-edit">';
+	$RKI->Template::$b[] = '<header class="revolver__article-header">'; 
+	$RKI->Template::$b[] = '<h1>'. $RKV->lang['Categories'] .'</h1>';
+	$RKI->Template::$b[] = '</header>';
 
-	$render_node .= $RKI->HTMLForm::build( $form_parameters );
+	$RKI->Template::$b[] = $RKI->HTMLForm::build( $form_parameters );
 
-	$render_node .= '</article>';
+	$RKI->Template::$b[] = '</article>';
 
 }
 

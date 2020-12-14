@@ -371,14 +371,14 @@ if( in_array(ACCESS['role'], ['Admin', 'Writer', 'User'], true) ) {
 	}
 
 	$render_node  = '';
-	$render_node .= '<article class="revolver__article article-id-'. $n['id'] .'-edit">';
-	$render_node .= '<header class="revolver__article-header">'; 
-	$render_node .= '<h2>'. $title .'</h2>';
-	$render_node .= '</header>';
+	$RKI->Template::$b[] = '<article class="revolver__article article-id-'. $n['id'] .'-edit">';
+	$RKI->Template::$b[] = '<header class="revolver__article-header">'; 
+	$RKI->Template::$b[] = '<h2>'. $title .'</h2>';
+	$RKI->Template::$b[] = '</header>';
 
-	$render_node .= $RKI->HTMLForm::build( $form_parameters, true );
+	$RKI->Template::$b[] = $RKI->HTMLForm::build( $form_parameters, true );
 
-	$render_node .= '</article>';
+	$RKI->Template::$b[] = '</article>';
 
 }
 

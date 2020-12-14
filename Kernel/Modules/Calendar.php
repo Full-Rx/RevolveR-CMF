@@ -4,7 +4,7 @@
   * 
   * RevolveR Calendar
   *
-  * v.2.0.0.0
+  * v.2.0.0.4
   *
   *
   *
@@ -199,7 +199,7 @@ final class Calendar {
 
 		foreach( $headlines as $h ) {
 
-			$cellCaptions .= '<th '. ( $asx !== ++$hn ? '' : 'class="active-scope"') . ' data-scope="day-'. $hn .'" scope="col"> [ '. $h .' ] </th>';
+			$cellCaptions .= '<th '. ( (int)$asx !== ++$hn ? '' : 'class="active-scope"') . ' data-scope="day-'. $hn .'" scope="col"> [ '. $h .' ] </th>';
 
 		}
 
@@ -242,7 +242,7 @@ final class Calendar {
 
 				}
 
-				$layout_td .= '<td class="'. ( '' ) . ($day == (int)$now ? 'active-day-cell ' : '') . ( $mod ? 'calendar-day' : 'calendar-day-void' ) .'"';
+				$layout_td .= '<td class="'. ( (int)$asx === $d ? 'active-scope ' : '' ) . ($day == (int)$now ? 'active-day-cell ' : '') . ( $mod ? 'calendar-day' : 'calendar-day-void' ) .'"';
 
 				if( $mod ) {
 

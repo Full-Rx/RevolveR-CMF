@@ -3,7 +3,7 @@
   *
   * RevolveR CMF interface :: ECMA Script 7
   *
-  * v.2.0.0.0
+  * v.2.0.0.4
   *
   * RevolveR ECMA Script is a fast, simple and
   *
@@ -144,7 +144,7 @@
 		get browser() {
 
 			// Interface application version
-			RR.coreVer = '2.0.0.1';
+			RR.coreVer = '2.0.0.4';
 
 			// Is mobile support available
 			RR.isM = /(Privacy|Android|BackBerry|phone|iPad|iPod|IEMobile|Nokia|Mobile)/.test(navigator.userAgent);
@@ -717,8 +717,14 @@
 
 					RR.event([that], 'mousemove', (evt) => {
 
-						RR.sel('.hint')[0].style.left = RR.currentSizes[0] < overflowSizeX ? ( RR.curxy[0] - hSizeX - 20 ) +'px' : (RR.curxy[0] + 20) +'px';
-						RR.sel('.hint')[0].style.top = (RR.curxy[1] - 50) +'px';
+						let hint = RR.sel('.hint');
+
+						if( hint ) {
+
+							hint[0].style.left = RR.currentSizes[0] < overflowSizeX ? ( RR.curxy[0] - hSizeX - 20 ) +'px' : (RR.curxy[0] + 20) +'px';
+							hint[0].style.top = (RR.curxy[1] - 50) +'px';
+
+						}
 
 					});
 
@@ -733,10 +739,22 @@
 						if( hint ) {
 
 							RR.rem( hint );
-						
+
 						}
 
 					});
+
+					setTimeout(() => {
+
+						let hint = RR.sel('.hint');
+
+						if( hint ) {
+
+							RR.rem( hint );
+
+						}
+
+					}, 3000);
 
 				});
 
@@ -3485,6 +3503,7 @@
 				/rgba?\(\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d?(?:\.\d+)?)\s*)?\)/,
 				/^hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*(\d*(?:\.\d+)?)\)$/,
 				/^hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)$/,
+				/#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
 				/#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
 				/#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/
 
@@ -3538,51 +3557,57 @@
 
 			let r;
 
-			if(r = patterns[0].exec(color)) {
+			if(r = patterns[ 0 ].exec(color)) {
 
-				return [parseInt(r[1]), parseInt(r[2]), parseInt(r[3]), 1];
-
-			}
-
-			if(r = patterns[1].exec(color)) {
-
-				return [parseFloat(r[1]) * 2.55, parseFloat(r[2]) * 2.55, parseFloat(r[3]) * 2.55, 1];
+				return [parseInt(r[ 1 ]), parseInt(r[ 2 ]), parseInt(r[ 3 ]), 1];
 
 			}
 
-			if(r = patterns[2].exec(color)) {
+			if(r = patterns[ 1 ].exec(color)) {
 
-				return [parseInt(r[1]), parseInt(r[2]), parseInt(r[3]), parseFloat(r[4])];
-
-			}
-
-			if(r = patterns[3].exec(color)) {
-
-				return [parseFloat(r[1]) * 2.55, parseFloat(r[2]) * 2.55, parseFloat(r[3]) * 2.55, parseFloat(r[4])];
+				return [parseFloat(r[ 1 ]) * 2.55, parseFloat(r[ 2 ]) * 2.55, parseFloat(r[ 3 ]) * 2.55, 1];
 
 			}
 
-			if(r = patterns[4].exec(color)) {
+			if(r = patterns[ 2 ].exec(color)) {
 
-				return hsla2rgb( parseInt(r[1]) / 360, parseInt(r[2]) / 100, parseInt(r[3]) / 100 ).concat(parseFloat(r[4]));
-
-			}
-
-			if(r = patterns[5].exec(color)) {
-
-				return hsla2rgb( parseInt(r[1]) / 360, parseInt(r[2]) / 100, parseInt(r[3]) / 100).concat(1);
+				return [parseInt(r[ 1 ]), parseInt(r[ 2 ]), parseInt(r[ 3 ]), parseFloat(r[ 4 ])];
 
 			}
 
-			if(r = patterns[6].exec(color)) {
+			if(r = patterns[ 3 ].exec(color)) {
 
-				return [parseInt(r[1], 16), parseInt(r[2], 16), parseInt(r[3], 16), 1];
+				return [parseFloat(r[ 1 ]) * 2.55, parseFloat(r[ 2 ]) * 2.55, parseFloat(r[ 3 ]) * 2.55, parseFloat(r[ 4 ])];
 
 			}
 
-			if(r = patterns[7].exec(color)) {
+			if(r = patterns[ 4 ].exec(color)) {
 
-				return [parseInt(r[1] + r[1], 16), parseInt(r[2] + r[2], 16), parseInt(r[3] + r[3], 16), 1];
+				return hsla2rgb( parseInt(r[ 1 ]) / 360, parseInt(r[ 2 ]) / 100, parseInt(r[ 3 ]) / 100 ).concat(parseFloat(r[ 4 ]));
+
+			}
+
+			if(r = patterns[ 5 ].exec(color)) {
+
+				return hsla2rgb( parseInt(r[ 1 ]) / 360, parseInt(r[ 2 ]) / 100, parseInt(r[ 3 ]) / 100).concat(1);
+
+			}
+
+			if(r = patterns[ 6 ].exec(color)) {
+
+				return [parseInt(r[ 1 ], 16), parseInt(r[ 2 ], 16), parseInt(r[ 3 ], 16), parseInt(r[ 4 ], 16)];
+
+			}
+
+			if(r = patterns[ 7 ].exec(color)) {
+
+				return [parseInt(r[ 1 ], 16), parseInt(r[ 2 ], 16), parseInt(r[ 3 ], 16), 1];
+
+			}
+
+			if(r = patterns[ 8 ].exec(color)) {
+
+				return [parseInt(r[ 1 ] + r[ 1 ], 16), parseInt(r[ 2 ] + r[ 2 ], 16), parseInt(r[ 3 ] + r[ 3 ], 16), 1];
 
 			}
 
@@ -3627,7 +3652,7 @@
 
 						let f = RR.effects(r, g / t);
 
-						e.style.setProperty(p, 'rgba('+ colors(c[0], v[0]) * f +','+ colors(c[1], v[1]) * f +','+ colors(c[2], v[2]) * f +','+ parseFloat(lerp( v[3], c[3], g / t )) * f +')');
+						e.style.setProperty(p, 'rgba('+ colors(c[ 0 ], v[ 0 ]) * f +','+ colors(c[ 1 ], v[ 1 ]) * f +','+ colors(c[ 2 ], v[ 2 ]) * f +','+ parseFloat(lerp( v[ 3 ], c[ 3 ], g / t )) * f +')');
 
 						// Is animation time over? if not do next frame
 						if( d < t ) {
@@ -3637,7 +3662,7 @@
 						} 
 						else {
 
-							e.style.setProperty(p, 'rgba('+ v[0] +','+ v[1] +','+ v[2] +','+ v[3] +')');
+							e.style.setProperty(p, 'rgba('+ v[ 0 ] +','+ v[ 1 ] +','+ v[ 2 ] +','+ v[ 3 ] +')');
 
 							if( callback && cnt < 1 )  {
 
@@ -3950,7 +3975,7 @@
 		},
 
 		// Cookie API
-		cookie: function (p, m) {
+		cookie: function ( p, m ) {
 
 			let args = [];
 

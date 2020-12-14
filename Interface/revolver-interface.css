@@ -2,7 +2,7 @@
 /* 
  * RevolveR CMF main interface
  *
- * v.2.0.0.0
+ * v.2.0.0.4
  *
  *
  *			          ^
@@ -279,8 +279,15 @@ html {
 
 .revolver__scalable-main .revolver__form-wrapper form fieldset legend {
 
+	transition: all 1s ease-in-out;
 	background: var(--form-legend-bg);
 	text-shadow: 0 0.1vw var(--simple-shadow) !important;
+
+}
+
+.revolver__scalable-main .revolver__form-wrapper form fieldset:hover legend {
+
+	width: 97.8%;
 
 }
 
@@ -293,6 +300,32 @@ html {
 
 }
 
+.setup-screen {
+
+	text-align: center;
+	position: fixed;
+	display: block;
+	width: 100vw;
+	top: 35%;
+
+}
+
+.setup-home {
+
+	transition: all .5s ease-in-out;
+	display: inline-block;
+	margin: 6vh auto 5vh;
+	cursor: pointer;
+	padding: 0 5vw;
+	width: 5%;
+
+}
+
+.setup-home:hover {
+
+	transform: rotate(180deg);
+
+}
 
 h1, h2,
 h1 a, h2 a {
@@ -1571,7 +1604,7 @@ fieldset legend::before {
 
 	.revolver__logo span {
 
-		text-shadow: .1vw .1vw .4vw rgba(10, 10, 10, .08), .2vw .2vw .1vw rgba(8, 8, 8, .075), .4vw .4vw .1vw rgba(12, 12, 12, .07), .6vw .6vw .1vw rgba(12, 12, 12, .065), .8vw .8vw .1vw rgba(10, 10, 10, .06), 1vw 1vw .1vw rgba(8, 8, 8, .055), 1.2vw 1.2vw .1vw rgba(8, 8, 8, .05), 1.4vw 1.4vw 1vw rgba(10, 10, 10, .045), 1.6vw 1.6vw .1vw rgba(14, 14, 14, .04), 1.8vw 1.8vw .1vw rgba(14, 14, 14, .035), 2vw 2vw .1vw rgba(14, 14, 14, .03), 2.22vw 22.2vw .1vw rgba(12, 12, 12, .025), 2.4vw 2.4vw .1vw rgba(12, 12, 12, .02), 2.6vw 2.6vw .1vw rgba(0, 0, 0, .015), 2.8vw 2.8vw .1vw rgba(4, 4, 4, .01), 3vw 3vw .1vw rgba(10, 10, 10, .005), 3.2vw 3.2vw .1vw rgba(12, 12, 12, .0025), 3.4vw 3.4vw .1vw rgba(10, 10, 10, .002), 3.6vw 3.6vw .1vw rgba(12, 12, 12, .0015), 3.8vw 3.8vw .1vw rgba(12, 12, 12, .001);
+		text-shadow: .1vw .1vw 0.4vw rgb(249, 186, 255), .2vw .2vw .1vw rgba(134, 16, 93, .17), .4vw .4vw .1vw rgba(144, 34, 106, .19), .6vw .6vw .1vw rgba(156, 80, 148, .19), .8vw .8vw .1vw rgba(117, 46, 109, .13), 1vw 1vw .1vw rgba(136, 49, 120, .1), 1.2vw 1.2vw .1vw rgba(8, 8, 8, .05), 1.4vw 1.4vw 1vw rgba(10, 10, 10, .045), 1.6vw 1.6vw .1vw rgba(14, 14, 14, .04), 1.8vw 1.8vw .1vw rgba(14, 14, 14, .035), 2vw 2vw .1vw rgba(14, 14, 14, .03);
 
 	}
 
@@ -1652,7 +1685,7 @@ fieldset legend::before {
 	/* Animate slogan */
 	.revolver__site-description {
 
-		background: linear-gradient(to left, rgba(254, 255, 232, 0) 0%, rgb(220 220 220) 100%);
+		background: linear-gradient(to left, #feffe800 0%, #c3c3c3e6 100%);
 		transform: skewX(-20deg) translate(-.5vw, 0);
 		text-shadow: -.1vw -.1vw 0 #375733;
 		transition: all 1s ease-in-out;
@@ -1815,6 +1848,18 @@ fieldset legend::before {
 
 	}
 
+		.revolver__main-breadcrumb:first-child ul {
+
+			margin-bottom: 1.5vw;
+
+		}
+
+		.revolver__main-breadcrumb:last-child ul {
+
+			margin-top: 1.5vw;
+
+		}
+
 		.revolver__main-breadcrumb ul {
 
 			list-style: none;
@@ -1834,7 +1879,20 @@ fieldset legend::before {
 			.revolver__main-breadcrumb ul li {
 
 				display: inline-block;
+				position: relative;
 				list-style: none;
+
+			}
+
+			.revolver__main-breadcrumb ul li:first-child a b {
+
+				border-left: .2vw dashed #dcdcdc;
+
+			}
+
+			.revolver__main-breadcrumb ul li:nth-child(3) a {
+
+				margin-left: -.3vw;
 
 			}
 
@@ -1845,16 +1903,26 @@ fieldset legend::before {
 					text-shadow: 0 0 #fff;
 
 				}
+				.revolver__main-breadcrumb ul li a b {
+
+					background: #ffffff;
+					padding: .3vw .8vw;
+
+				}
 
 				.revolver__main-breadcrumb ul li a:hover {
 
-					color: #006400cf;
 					text-decoration: underline;
+					color: #006400cf;
 
 				}
 
 				.revolver__main-breadcrumb ul li span {
 
+					border-left: .2vw dashed #fff;
+					background: #dcc62a;
+					padding: .3vw .8vw;
+					margin-left: -.3vw;
 					font-weight: bold;
 					color: #666c;
 
@@ -1862,8 +1930,47 @@ fieldset legend::before {
 
 				.revolver__main-breadcrumb ul li em {
 
+					padding: .3vw 1.5vw .3vw 1.6vw;
+					background: #dcc62a;
 					font-weight: normal;
+					font-style: normal;
+					position: relative;
+					left: -2.3vw;
 					color: #333;
+
+				}
+
+				.revolver__main-breadcrumb ul li em::before {
+
+					position: absolute;
+					content: '';
+					top: 0;
+					border: .8vw solid transparent;
+					border-left: .8vw solid #fff;
+					left: -.3vw;
+
+				}
+
+				.revolver__main-breadcrumb ul li em::after {
+
+					position: absolute;
+					content: '';
+					top: .3vw;
+					right: 0;
+					border: .5vw solid transparent;
+					border-right: .5vw solid #d7d3e2e0;
+
+				}
+
+				.revolver__mobile-friendly .revolver__main-breadcrumb ul li em::before {
+
+					top: .4vw;
+
+				}
+
+				.revolver__mobile-friendly .revolver__main-breadcrumb ul li em::after {
+
+					top: .7vw;
 
 				}
 
@@ -1878,8 +1985,9 @@ fieldset legend::before {
 
 	}
 
-	.revolver__nav-bar .revolver__main-menu  {
+	.revolver__nav-bar .revolver__main-menu {
 
+		background: linear-gradient(90deg, rgba(212, 212, 212, 0) 0%, rgba(255, 255, 255, .7) 35%, rgba(226, 226, 226, 0) 100%);
 		display: inline-block;
 		position: relative;
 		overflow: hidden;
@@ -4557,7 +4665,7 @@ div.day-future:hover {
 
 	.revolver__footer p {
 
-		text-shadow: .1vw .1vw .4vw rgba(10, 10, 10, .08), .2vw .2vw .1vw rgba(8, 8, 8, .075), .4vw .4vw .1vw rgba(12, 12, 12, .07), .6vw .6vw .1vw rgba(12, 12, 12, .065), .8vw .8vw .1vw rgba(10, 10, 10, .06), 1vw 1vw .1vw rgba(8, 8, 8, .055), 1.2vw 1.2vw .1vw rgba(8, 8, 8, .05), 1.4vw 1.4vw 1vw rgba(10, 10, 10, .045), 1.6vw 1.6vw .1vw rgba(14, 14, 14, .04), 1.8vw 1.8vw .1vw rgba(14, 14, 14, .035), 2vw 2vw .1vw rgba(14, 14, 14, .03), 2.22vw 22.2vw .1vw rgba(12, 12, 12, .025), 2.4vw 2.4vw .1vw rgba(12, 12, 12, .02), 2.6vw 2.6vw .1vw rgba(0, 0, 0, .015), 2.8vw 2.8vw .1vw rgba(4, 4, 4, .01), 3vw 3vw .1vw rgba(10, 10, 10, .005), 3.2vw 3.2vw .1vw rgba(12, 12, 12, .0025), 3.4vw 3.4vw .1vw rgba(10, 10, 10, .002), 3.6vw 3.6vw .1vw rgba(12, 12, 12, .0015), 3.8vw 3.8vw .1vw rgba(12, 12, 12, .001);
+		text-shadow: .1vw .1vw .4vw rgba(10, 10, 10, .08), .2vw .2vw .1vw rgba(8, 8, 8, .075), .4vw .4vw .1vw rgba(12, 12, 12, .07), .9vw .9vw .1vw rgba(12, 12, 12, .065), 1.2vw 1.2vw .1vw rgba(10, 10, 10, .06), 1.4vw 1.4vw .1vw rgba(8, 8, 8, .055), 1.8vw 1.8vw .1vw rgba(8, 8, 8, .05), 2vw 2vw 1vw rgba(10, 10, 10, .045), 2.2vw 2.2vw .1vw rgba(14, 14, 14, .04), 2.6vw 2.6vw .1vw rgba(14, 14, 14, .035);
 		vertical-align: middle;
 		padding-bottom: 1.5vw;
 		display: table-cell;
@@ -4567,8 +4675,17 @@ div.day-future:hover {
 		height: 4.5vw;
 		color: #666;
 
-
 	}
+
+	.revolver__footer p #jump {
+
+		position: relative;
+		margin-right: 2vw;
+		cursor: pointer;
+		float: right;
+		top: -.2vw;
+
+	} 
 
 /* scalable definitions */
 .revolver__scalable-main {

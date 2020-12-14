@@ -12,26 +12,26 @@
 
 	}
 
-	$render_node .= '<article lang="'. $n['language']['hreflang'] .'" class="revolver__article article-id-'. $n['id'] .' '. $class .'">';
+	$RKI->Template::$b[] = '<article lang="'. $n['language']['hreflang'] .'" class="revolver__article article-id-'. $n['id'] .' '. $class .'">';
 
-	$render_node .= '<header class="revolver__article-header">'; 
+	$RKI->Template::$b[] = '<header class="revolver__article-header">'; 
 
 	if( $n['teaser'] ) {
 
-		$render_node .= '<h2><a hreflang="'. $n['language']['hreflang'] .'" href="'. $n['route'] .'" rel="bookmark">'. $n['title'] .'</a></h2>';
+		$RKI->Template::$b[] = '<h2><a hreflang="'. $n['language']['hreflang'] .'" href="'. $n['route'] .'" rel="bookmark">'. $n['title'] .'</a></h2>';
 
 	}
 	else {
 
-		$render_node .= '<h2>'. $n['title'] .'</h2>';
+		$RKI->Template::$b[] = '<h2>'. $n['title'] .'</h2>';
 
 	}
 
-	$render_node .= '</header>';
+	$RKI->Template::$b[] = '</header>';
 
 	if( RQST === '/' ) {
 
-		$render_node .= '<div class="revolver__article-contents">'. $RKI->HTML::Markup( 
+		$RKI->Template::$b[] = '<div class="revolver__article-contents">'. $RKI->HTML::Markup( 
 
 					htmlspecialchars_decode( 
 
@@ -48,12 +48,12 @@
 
 		if( $flag_main_node ) {
 
-			$render_node .= '<div class="revolver__article-contents">'. $n['contents'] .'</div>';	
+			$RKI->Template::$b[] = '<div class="revolver__article-contents">'. $n['contents'] .'</div>';	
 
 		}
 		else {
 
-			$render_node .= '<div class="revolver__article-contents">'. $RKI->HTML::Markup( 
+			$RKI->Template::$b[] = '<div class="revolver__article-contents">'. $RKI->HTML::Markup( 
 
 					htmlspecialchars_decode( 
 
@@ -71,20 +71,20 @@
 
 	if( $n['footer'] ) {
 
-		$render_node .= '<footer class="revolver__article-footer"><nav>';
+		$RKI->Template::$b[] = '<footer class="revolver__article-footer"><nav>';
 
-		$render_node .= '<ul>';
+		$RKI->Template::$b[] = '<ul>';
 
 		if( $n['editor'] ) {
 
-			$render_node .= '<li><a title="'. $n['title'] .' '. $RKV->lang['edit'] .'" href="'. $n['route'] .'edit/' .'">'. $RKV->lang['Edit'] .'</a></li>';
+			$RKI->Template::$b[] = '<li><a title="'. $n['title'] .' '. $RKV->lang['edit'] .'" href="'. $n['route'] .'edit/' .'">'. $RKV->lang['Edit'] .'</a></li>';
 
 		}
 
-		$render_node .= '</ul></nav></footer>';
+		$RKI->Template::$b[] = '</ul></nav></footer>';
 
 	}
 
-	$render_node .= '</article>';
+	$RKI->Template::$b[] = '</article>';
 
 ?>

@@ -29,32 +29,32 @@
 	$xlang  = PASS[ 1 ] !== 'blog' && PASS[ 1 ] !== 'forum' ? ' lang="'. $n['language']['hreflang'] .'"' : '';
 	$xalang = PASS[ 1 ] !== 'blog' && PASS[ 1 ] !== 'forum' ? ' hreflang="'. $n['language']['hreflang'] .'"' : '';
 
-	$render_node .= '<article itemscope itemtype="http://schema.org/Article"'. $xlang .' class="revolver__article article-id-'. $n['id'] .' '. $class .'">';
+	$RKI->Template::$b[] = '<article itemscope itemtype="http://schema.org/Article"'. $xlang .' class="revolver__article article-id-'. $n['id'] .' '. $class .'">';
 
-	$render_node .= '<header class="revolver__article-header">';
+	$RKI->Template::$b[] = '<header class="revolver__article-header">';
 
 	if( $n['teaser'] ) {
 
-		$render_node .= '<h2 itemprop="headline"><a itemprop="url"'. $xalang .' href="'. $n['route'] .'" rel="bookmark">'. $n['title'] .'</a></h2>';
+		$RKI->Template::$b[] = '<h2 itemprop="headline"><a itemprop="url"'. $xalang .' href="'. $n['route'] .'" rel="bookmark">'. $n['title'] .'</a></h2>';
 
 	}
 	else {
 
-		$render_node .= '<h2 itemprop="headline name">'. $n['title'] .'</h2>';
+		$RKI->Template::$b[] = '<h2 itemprop="headline name">'. $n['title'] .'</h2>';
 
 	}
 
 	if( $n['time'] ) {
 
-		$render_node .= '<time itemprop="datePublished dateModified" datetime="'. $RKI->Calendar::formatTime( $n['time'] ) .'">'. $n['time'] .'</time>';
+		$RKI->Template::$b[] = '<time itemprop="datePublished dateModified" datetime="'. $RKI->Calendar::formatTime( $n['time'] ) .'">'. $n['time'] .'</time>';
 
 	}
 
-	$render_node .= '</header>';
+	$RKI->Template::$b[] = '</header>';
 
 	if( RQST === '/' ) {
 
-		$render_node .= '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents">'. $RKI->HTML::Markup( $RKI->HTML::metaHash($n['contents']), [ 'length' => 2000, 'lazy' => 1 ] ) .'</div>';
+		$RKI->Template::$b[] = '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents">'. $RKI->HTML::Markup( $RKI->HTML::metaHash($n['contents']), [ 'length' => 2000, 'lazy' => 1 ] ) .'</div>';
 
 	}
 	else {
@@ -75,7 +75,7 @@
 
 					)['model::users'][ 0 ];
 
-				$render_node .= '<figure itemprop="creator" itemscope itemtype="https://schema.org/Person" class="revolver__comments-avatar">';
+				$RKI->Template::$b[] = '<figure itemprop="creator" itemscope itemtype="https://schema.org/Person" class="revolver__comments-avatar">';
 
 				if( $topic_author['avatar'] === 'default') {
 
@@ -88,17 +88,17 @@
 
 				}
 
-				$render_node .= '<img itemprop="image" src="'. $src .'" alt="'. $topic_author['nickname'] .'" />';
+				$RKI->Template::$b[] = '<img itemprop="image" src="'. $src .'" alt="'. $topic_author['nickname'] .'" />';
 
-				$render_node .= '<figcaption itemprop="name">'. $topic_author['nickname'] .'</figcaption>';
+				$RKI->Template::$b[] = '<figcaption itemprop="name">'. $topic_author['nickname'] .'</figcaption>';
 
-				$render_node .= '</figure>';
+				$RKI->Template::$b[] = '</figure>';
 
-				$render_node .= '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents" data-node="'. $n['id'] .'" data-type="forum-node" data-user="'. $n['author'] .'">';
+				$RKI->Template::$b[] = '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents" data-node="'. $n['id'] .'" data-type="forum-node" data-user="'. $n['author'] .'">';
 
-				$render_node .= $RKI->HTML::Markup( $RKI->HTML::metaHash($n['contents']), [ 'lazy' => 1 ] );
+				$RKI->Template::$b[] = $RKI->HTML::Markup( $RKI->HTML::metaHash($n['contents']), [ 'lazy' => 1 ] );
 
-				$render_node .= '</div>';
+				$RKI->Template::$b[] = '</div>';
 
 			}
 			else {
@@ -128,7 +128,7 @@
 
 				}
 
-				$render_node .= '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents"'. $quick_edit_attr . $quick_edit_data .'>'. $n['contents'] .'</div>';
+				$RKI->Template::$b[] = '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents"'. $quick_edit_attr . $quick_edit_data .'>'. $n['contents'] .'</div>';
 
 			}
 
@@ -149,125 +149,125 @@
 
 			}
 
-			$render_node .= '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents"'. $quick_edit_attr . $quick_edit_data .'>';
+			$RKI->Template::$b[] = '<div itemprop="articleBody mainEntityOfPage" class="revolver__article-contents"'. $quick_edit_attr . $quick_edit_data .'>';
 
-			$render_node .= $RKI->HTML::Markup( $RKI->HTML::metaHash($n['contents']), [ 'lazy' => 1 ] );
+			$RKI->Template::$b[] = $RKI->HTML::Markup( $RKI->HTML::metaHash($n['contents']), [ 'lazy' => 1 ] );
 
-			$render_node .='</div>';
+			$RKI->Template::$b[] ='</div>';
 
 		}
 
 	}
 
 
-	$render_node .= '<footer class="revolver__article-footer">';
+	$RKI->Template::$b[] = '<footer class="revolver__article-footer">';
 
 	if( isset($n['rating']) ) {
 
 		$tpe = PASS[ 1 ] === 'blog' ? 'blog' : 'node';
 
-		$render_node .= '<div class="revolver-rating">';
-		$render_node .= '<ul class="rated-'. $n['rating'] .'" data-node="'. $n['id'] .'" data-user="'. USER['id'] .'" data-type="'. $tpe .'">';
-			$render_node .= '<li data-rated="1">1</li>';
-			$render_node .= '<li data-rated="2">2</li>';
-			$render_node .= '<li data-rated="3">3</li>';
-			$render_node .= '<li data-rated="4">4</li>';
-			$render_node .= '<li data-rated="5">5</li>';
-		$render_node .= '</ul>';
+		$RKI->Template::$b[] = '<div class="revolver-rating">';
+		$RKI->Template::$b[] = '<ul class="rated-'. $n['rating'] .'" data-node="'. $n['id'] .'" data-user="'. USER['id'] .'" data-type="'. $tpe .'">';
+			$RKI->Template::$b[] = '<li data-rated="1">1</li>';
+			$RKI->Template::$b[] = '<li data-rated="2">2</li>';
+			$RKI->Template::$b[] = '<li data-rated="3">3</li>';
+			$RKI->Template::$b[] = '<li data-rated="4">4</li>';
+			$RKI->Template::$b[] = '<li data-rated="5">5</li>';
+		$RKI->Template::$b[] = '</ul>';
 
-		$render_node .= '<span>'. $n['rating'] .'</span> / <span>5</span> #<span class="closest">'. $n['rates'] .'</span>';
-		$render_node .= '</div>';
+		$RKI->Template::$b[] = '<span>'. $n['rating'] .'</span> / <span>5</span> #<span class="closest">'. $n['rates'] .'</span>';
+		$RKI->Template::$b[] = '</div>';
 
 	}
 
-	$render_node .= '<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">';
-	$render_node .= '<meta itemprop="height" content="435">';
-	$render_node .= '<meta itemprop="width" content="432">';
-	$render_node .= '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png">';
-	$render_node .= '</div>';
+	$RKI->Template::$b[] = '<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">';
+	$RKI->Template::$b[] = '<meta itemprop="height" content="435">';
+	$RKI->Template::$b[] = '<meta itemprop="width" content="432">';
+	$RKI->Template::$b[] = '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png">';
+	$RKI->Template::$b[] = '</div>';
 
-	$render_node .= '<div class="meta" itemprop="author publisher" itemscope itemtype="http://schema.org/Organization">';
+	$RKI->Template::$b[] = '<div class="meta" itemprop="author publisher" itemscope itemtype="http://schema.org/Organization">';
 
-	$render_node .= '<div itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">';
-	$render_node .= '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png" />';
-	$render_node .= '</div>';
-	$render_node .= '<span itemprop="name">'. $n['author'] .'</span>';
+	$RKI->Template::$b[] = '<div itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">';
+	$RKI->Template::$b[] = '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png" />';
+	$RKI->Template::$b[] = '</div>';
+	$RKI->Template::$b[] = '<span itemprop="name">'. $n['author'] .'</span>';
 
-	$render_node .= '</div>';
+	$RKI->Template::$b[] = '</div>';
 
 	if( $n['footer'] ) {
 
-		$render_node .= '<nav>';
+		$RKI->Template::$b[] = '<nav>';
 
-		$render_node .= '<ul>';
+		$RKI->Template::$b[] = '<ul>';
 
 		if( $n['quedit'] ) {
 
-			$render_node .= '<li class="revolver__quick-edit-handler" title="'. $n['title'] .' '. $RKV->lang['qedit'] .'">[ '. $RKV->lang['QEdit'] .' ]</li>';
+			$RKI->Template::$b[] = '<li class="revolver__quick-edit-handler" title="'. $n['title'] .' '. $RKV->lang['qedit'] .'">[ '. $RKV->lang['QEdit'] .' ]</li>';
 
 		}
 
 		if( $n['editor'] ) {
 
-			$render_node .= '<li><a title="'. $n['title'] .' '. $RKV->lang['edit'] .'" href="'. $n['route'] .'edit/' .'">'. $RKV->lang['Edit'] .'</a></li>';
+			$RKI->Template::$b[] = '<li><a title="'. $n['title'] .' '. $RKV->lang['edit'] .'" href="'. $n['route'] .'edit/' .'">'. $RKV->lang['Edit'] .'</a></li>';
 
 		}
 		else {
 
 			if( PASS[ 1 ] !== 'blog' && PASS[ 1 ] !== 'wiki' ) {
 
-				$render_node .= '<li><a itemprop="url"'. $xalang .' title="'. $n['title'] .'" href="'. $n['route'] .'">'. $RKV->lang['Read More'] .' &rArr;</a></li>';
+				$RKI->Template::$b[] = '<li><a itemprop="url"'. $xalang .' title="'. $n['title'] .'" href="'. $n['route'] .'">'. $RKV->lang['Read More'] .' &rArr;</a></li>';
 
 			}
 
 		}
 
-		$render_node .= '</ul></nav>';
+		$RKI->Template::$b[] = '</ul></nav>';
 
 	}
 
-	$render_node .= '</footer>';
+	$RKI->Template::$b[] = '</footer>';
 
-	$render_node .= '</article>';
+	$RKI->Template::$b[] = '</article>';
 
 	// Similar contents links next \ prev 
 	if( isset($n['similar']) && $RKV->request !== '/' && !(bool)pagination['offset'] ) {
 
-		$render_node .= '<nav class="revolver__similar-links">';
+		$RKI->Template::$b[] = '<nav class="revolver__similar-links">';
 
-		$render_node .= '<ul>';
+		$RKI->Template::$b[] = '<ul>';
 
 		if( !empty( $n['similar']['prev']['route'] ) ) {
 
-			$render_node .= '<li class="revolver__similar-links--previous">';
+			$RKI->Template::$b[] = '<li class="revolver__similar-links--previous">';
 
-			$render_node .= '<a hreflang="'. $n['language']['hreflang'] .'" rel="prev" href="'. $n['similar']['prev']['route'] .'" title="'. $RKV->lang['previous'] .' :: '. $n['similar']['prev']['title'].'">';
+			$RKI->Template::$b[] = '<a hreflang="'. $n['language']['hreflang'] .'" rel="prev" href="'. $n['similar']['prev']['route'] .'" title="'. $RKV->lang['previous'] .' :: '. $n['similar']['prev']['title'].'">';
 
-			$render_node .= '<span>'. $n['similar']['prev']['title'] .'</span>';
+			$RKI->Template::$b[] = '<span>'. $n['similar']['prev']['title'] .'</span>';
 
-			$render_node .= '</a>';
+			$RKI->Template::$b[] = '</a>';
 
-			$render_node .= '</li>';
+			$RKI->Template::$b[] = '</li>';
 
 		}
 
 		if( !empty( $n['similar']['next']['route'] ) ) { 
 
-			$render_node .= '<li class="revolver__similar-links--next">';
+			$RKI->Template::$b[] = '<li class="revolver__similar-links--next">';
 
-			$render_node .= '<a hreflang="'. $n['language']['hreflang'] .'" rel="next" href="'. $n['similar']['next']['route'] .'" title="'. $RKV->lang['next'] .' :: '. $n['similar']['next']['title'] .'">';
+			$RKI->Template::$b[] = '<a hreflang="'. $n['language']['hreflang'] .'" rel="next" href="'. $n['similar']['next']['route'] .'" title="'. $RKV->lang['next'] .' :: '. $n['similar']['next']['title'] .'">';
 
-			$render_node .= '<span>'. $n['similar']['next']['title'] .'</span>';
+			$RKI->Template::$b[] = '<span>'. $n['similar']['next']['title'] .'</span>';
 
-			$render_node .= '</a>';
+			$RKI->Template::$b[] = '</a>';
 
-			$render_node .= '</li>';
+			$RKI->Template::$b[] = '</li>';
 
 		}
 
-		$render_node .= '</ul>';
+		$RKI->Template::$b[] = '</ul>';
 
-		$render_node .= '</nav>';
+		$RKI->Template::$b[] = '</nav>';
 
 	}
 

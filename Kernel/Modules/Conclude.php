@@ -6,7 +6,7 @@
   *
   * make exit and frees resources
   *
-  * v.2.0.0.3
+  * v.2.0.0.4
   *
   *                   ^
   *                  | |
@@ -38,6 +38,8 @@
 final class Conclude {
 
 	protected static $file;
+
+	public static $b = [];
 
 	function __construct( File $f ) {
 

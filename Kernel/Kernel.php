@@ -3,7 +3,7 @@
  /*
   * RevolveR CMF Kernel
   *
-  * v.2.0.0.3
+  * v.2.0.0.4
   *
   *			          ^
   *			         | |
@@ -32,7 +32,7 @@
   */
 
 // Kernel version
-define('rr_version', '2.0.0.3');
+define('rr_version', '2.0.0.4');
 
 // X64 guest number
 define('BigNumericX64', 9223372036854775806);
@@ -1058,6 +1058,11 @@ if( !$current_version ) {
 else {
 
 	if( (int)$current_version < (int)$actual_version ) {
+
+		// Fix Files and directories permissons
+
+		exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0770 {} +'); // for sub directory
+		exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
 
 		// update db struct
 		if( (int)$current_version <= 2000 ) {

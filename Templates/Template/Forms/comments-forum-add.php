@@ -109,10 +109,10 @@ if( FORM_ACCESS !== 'none' ) {
 
 }
 
-$render_node .= '<div class="revolver__comments_add">';
+$RKI->Template::$b[] = '<div class="revolver__comments_add">';
 
-$render_node .= $RKI->HTMLForm::build( $form_parameters );
+$RKI->Template::$b[] = $RKI->HTMLForm::build( $form_parameters );
 
-$render_node .= '</div>';
+$RKI->Template::$b[] = '</div>';
 
 ?>

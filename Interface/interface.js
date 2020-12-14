@@ -2,7 +2,7 @@
  /* 
   * RevolveR Front-end :: main interface
   *
-  * v.2.0.0.0
+  * v.2.0.0.4
   *
   *			          ^
   *			         | |
@@ -365,6 +365,14 @@ R.cleanNotifications = (t) => {
 // Make interface
 R.fetchRoute = ( intro ) => {
 
+	const setupScreen = R.sel('.setup-screen')[0];
+
+	if( document.location.protocol.includes('http:') ) {
+
+		setupScreen.style.display = 'none';
+
+	}
+
 	if( 'caches' in window ) {
 
 		if( 'serviceWorker' in navigator ) {
@@ -379,95 +387,71 @@ R.fetchRoute = ( intro ) => {
 
 			});
 
+			let deferred;
+
+			const setup = R.sel('.setup-home')[0];
+
+			let installedTest = R.cookie('installed','get');
+
+			if( installedTest.length > 0 ) {
+
+				setupScreen.style.display = 'none';
+
+			}
+
+			window.addEventListener('beforeinstallprompt', ( e ) => {
+
+				// Prevent Chrome 67 and earlier from automatically showing the prompt
+				e.preventDefault();
+
+				// R.cookie('installed=1','set');
+
+				// Stash the event so it can be triggered later.
+				deferred = e;
+
+				// Update UI to notify the user they can add to home screen
+				setupScreen.style.display = 'block';
+
+				setup.addEventListener('click', ( e ) => {
+
+					// hide our user interface that shows our A2HS button
+					setupScreen.style.display = 'none';
+
+					// Show the prompt
+					deferred.prompt();
+
+					// Wait for the user to respond to the prompt
+					deferred.userChoice.then((c) => {
+
+						if( c.outcome === 'accepted' ) {
+
+							console.log('User accepted the application add promt');
+
+							R.cookie('installed=1','set');
+
+						}
+						else {
+
+							console.log('User dismissed the the application add promt');
+
+							R.cookie('installed','rem');
+						}
+
+						deferred = null;
+
+					});
+
+				});
+
+			});
+
 		}
 
 	}
-
-	R.timeFutures();
 
 	R.talkUpdate();
 
-	let dateTime = new Date();
-
-	let hours = dateTime.getHours();
-
-	let timeStyle = R.sel('.revolver__time-futures');
-
-	if( hours > 6 && hours <= 12 ) {
-
-		if( !R.morning ) {
-
-			if( timeStyle ) {
-
-				R.rem(timeStyle);
-
-				R.night = null;
-
-				R.evening = null;
-
-			}
-
-			R.morningMode();
-
-			console.log('Morning come ...');
-
-		}
-
-	}
-
-	if( hours > 17 && hours <= 20 ) {
-
-		if( !R.evening ) {
-
-			if( timeStyle ) {
-
-				R.rem(timeStyle);
-
-				R.night = null;
-
-				R.morning = null;
-
-			}
-
-		}
-
-		R.eveningMode();
-
-		console.log('Evening come ...');
-
-	}
-
-	if( hours > 20 || hours <= 8 ) {
-
-		if( !R.night ) {
-
-			if( timeStyle ) {
-
-				R.rem(timeStyle);
-
-				R.morning = null;
-				R.evening = null;
-
-			}
-
-			R.nightMode();
-
-			console.log('Night come ...');
-
-		}
-
-	} 
-	else {
-
-		if( timeStyle ) {
-
-			R.rem(timeStyle);
-
-			console.log('Day come ...');
-
-		}
-
-	}
+	R.timeFutures();
 
 	/* Recorder */
 	let recordHandler = R.sel('.revolver__record-handler');
@@ -765,14 +749,20 @@ R.fetchRoute = ( intro ) => {
 
 		});
 
-		R.styleApply('.revolver__header h1 a', ['color: rgba(220, 220, 220, .8)', 'display:inline-block', 'opacity:.1'], () => {
+		R.styleApply('.revolver__header h1 a', ['color: #ffffffdb', 'display:inline-block', 'opacity:.1'], () => {
 
 			R.animate('.revolver__header h1 a', ['transform: scale(.5, .5, .5) rotate(360deg, 360deg, 360deg):1500:bouncePast']);
-			R.animate('.revolver__header h1 a', ['opacity:.9:1500:bouncePast', 'transform: scale(1, 1, 1) rotate(0deg,0deg,0deg):2000:elastic', 'color:rgba(111, 111, 111, 0.9):6000:wobble']);
+			R.animate('.revolver__header h1 a', ['opacity:.9:1500:bouncePast', 'transform: scale(1, 1, 1) rotate(0deg,0deg,0deg):2000:elastic', 'color:#790a61d6:6000:wobble']);
 
 		});
 
 	}
+
+	R.event('#jump', 'click', () => {
+
+		R.scroll('#RevolverRoot');
+
+	});
 
 	// Store goods covers slider
 	setTimeout(() => {
@@ -1051,7 +1041,7 @@ R.fetchRoute = ( intro ) => {
 
 				in_basket_i.innerText = (in_basket_i.innerText - 0) + 1;
 
-				R.cookie('goods_in_basket='+ R.cookie('goods_in_basket', 'get') + wrapper.dataset.goods +'|', 'set');
+				R.cookie('goods_in_basket='+ (R.cookie('goods_in_basket', 'get') + wrapper.dataset.goods +'|').replace('||', '|'), 'set');
 
 				R.tick('cart', .2);
 
@@ -1075,7 +1065,7 @@ R.fetchRoute = ( intro ) => {
 
 				};
 
-				R.cookie('goods_in_basket='+ goods_stack, 'set');
+				R.cookie('goods_in_basket='+ goods_stack.replace('||', '|'), 'set');
 
 				console.log('Goods removed from basket');
 

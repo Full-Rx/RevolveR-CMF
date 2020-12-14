@@ -20,97 +20,97 @@
 
 	}
 
-	$render_node .= '<article itemscope itemtype="https://schema.org/BlogPosting" class="revolver__article article-id-'. $n['id'] .' '. $class .'">';
+	$RKI->Template::$b[] = '<article itemscope itemtype="https://schema.org/BlogPosting" class="revolver__article article-id-'. $n['id'] .' '. $class .'">';
 
-	$render_node .= '<header class="revolver__article-header">'; 
+	$RKI->Template::$b[] = '<header class="revolver__article-header">'; 
 
 	if( empty( PASS[ 2 ] ) ) {
 
-		$render_node .= '<h2 itemprop="headline"><a itemprop="url" href="'. $n['route'] .'" rel="bookmark">'. $n['title'] .'</a></h2>';
+		$RKI->Template::$b[] = '<h2 itemprop="headline"><a itemprop="url" href="'. $n['route'] .'" rel="bookmark">'. $n['title'] .'</a></h2>';
 
 	}
 	else {
 
-		$render_node .= '<h2 itemprop="headline">'. $n['title'] .'</h2>';
+		$RKI->Template::$b[] = '<h2 itemprop="headline">'. $n['title'] .'</h2>';
 
 	}
 
 	if( $n['time'] ) {
 
-		$render_node .= '<time itemprop="datePublished dateModified" datetime="'. $RKI->Calendar::formatTime($n['time']) .'">'. $n['time'] .'</time>';
+		$RKI->Template::$b[] = '<time itemprop="datePublished dateModified" datetime="'. $RKI->Calendar::formatTime($n['time']) .'">'. $n['time'] .'</time>';
 
 	}
 
-	$render_node .= '</header>';
+	$RKI->Template::$b[] = '</header>';
 
 	if( $RKV->request === '/blog/' ) {
 
-		$render_node .= '<div class="revolver__article-contents" itemprop="articleBody mainEntityOfPage">'. $n['contents'] .'</div>';
+		$RKI->Template::$b[] = '<div class="revolver__article-contents" itemprop="articleBody mainEntityOfPage">'. $n['contents'] .'</div>';
 
 	}
 
 	if( $n['footer'] ) {
 
-		$render_node .= '<footer class="revolver__article-footer">';
+		$RKI->Template::$b[] = '<footer class="revolver__article-footer">';
 
 		if( isset($n['rating']) ) {
 
 			$tpe = PASS[ 1 ] === 'blog' ? 'blog' : 'node';
 
-			$render_node .= '<div class="revolver-rating">';
-			$render_node .= '<ul class="rated-'. $n['rating'] .'" data-node="'. $n['id'] .'" data-user="'. USER['id'] .'" data-type="'. $tpe .'">';
-				$render_node .= '<li data-rated="1">1</li>';
-				$render_node .= '<li data-rated="2">2</li>';
-				$render_node .= '<li data-rated="3">3</li>';
-				$render_node .= '<li data-rated="4">4</li>';
-				$render_node .= '<li data-rated="5">5</li>';
-			$render_node .= '</ul>';
+			$RKI->Template::$b[] = '<div class="revolver-rating">';
+			$RKI->Template::$b[] = '<ul class="rated-'. $n['rating'] .'" data-node="'. $n['id'] .'" data-user="'. USER['id'] .'" data-type="'. $tpe .'">';
+			$RKI->Template::$b[] = '<li data-rated="1">1</li>';
+			$RKI->Template::$b[] = '<li data-rated="2">2</li>';
+			$RKI->Template::$b[] = '<li data-rated="3">3</li>';
+			$RKI->Template::$b[] = '<li data-rated="4">4</li>';
+			$RKI->Template::$b[] = '<li data-rated="5">5</li>';
+			$RKI->Template::$b[] = '</ul>';
 
-			$render_node .= '<span>'. $n['rating'] .'</span> / <span>5</span> #<span class="closest">'. $n['rates'] .'</span>';
-			$render_node .= '</div>';
+			$RKI->Template::$b[] = '<span>'. $n['rating'] .'</span> / <span>5</span> #<span class="closest">'. $n['rates'] .'</span>';
+			$RKI->Template::$b[] = '</div>';
 
 		}
 
-			$render_node .= '<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">';
-			$render_node .= '<meta itemprop="height" content="435">';
-			$render_node .= '<meta itemprop="width" content="432">';
-			$render_node .= '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png">';
-			$render_node .= '</div>';
+			$RKI->Template::$b[] = '<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">';
+			$RKI->Template::$b[] = '<meta itemprop="height" content="435">';
+			$RKI->Template::$b[] = '<meta itemprop="width" content="432">';
+			$RKI->Template::$b[] = '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png">';
+			$RKI->Template::$b[] = '</div>';
 
-			$render_node .= '<div class="meta" itemprop="author publisher" itemscope itemtype="http://schema.org/Organization">';
+			$RKI->Template::$b[] = '<div class="meta" itemprop="author publisher" itemscope itemtype="http://schema.org/Organization">';
 
-			$render_node .= '<div itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">';
-			$render_node .= '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png" />';
-			$render_node .= '</div>';
-			$render_node .= '<span itemprop="name">'. $n['author'] .'</span>';
+			$RKI->Template::$b[] = '<div itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">';
+			$RKI->Template::$b[] = '<meta itemprop="url" content="'. $RKV->host .'/Interface/ArticlePostImage.png" />';
+			$RKI->Template::$b[] = '</div>';
+			$RKI->Template::$b[] = '<span itemprop="name">'. $n['author'] .'</span>';
 
-			$render_node .= '</div>';
+			$RKI->Template::$b[] = '</div>';
 
-		$render_node .= '<nav>';
+		$RKI->Template::$b[] = '<nav>';
 
-		$render_node .= '<ul>';
+		$RKI->Template::$b[] = '<ul>';
 
 		if( $n['editor'] ) {
 
-			$render_node .= '<li><a title="'. $n['title'] .' '. $RKV->lang['edit'] .'" href="'. $n['route'] .'edit/' .'">'. $RKV->lang['Edit'] .'</a></li>';
+			$RKI->Template::$b[] = '<li><a title="'. $n['title'] .' '. $RKV->lang['edit'] .'" href="'. $n['route'] .'edit/' .'">'. $RKV->lang['Edit'] .'</a></li>';
 
 		}
 		else {
 
 
-			$render_node .= '<li><a title="'. $n['title'] .'" href="'. $n['route'] .'">'. $RKV->lang['Read More'] .' &rArr;</a></li>';
+			$RKI->Template::$b[] = '<li><a title="'. $n['title'] .'" href="'. $n['route'] .'">'. $RKV->lang['Read More'] .' &rArr;</a></li>';
 
 		}
 
-		$render_node .= '</ul></nav>';
+		$RKI->Template::$b[] = '</ul></nav>';
 
-		$render_node .= '<div itemprop="author publisher" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">'. $n['author'] .'</span></div>';
+		$RKI->Template::$b[] = '<div itemprop="author publisher" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">'. $n['author'] .'</span></div>';
 
-		$render_node .= '</footer>';
+		$RKI->Template::$b[] = '</footer>';
 
 	}
 
-	$render_node .= '</article>';
+	$RKI->Template::$b[] = '</article>';
 
 
 ?>

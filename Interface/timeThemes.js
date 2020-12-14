@@ -1,12 +1,16 @@
 
+// Day times future switch
+
 RR.timeFutures = () => {
 
 	let dateTime = new Date();
 
 	let hours = dateTime.getHours();
 
+	let timeStyle = RR.sel('.revolver__time-futures');
+
 	// Morning Sound
-	if( hours > 6 && hours <= 12 ) {
+	if( hours > 5 && hours <= 11 ) {
 
 		if( !RR.morningSound ) {
 
@@ -16,16 +20,48 @@ RR.timeFutures = () => {
 
 		}
 
+		if( !R.morning ) {
+
+			if( timeStyle ) {
+
+				RR.rem(timeStyle);
+
+				RR.night = null;
+
+				RR.evening = null;
+
+			}
+
+			RR.morningMode();
+
+			console.log('Morning come ...');
+
+		}
+
 	}
 
 	// Day Sound
-	if( hours > 12 && hours <= 17 ) {
+	if( hours > 11 && hours <= 16 ) {
 
 		if( !RR.daySound ) {
 
 			RR.tick('day-come', .7);
 
 			RR.daySound = true;
+
+		}
+
+		if( timeStyle ) {
+
+			RR.rem(timeStyle);
+
+			RR.morning = null;
+
+			RR.evening = null;
+
+			RR.night = null;
+
+			console.log('Day come ...');
 
 		}
 
@@ -42,16 +78,54 @@ RR.timeFutures = () => {
 
 		}
 
+		if( !R.evening ) {
+
+			if( timeStyle ) {
+
+				RR.rem(timeStyle);
+
+				RR.night = null;
+
+				RR.morning = null;
+
+			}
+
+		}
+
+		RR.eveningMode();
+
+		RR.evening = true;
+
+		console.log('Evening come ...');
+
 	}
 
 	// Night Sound
-	if( hours > 20 || hours <= 6 ) {
+	if( hours > 20 || hours <= 5 ) {
 
 		if( !RR.nightSound ) {
 
 			RR.tick('night-come', .07);
 
 			RR.nightSound = true;
+
+		}
+
+		if( !R.night ) {
+
+			if( timeStyle ) {
+
+				RR.rem(timeStyle);
+
+				RR.morning = null;
+
+				RR.evening = null;
+
+			}
+
+			RR.nightMode();
+
+			console.log('Night come ...');
 
 		}
 

@@ -1,6 +1,6 @@
 <?php
 
-$render_node .= '<section class="revolver__advanced-contents">';
+$RKI->Template::$b[] = '<section class="revolver__advanced-contents">';
 
 $blog_id = iterator_to_array(
 
@@ -109,17 +109,17 @@ if( $comments ) {
 
 		}
 
-		$render_node .= '<article itemprop="comment" itemscope itemtype="https://schema.org/Comment" id="comment-'. $c['id'] .'" class="revolver__comments comments-'. $c['id'] .' '. $class .'">';
+		$RKI->Template::$b[] = '<article itemprop="comment" itemscope itemtype="https://schema.org/Comment" id="comment-'. $c['id'] .'" class="revolver__comments comments-'. $c['id'] .' '. $class .'">';
 
-		$render_node .= '<header class="revolver__comments-header">'; 
+		$RKI->Template::$b[] = '<header class="revolver__comments-header">'; 
 
-		$render_node .= '<h2><a itemprop="url" href="'. $RKV->request .'#comment-'. $c['id'] .'">&#8226;'. $c['id'] .'</a> '. $RKV->lang['by'] .' <span>'. $comment_user['nickname'] .'</span></h2>';
+		$RKI->Template::$b[] = '<h2><a itemprop="url" href="'. $RKV->request .'#comment-'. $c['id'] .'">&#8226;'. $c['id'] .'</a> '. $RKV->lang['by'] .' <span>'. $comment_user['nickname'] .'</span></h2>';
 
-		$render_node .= '<time itemprop="dateCreated" datetime="'. $RKI->Calendar::formatTime($c['time']) .'">'. $c['time'] .'</time>';
+		$RKI->Template::$b[] = '<time itemprop="dateCreated" datetime="'. $RKI->Calendar::formatTime($c['time']) .'">'. $c['time'] .'</time>';
 
-		$render_node .= '</header>';
+		$RKI->Template::$b[] = '</header>';
 
-		$render_node .= '<figure itemprop="creator" itemscope itemtype="https://schema.org/Person" class="revolver__comments-avatar">';
+		$RKI->Template::$b[] = '<figure itemprop="creator" itemscope itemtype="https://schema.org/Person" class="revolver__comments-avatar">';
 
 		if( $comment_user['avatar'] === 'default') {
 
@@ -132,11 +132,11 @@ if( $comments ) {
 
 		}
 
-		$render_node .= '<img itemprop="image" src="'. $src .'" alt="'. $comment_user['nickname'] .'" />';
+		$RKI->Template::$b[] = '<img itemprop="image" src="'. $src .'" alt="'. $comment_user['nickname'] .'" />';
 
-		$render_node .= '<figcaption itemprop="name">'. $comment_user['nickname'] .'</figcaption>';
+		$RKI->Template::$b[] = '<figcaption itemprop="name">'. $comment_user['nickname'] .'</figcaption>';
 
-		$render_node .= '</figure>';
+		$RKI->Template::$b[] = '</figure>';
 
 		if( in_array(ROLE, ['Admin', 'Writer']) || USER['name'] === $comment_user['nickname'] ) {
 
@@ -151,7 +151,7 @@ if( $comments ) {
 
 		}
 
-		$render_node .= '<div class="revolver__comments-contents"'. $quick_edit_attr . $quick_edit_data .'>'. $RKI->HTML::Markup( 
+		$RKI->Template::$b[] = '<div class="revolver__comments-contents"'. $quick_edit_attr . $quick_edit_data .'>'. $RKI->HTML::Markup( 
 
 					htmlspecialchars_decode( 
 
@@ -164,44 +164,44 @@ if( $comments ) {
 					), [ 'lazy' => 1 ] ) .'</div>';
 
 
-		$render_node .= '<footer class="revolver__comments-footer">';
+		$RKI->Template::$b[] = '<footer class="revolver__comments-footer">';
 
 		$tpe = 'blog-comment';
 
-		$render_node .= '<div class="revolver-rating">';
-		$render_node .= '<ul class="rated-'. floor($crate) .'" data-node="'. $c['id'] .'" data-user="'. USER['id'] .'" data-type="'. $tpe .'">';
+		$RKI->Template::$b[] = '<div class="revolver-rating">';
+		$RKI->Template::$b[] = '<ul class="rated-'. floor($crate) .'" data-node="'. $c['id'] .'" data-user="'. USER['id'] .'" data-type="'. $tpe .'">';
 
-			$render_node .= '<li data-rated="1">1</li>';
-			$render_node .= '<li data-rated="2">2</li>';
-			$render_node .= '<li data-rated="3">3</li>';
-			$render_node .= '<li data-rated="4">4</li>';
-			$render_node .= '<li data-rated="5">5</li>';
+			$RKI->Template::$b[] = '<li data-rated="1">1</li>';
+			$RKI->Template::$b[] = '<li data-rated="2">2</li>';
+			$RKI->Template::$b[] = '<li data-rated="3">3</li>';
+			$RKI->Template::$b[] = '<li data-rated="4">4</li>';
+			$RKI->Template::$b[] = '<li data-rated="5">5</li>';
 
-		$render_node .= '</ul>';
+		$RKI->Template::$b[] = '</ul>';
 
-		$render_node .= '<span>'. floor($crate) .'</span> / <span>5</span> #<span class="closest">'. count($crating) .'</span>';
-		$render_node .= '</div>';
+		$RKI->Template::$b[] = '<span>'. floor($crate) .'</span> / <span>5</span> #<span class="closest">'. count($crating) .'</span>';
+		$RKI->Template::$b[] = '</div>';
 
 		if( $comment_user['id'] === USER['id'] || in_array(ROLE, ['Admin', 'Writer']) ) {
 
-			$render_node .= '<nav><ul>';
+			$RKI->Template::$b[] = '<nav><ul>';
 
-			$render_node .= '<li class="revolver__quick-edit-handler" title="'. $RKV->lang['qedit'] .'">[ '. $RKV->lang['QEdit'] .' ]</li>';
+			$RKI->Template::$b[] = '<li class="revolver__quick-edit-handler" title="'. $RKV->lang['qedit'] .'">[ '. $RKV->lang['QEdit'] .' ]</li>';
 
-			$render_node .= '<li><a title="'. $c['id'] .' '. $RKV->lang['edit'] .'" href="'. $RKV->request .'comment/'.  $c['id'] .'/edit/">'. $RKV->lang['Edit'] .'</a></li>';
+			$RKI->Template::$b[] = '<li><a title="'. $c['id'] .' '. $RKV->lang['edit'] .'" href="'. $RKV->request .'comment/'.  $c['id'] .'/edit/">'. $RKV->lang['Edit'] .'</a></li>';
 
-			$render_node .= '</ul></nav>';
+			$RKI->Template::$b[] = '</ul></nav>';
 
 		}
 
-		$render_node .= '</footer>';
+		$RKI->Template::$b[] = '</footer>';
 
-		$render_node .= '</article>';
+		$RKI->Template::$b[] = '</article>';
 
 	}
 
 }
 
-$render_node .= '</section>';
+$RKI->Template::$b[] = '</section>';
 
 ?>

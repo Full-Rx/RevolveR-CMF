@@ -3,7 +3,7 @@
  /* 
   * RevolveR Node
   *
-  * v.2.0.0.0
+  * v.2.0.0.4
   *
   *
   *
@@ -66,6 +66,7 @@ if( defined('NODE_ID') ) {
 } 
 
 // Create empty variables for navigation
+
 $prev_title = '';
 $prev_route = '';
 $next_title = '';
@@ -81,6 +82,7 @@ if( CONTENTS_FLAG ) {
 	foreach( $all_nodes as $node ) {
 
 		// Previous node
+
 		if( isset($all_nodes[ $nc - 1 ]) && $all_nodes[ $nc - 1 ]['country'] === $node['country'] ) {
 
 			if( $all_nodes[ $nc - 1 ]['route'] !== $node['route'] ) {
@@ -99,6 +101,7 @@ if( CONTENTS_FLAG ) {
 		}
 
 		// Next node
+
 		if( isset($all_nodes[ $nc + 1 ]) && $all_nodes[ $nc + 1 ]['country'] === $node['country']) {
 
 			if( $all_nodes[ $nc + 1 ]['route'] !== $node['route'] ) {
@@ -199,7 +202,6 @@ if( CONTENTS_FLAG ) {
 			'editor'      => null,
 			'editor_mode' => null,
 			'quedit'	  => null,
-			'footer'	  => null
 
 		]; 
 
@@ -210,7 +212,7 @@ if( CONTENTS_FLAG ) {
 
 				$token_explode = explode('|', $cipher::crypt('decrypt', SV['c']['usertoken']));
 
-				if( $token_explode[2] === $node['user'] || (in_array(ROLE, ['Admin', 'Writer'], true) ) ) {
+				if( $token_explode[ 2 ] === $node['user'] || (in_array(ROLE, ['Admin', 'Writer'], true) ) ) {
 
 					$CNODE['footer'] = true;
 					$CNODE['editor'] = true;
@@ -223,6 +225,17 @@ if( CONTENTS_FLAG ) {
 					}
 
 				}
+
+			}
+			else {
+
+				$CNODE['footer'] = null;
+
+			}
+
+			if( isset(PASS[ 3 ]) ) {
+
+				$CNODE['footer'] = null;
 
 			}
 
@@ -250,7 +263,7 @@ if( CONTENTS_FLAG ) {
 
 			if( defined('NODE_ID') ) {
 
-				if( !(bool)$nc && isset( NCU[0] ) ) {
+				if( !(bool)$nc && isset( NCU[ 0 ] ) ) {
 
 					foreach( NCU as $c ) {
 

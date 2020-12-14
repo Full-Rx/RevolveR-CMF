@@ -4,7 +4,7 @@
   * 
   * RevolveR CMF Setup
   *
-  * v.2.0.0.0
+  * v.2.0.0.4
   *
   *
   *
@@ -693,6 +693,11 @@ if( !empty(SV['p']) ) {
 
 			// Create table talk
 			$dbx::query('c', 'revolver__talk', $STRUCT_TALK);
+
+			// Fix Files and directories permissons
+
+			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0770 {} +'); // for sub directory
+			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
 
 			header( 'Location: '. $RNV->host );
 

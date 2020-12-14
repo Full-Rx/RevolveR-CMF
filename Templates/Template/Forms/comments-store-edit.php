@@ -205,16 +205,16 @@ if( in_array( ACCESS['role'], ['Admin', 'Writer', 'User'], true ) ) {
 
 	];
 
-	$render_node .= '<article class="revolver__article">';
-	$render_node .= '<header class="revolver__article-header">'; 
-	$render_node .= '<h2>'. $RKV->lang['Edit comment'] .' '. $RKV->lang['by'] .' '. $comment_user['nickname'] .'</h2>';
+	$RKI->Template::$b[] = '<article class="revolver__article">';
+	$RKI->Template::$b[] = '<header class="revolver__article-header">'; 
+	$RKI->Template::$b[] = '<h2>'. $RKV->lang['Edit comment'] .' '. $RKV->lang['by'] .' '. $comment_user['nickname'] .'</h2>';
 
-	$render_node .= '<time datetime="2019-12-31T19:20">'. $comment['time'] .'</time>';
-	$render_node .= '</header>';
+	$RKI->Template::$b[] = '<time datetime="2019-12-31T19:20">'. $comment['time'] .'</time>';
+	$RKI->Template::$b[] = '</header>';
 
-	$render_node .= $RKI->HTMLForm::build( $form_parameters );
+	$RKI->Template::$b[] = $RKI->HTMLForm::build( $form_parameters );
 
-	$render_node .= '</article>';
+	$RKI->Template::$b[] = '</article>';
 
 }
 
