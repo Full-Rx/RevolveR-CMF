@@ -2510,6 +2510,12 @@ fieldset legend::before {
  
 		}
 
+		.revolver__mobile-friendly .revolver__basket-items dd.revolver__basket-goods_cover {
+
+			margin: 0;
+
+		}
+
 
 		.revolver__basket-items dd.revolver__basket-goods_cover figure {
 
@@ -2908,6 +2914,13 @@ fieldset legend::before {
 
 			}
 
+			.revolver__mobile-friendly .revolver__search_results ol {
+
+				padding: 0 !important;
+				margin: 0 !important;
+
+			}
+
 			.revolver__article-contents .revolver__search_results li .revolver-rating {
 
 				top: 2vw !important;
@@ -2996,7 +3009,7 @@ fieldset legend::before {
 
 			.revolver__mobile-friendly .revolver__scalable-main .revolver__article-contents h2 {
 
-				font-size: calc(.4vw * var(--scale-factor));				
+				font-size: calc(.8vw * var(--scale-factor));				
 
 			}
 
@@ -3120,6 +3133,13 @@ fieldset legend::before {
 
 			}
 
+			.revolver__mobile-friendly .revolver__article-contents ul,
+			.revolver__mobile-friendly .revolver__comments-contents ul {
+
+				margin: 1vw 2vw 1vw 4vw;
+
+			}
+
 			.revolver__article-contents ul li,
 			.revolver__comments-contents ul li {
 
@@ -3144,6 +3164,80 @@ fieldset legend::before {
 
 		}
 
+		.revolver__article-footer {
+
+			text-align: center;
+
+		}
+
+		.revolver__article-footer .socialize {
+
+			display: inline-block;
+
+		}
+
+		.revolver__mobile-friendly .revolver__article-footer .socialize {
+
+			position: relative;
+			top: -2.35vw;
+
+		}
+
+		.revolver__article-footer .socialize ul {
+
+			padding: 0;
+			margin: 0;
+
+		}
+
+		.revolver__article-footer .socialize ul li {
+
+			background: transparent url('/Interface/sicons.png') 0 0 no-repeat;
+			transition: all .7s ease-in-out;
+			background-size: cover;
+			display: inline-block;
+			transform: rotate(0deg) scale(.8);
+			cursor: pointer;
+			padding: .2vw;
+			height: 1.4vw;
+			width: 1.4vw;
+
+		}
+
+		.revolver__article-footer .socialize ul li:hover {
+
+			box-shadow: inset 0 0 0.2vw #fff, 0 0 0.4vw #fff;
+			transform: rotate(360deg) scale(1);
+			background-color: #704279f5;
+			border: .05vw solid #fff;
+			border-radius: 2vw;
+
+		}
+
+		.revolver__article-footer .socialize ul li.fb {
+
+			background-position: 0 .1vw;
+
+		}
+
+		.revolver__article-footer .socialize ul li.tw {
+
+			background-position: -6.8vw .1vw;
+
+		}
+
+		.revolver__article-footer .socialize ul li.vk {
+
+			background-position: -4.3vw .1vw;
+
+		}
+
+		.revolver__article-footer .socialize ul li.in {
+
+			background-position: -1.8vw .1vw;
+
+		}
+
 		.revolver__article-footer div {
 
 			display: table-column;
@@ -3155,7 +3249,6 @@ fieldset legend::before {
 
 			list-style: none;
 			margin: .2vw 0;
-			display: table;
 			width: 100%;
 
 		}
@@ -3212,13 +3305,39 @@ fieldset legend::before {
 
 		.revolver__mobile-friendly .revolver__article-footer ul li.revolver__quick-edit-handler,
 		.revolver__mobile-friendly .revolver__article-footer ul li.revolver__in-basket-handler,
-		.revolver__mobile-friendly .revolver__comments-footer ul li.revolver__quick-edit-handler,
 		.revolver__mobile-friendly .revolver__article-footer ul li a {
 
 			position: relative;
 			top: -3vw;
 
-			font-size: calc(1vw * var(--scale-factor));
+			font-size: calc(.6vw * var(--scale-factor));
+
+		}
+
+		.revolver__mobile-friendly .revolver__comments-footer nav {
+
+			display: inline-block;
+			float: right;
+		}
+
+		.revolver__mobile-friendly .revolver__comments-footer nav ul li {
+
+			position: relative;
+			top: -3vw;
+
+		}
+
+		.revolver__mobile-friendly .revolver__comments-footer ul li.revolver__quick-edit-handler {
+
+			top: .2vw;
+			font-size: calc(.6vw * var(--scale-factor));
+
+		}
+
+		.revolver__mobile-friendly .revolver__article-footer ul li.revolver__quick-edit-handler,
+		.revolver__mobile-friendly .revolver__article-footer ul li.revolver__in-basket-handler {
+
+			top: -.3vw;
 
 		}
 
@@ -3239,8 +3358,9 @@ fieldset legend::before {
 
 		.revolver__comments {
 
+			padding-bottom: 2vw;
+			position: relative;
 			display: table;
-
 			width: 100%;
 
 		}
@@ -3259,6 +3379,12 @@ fieldset legend::before {
 			overflow: hidden;
 			float: left;
 			height: 6vw;
+
+		}
+
+		.revolver__comments-avatar {
+
+			width: 10%;
 
 		}
 
@@ -3467,18 +3593,15 @@ fieldset legend::before {
 
 		}
 
-		.revolver__comments-contents {
-
-			display: table-cell;
-			float: left;
-			width: 85%;
-
-		}
-
 		.revolver__comments-footer {
 
+			position: absolute;
+			display: block;
+			width: 100%;
+			bottom: 0;
+			left: 0;
+
 			background: var(--comments-article-footer);
-			display: table-row;	
 
 		}
 

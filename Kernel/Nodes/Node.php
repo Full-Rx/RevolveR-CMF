@@ -3,7 +3,7 @@
  /* 
   * RevolveR Node
   *
-  * v.2.0.0.4
+  * v.2.0.0.5
   *
   *
   *
@@ -208,6 +208,7 @@ if( CONTENTS_FLAG ) {
 		if( !defined('ROUTE') ) {
 
 			// Editor allowed
+
 			if( isset( SV['c']['usertoken'] ) ) {
 
 				$token_explode = explode('|', $cipher::crypt('decrypt', SV['c']['usertoken']));
@@ -228,12 +229,6 @@ if( CONTENTS_FLAG ) {
 
 			}
 			else {
-
-				$CNODE['footer'] = null;
-
-			}
-
-			if( isset(PASS[ 3 ]) ) {
 
 				$CNODE['footer'] = null;
 

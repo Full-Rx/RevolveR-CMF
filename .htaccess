@@ -2,7 +2,7 @@
 #
 # RevolveR CMF :: Access configuration
 #
-# v.2.0.0.3
+# v.2.0.0.5
 #
 #
 #                     ^
@@ -178,7 +178,7 @@ RewriteRule ^(.*)/$ $1 [R=301,L]
 
 		<IfModule mod_headers.c>
 
-			Header set Cache-Control 'private, must-revalidate, proxy-revalidate, max-age=1000800, no-transform, no-cache'
+			Header set Cache-Control 'private, must-revalidate, proxy-revalidate, max-age=100800, no-transform, no-cache'
 
 			Header unset pragma
 
@@ -188,7 +188,7 @@ RewriteRule ^(.*)/$ $1 [R=301,L]
 
 	<FilesMatch .(jp?g|gif|png|webp|ico|css|js|es7)$>
 
-		Header set Cache-Control 'public, must-revalidate, proxy-revalidate, max-age=5008000, no-transform'
+		Header set Cache-Control 'public, must-revalidate, proxy-revalidate, max-age=500800, no-transform'
 
 		Header set Access-Control-Allow-Methods 'GET'
 

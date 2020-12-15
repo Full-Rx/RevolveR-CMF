@@ -348,7 +348,7 @@ if( defined('ROUTE') ) {
 
 				];
 
-				$KI->Auth::logout();
+				$RKI->Auth::logout();
 
 			}
 

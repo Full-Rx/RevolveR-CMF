@@ -2,7 +2,7 @@
  /* 
   * RevolveR Front-end :: main interface
   *
-  * v.2.0.0.4
+  * v.2.0.0.5
   *
   *			          ^
   *			         | |
@@ -273,7 +273,7 @@ R.useCaptcha = ( p ) => {
 						this.dataset.selected = 'true';
 						this.className = 'active';
 
-						R.tick('hint', .03)
+						R.tick('hint', .03);
 
 					}
 					else {
@@ -404,8 +404,6 @@ R.fetchRoute = ( intro ) => {
 				// Prevent Chrome 67 and earlier from automatically showing the prompt
 				e.preventDefault();
 
-				// R.cookie('installed=1','set');
-
 				// Stash the event so it can be triggered later.
 				deferred = e;
 
@@ -452,6 +450,27 @@ R.fetchRoute = ( intro ) => {
 	R.talkUpdate();
 
 	R.timeFutures();
+
+	const share = R.sel('.socialize'); 
+
+	if( share ) {
+
+		R.event('.fb, .vk, .tw', 'mouseenter', function(e) {
+
+			R.tick('hint', .03);
+
+		});
+
+		R.event('.fb, .vk, .tw', 'click', function(e) {
+
+			R.tick('expand', .05);
+
+			window.open(this.dataset.share, 'example', 'width=600,height=400');
+
+
+		});
+
+	}
 
 	/* Recorder */
 	let recordHandler = R.sel('.revolver__record-handler');

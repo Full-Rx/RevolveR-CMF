@@ -224,6 +224,14 @@
 	$RKI->Template::$b[] = '<span itemprop="ratingValue">'. floor( $grate ) .'</span> / <span>5</span> #<span class="closest" itemprop="reviewCount">'. count( $goods_rating ) .'</span>';
 	$RKI->Template::$b[] = '</div>';
 
+	$RKI->Template::$b[] = '<div class="socialize">';
+	$RKI->Template::$b[] = '<ul data-type="'. $tpe .'">';
+	$RKI->Template::$b[] = '<li class="fb" data-share="https://www.facebook.com/sharer.php?src='. $RKV->brand .'&u='. $RKV->host . $n['route'] .'&t='. $n['title'] .'"></li>';
+	$RKI->Template::$b[] = '<li class="vk" data-share="https://vk.com/share.php?url='. $RKV->host . $n['route'] .'&title='. $n['title'] .'&description'. $n['description'] .'=&image='. $RKV->host .'/Interface/ArticlePostImage.png"></li>';
+	$RKI->Template::$b[] = '<li class="tw" data-share="https://twitter.com/intent/tweet?url=&text='. $n['title'] .' :: '. $n['description'] .'"></li>';
+	$RKI->Template::$b[] = '</ul>';
+	$RKI->Template::$b[] = '</div>';
+
 	$RKI->Template::$b[] = '<nav>';
 
 	$RKI->Template::$b[] = '<ul>';
