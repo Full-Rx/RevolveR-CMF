@@ -14,6 +14,12 @@
 
 	</h1>
 
+	<div class="revolver__exchange-rates">
+
+		<?php require_once('./Templates/'. TEMPLATE .'/ex-rates.inc'); ?>
+
+	</div>
+
 	<div class="revolver__search-box">
 
 		<form action="/search/" method="GET">

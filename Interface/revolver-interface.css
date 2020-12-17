@@ -214,8 +214,14 @@ form fieldset {
 
 	position: absolute;
 	display: none;
-	left: -7vw;
+	left: -23.5vw;
 	width: 6vw;
+
+}
+
+.revolver__mobile-friendly .basket_handler {
+
+	left: -23vw;
 
 }
 
@@ -258,6 +264,54 @@ form fieldset {
 	opacity: 0;
 	width: 2vw;
 	top: .3vw;
+
+}
+
+.revolver__exchange-rates {
+
+	vertical-align: middle;
+	display: table-cell;
+	text-align: right;
+	width: 24vw;
+
+}
+
+.revolver__mobile-friendly .eur {
+
+	display: none;
+
+}
+
+.revolver__exchange-rates div {
+
+	display: inline-block;
+	margin-right: 2vw;
+
+}
+
+.revolver__exchange-rates span {
+
+	font: normal .7vw Verdana;
+    position: relative;
+    top: -.2vw;
+
+}
+
+.revolver__mobile-friendly .revolver__exchange-rates span {
+
+	font-size: calc(.4vw * var(--scale-factor));
+
+}
+
+.exchange-currency {
+
+	color: #006400ff;
+
+}
+
+.exchange-value {
+
+	color: #d02c2cf2;
 
 }
 

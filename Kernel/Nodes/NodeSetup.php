@@ -4,7 +4,7 @@
   * 
   * RevolveR CMF Setup
   *
-  * v.2.0.0.4
+  * v.2.0.0.5
   *
   *
   *
@@ -693,6 +693,9 @@ if( !empty(SV['p']) ) {
 
 			// Create table talk
 			$dbx::query('c', 'revolver__talk', $STRUCT_TALK);
+
+			// Create table talk
+			$dbx::query('c', 'revolver__rates', $STRUCT_RATES);
 
 			// Fix Files and directories permissons
 

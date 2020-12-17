@@ -404,7 +404,6 @@ if( $pages_count > 1 && pagination['allow'] ) {
 
 	if( !(bool)$nodeLoaded && PASS[ count(PASS) - 2 ] !== 'edit' &&  PASS[ 1 ] !== 'forum' && PASS[ 1 ] !== 'store' ) {
 
-
 		$RKI->Template::$b[] = '<article class="revolver__article article-id-404">';
 		$RKI->Template::$b[] = '<header class="revolver__article-header">';
 		$RKI->Template::$b[] = '<h1>'. $RKV->lang['Route not found'] .'</h1>';
@@ -438,7 +437,7 @@ if( $RKV->installed ) {
 
 	print implode("\n", $RKI->Template::$b);
 
-    $RKI->Template::$b = []; 
+	$RKI->Template::$b = []; 
 
 ?>
 

@@ -12,7 +12,7 @@ $extensionsTranslation = [
 
 	'EN' => [
 
-		'Feedback'				=> '🖂 Feedback',
+		'Feedback'				=> '@ Feedback',
 		'Request feedback'		=> 'Request feedback',
 		'Contact to feedback'	=> 'Contact to feedback',
 		'Feedback settings'		=> 'Feedback settings',
@@ -112,7 +112,7 @@ $extensionsTranslation = [
 
 	'RU' => [
 
-		'Feedback'				=> '🖂 Связь',
+		'Feedback'				=> '@ Связь',
 		'Request feedback'		=> 'Запрос обратной связи',
 		'Contact to feedback'	=> 'Обратная связь с ресурсом',
 		'Feedback settings'		=> 'Настройки обратной связи',

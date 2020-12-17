@@ -52,9 +52,9 @@ foreach( iterator_to_array(
 
 	$token_explode = explode('|', $cipher::crypt('decrypt', SV['c']['usertoken']));
 
-	if( $user['email'] === $token_explode[0] ) {
+	if( $user['email'] === $token_explode[ 0 ] ) {
 
-		if( $user['password'] === $token_explode[1] ) {
+		if( $user['password'] === $token_explode[ 1 ] ) {
 
 			$user_name = $user['nickname'];
 			$user_email = $user['email'];

@@ -4,7 +4,7 @@
   * 
   * RevolveR CMF Data Base schema
   *
-  * v.2.0.0.0
+  * v.2.0.0.5
   *
   *
   *
@@ -1887,6 +1887,55 @@ $STRUCT_TALK = [
 
 ];
 
+$STRUCT_RATES = [
+
+	'field_id' => [
+
+		'type'   => 'bignum', // bigint
+		'auto'	 => true,
+		'length' => 255,
+		'fill'   => true
+
+	],
+
+	'field_currency' => [
+
+		'type'   => 'text', // varchar
+		'length' => 5,
+		'fill'   => true,
+
+		'index'	 => [
+
+			'type' => 'simple'
+
+		]
+
+	],
+
+	'field_date' => [
+
+		'type'   => 'text', // varchar
+		'length' => 10,
+		'fill'   => true,
+
+		'index'	 => [
+
+			'type' => 'simple'
+
+		]
+
+	],
+
+	'field_value' => [
+
+		'type'   => 'text', // varchar
+		'length' => 1000,
+		'fill'   => true
+
+	]
+
+];
+
 $STRUCT_TEST = [
 
 	'field_id' => [
@@ -1913,7 +1962,6 @@ $STRUCT_TEST = [
 	]
 
 ];
-
 
 // Compare DBX Schema
 $DBX_KERNEL_SCHEMA = [
@@ -1968,6 +2016,9 @@ $DBX_KERNEL_SCHEMA = [
 
 	// Talk
 	'talk'					 => $STRUCT_TALK,
+
+	// Exchange rates
+	'rates'					 => $STRUCT_RATES,
 
 	'test'			    	 => $STRUCT_TEST
 

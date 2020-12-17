@@ -1,8 +1,12 @@
 # RevolveR-framework
 
-RevolveR contents management framework ( actual version 2.0.0.5 ) - web framework programmed on PHP, MySQL and ECMAScript based on Kernel Model View architecture with integrated search engine
+RevolveR contents management framework ( actual version 2.0.0.6 ) - web framework programmed on PHP, MySQL and ECMAScript based on Kernel Model View architecture with integrated search engine
 
 # Changes
+
+RevolveR CMF v.2.0.0.6 ::
+
+ - Excahnge currency rates added
 
 RevolveR CMF v.2.0.0.5 ::
 
