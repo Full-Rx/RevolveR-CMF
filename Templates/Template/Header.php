@@ -16,7 +16,15 @@
 
 	<div class="revolver__exchange-rates">
 
-		<?php require_once('./Templates/'. TEMPLATE .'/ex-rates.inc'); ?>
+		<?php 
+
+			if( $RKV->installed ) {
+
+				require_once('./Templates/'. TEMPLATE .'/widgets/ex-rates.inc'); 
+
+			}
+
+		?>
 
 	</div>
 

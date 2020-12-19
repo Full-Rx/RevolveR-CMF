@@ -2,7 +2,7 @@
 /* 
  * RevolveR CMF main interface
  *
- * v.2.0.0.4
+ * v.2.0.0.5
  *
  *
  *			          ^
@@ -212,16 +212,7 @@ form fieldset {
 
 .basket_handler {
 
-	position: absolute;
 	display: none;
-	left: -23.5vw;
-	width: 6vw;
-
-}
-
-.revolver__mobile-friendly .basket_handler {
-
-	left: -23vw;
 
 }
 
@@ -272,22 +263,34 @@ form fieldset {
 	vertical-align: middle;
 	display: table-cell;
 	text-align: right;
-	width: 24vw;
+	overflow: hidden;
+	width: 36vw;
 
 }
 
-.revolver__mobile-friendly .eur {
+.revolver__exchange-rates ul {
 
-	display: none;
+	transition: transform 6s;
+	list-style: none;
+	display: flex;
+	width: 36vw;
+
+}
+
+.revolver__mobile-friendly .revolver__exchange-rates  {
+
+	-webkit-overflow-scrolling: touch;
+	overflow-x: auto;
 
 }
 
-.revolver__exchange-rates div {
+.revolver__exchange-rates ul li {
 
-	display: inline-block;
-	margin-right: 2vw;
+    display: inline-block;
+    white-space: nowrap;
+    margin-right: 1vw;
 
-}
+ }
 
 .revolver__exchange-rates span {
 
@@ -1825,15 +1828,9 @@ fieldset legend::before {
 		position: relative;
 		text-align: right;
 		top: -.2vw;
-		left: 0vw;
-
-	}
-
-	.revolver__authorized .revolver__search-box {
-
 		left: 0;
 
-	} 
+	}
 
 	.revolver__search-box:hover {
 

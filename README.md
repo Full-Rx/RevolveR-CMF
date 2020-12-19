@@ -4,6 +4,11 @@ RevolveR contents management framework ( actual version 2.0.0.6 ) - web framewor
 
 # Changes
 
+RevolveR CMF v.2.0.0.7 ::
+
+ - Crypto currency rates added
+ - Small interface improvements
+
 RevolveR CMF v.2.0.0.6 ::
 
  - Excahnge currency rates added

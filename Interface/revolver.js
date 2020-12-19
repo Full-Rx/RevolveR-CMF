@@ -721,8 +721,8 @@
 
 						if( hint ) {
 
-							hint[0].style.left = RR.currentSizes[0] < overflowSizeX ? ( RR.curxy[0] - hSizeX - 20 ) +'px' : (RR.curxy[0] + 20) +'px';
-							hint[0].style.top = (RR.curxy[1] - 50) +'px';
+							hint[ 0 ].style.left = RR.currentSizes[ 0 ] < overflowSizeX ? ( RR.curxy[ 0 ] - hSizeX - 20 ) +'px' : (RR.curxy[ 0 ] + 20) +'px';
+							hint[ 0 ].style.top = (RR.curxy[ 1 ] - 50) +'px';
 
 						}
 
@@ -734,6 +734,8 @@
 
 						let hint = RR.sel('.hint');
 
+						clearTimeout( hide );
+
 						that.setAttribute('title', that.getAttribute('data-title'));
 
 						if( hint ) {
@@ -744,7 +746,7 @@
 
 					});
 
-					setTimeout(() => {
+					let hide = setTimeout(() => {
 
 						let hint = RR.sel('.hint');
 
@@ -754,7 +756,7 @@
 
 						}
 
-					}, 3000);
+					}, 4000);
 
 				});
 

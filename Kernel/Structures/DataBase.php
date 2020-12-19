@@ -4,7 +4,7 @@
   * 
   * RevolveR CMF Data Base schema
   *
-  * v.2.0.0.5
+  * v.2.0.0.6
   *
   *
   *
@@ -1912,6 +1912,22 @@ $STRUCT_RATES = [
 
 	],
 
+	'field_name' => [
+
+		'type'   => 'text', // varchar
+		'length' => 500,
+		'fill'   => true
+
+	],
+
+	'field_change' => [
+
+		'type'   => 'num', // int
+		'length' => 70,
+		'fill'   => null
+
+	],
+
 	'field_date' => [
 
 		'type'   => 'text', // varchar
@@ -1928,7 +1944,7 @@ $STRUCT_RATES = [
 
 	'field_value' => [
 
-		'type'   => 'text', // varchar
+		'type'   => 'num', // int
 		'length' => 1000,
 		'fill'   => true
 

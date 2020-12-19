@@ -2,7 +2,7 @@
  /* 
   * RevolveR Front-end :: main interface
   *
-  * v.2.0.0.5
+  * v.2.0.0.6
   *
   *			          ^
   *			         | |
@@ -721,7 +721,7 @@ R.fetchRoute = ( intro ) => {
 
 		}
 
-		R.event('a:not(.talk-abuse):not(.metahash)', 'click', function(e) {
+		R.event('a:not(.talk-abuse):not(.metahash):not(.talk-play)', 'click', function(e) {
 
 			e.preventDefault();
 
@@ -760,7 +760,7 @@ R.fetchRoute = ( intro ) => {
 
 		}
 
-		R.styleApply('input[type="search"]', ['width:50vw']);
+		R.styleApply('input[type="search"]', ['width:30vw']);
 
 		R.attr('.revolver__header h1 a, .revolver__main-contents', {
 
@@ -878,6 +878,8 @@ R.fetchRoute = ( intro ) => {
 	if( !R.isM ) {
 
 		setTimeout(() => {
+
+			R.Menu('.revolver__exchange-rates');
 
 			R.Menu('.revolver__main-menu');
 

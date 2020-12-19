@@ -437,7 +437,7 @@ if( $RKV->installed ) {
 
 	print implode("\n", $RKI->Template::$b);
 
-	$RKI->Template::$b = []; 
+	$RKI->Template::$b = [];
 
 ?>
 

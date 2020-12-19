@@ -3,7 +3,7 @@
  /*
   * RevolveR CMF Kernel
   *
-  * v.2.0.0.5
+  * v.2.0.0.7
   *
   *                                            ,   ,                                
   *                                            $,  $,     ,                         
@@ -58,7 +58,7 @@
   */
 
 // Kernel version
-define('rr_version', '2.0.0.6');
+define('rr_version', '2.0.0.7');
 
 // X64 guest number
 define('BigNumericX64', 9223372036854775806);
@@ -152,7 +152,7 @@ if( in_array(session_status(), [ PHP_SESSION_DISABLED, PHP_SESSION_NONE ], true)
 }
 
 // Data Base X cache chunks config
-define('dbx_cache_chunks_size', 5);
+define('dbx_cache_chunks_size', 3);
 
 // Data Base X SQL queries logging to file
 define('dbx_logging', 0);
@@ -1070,44 +1070,53 @@ if( !defined('ROUTE') ) {
 
 # [__ Update futures __ ] #
 
-$log_file = $_SERVER['DOCUMENT_ROOT'] .'/private/version';
+if( INSTALLED ) {
 
-$current_version = file_get_contents( $log_file );
+	$log_file = $_SERVER['DOCUMENT_ROOT'] .'/private/version';
 
-$actual_version = str_replace('.', '', rr_version);
+	$current_version = file_get_contents( $log_file );
 
-if( !$current_version ) {
+	$actual_version = str_replace('.', '', rr_version);
 
-	file_put_contents($log_file, $actual_version);
+	if( !$current_version ) {
 
-} 
-else {
-
-	if( (int)$current_version < (int)$actual_version ) {
-
-		// Fix Files and directories permissons
-
-		exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0770 {} +'); // for sub directory
-		exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
-
-		// update db struct
-		if( (int)$current_version <= 2005 ) {
-
-			// Create table talk
-			$dbx::query('c', 'revolver__rates', $STRUCT_RATES);
-
-		}
-
-		if( (int)$current_version <= 2000 ) {
-
-			// Update table talk
-			$dbx::query('d', 'revolver__talk', $STRUCT_TALK);
-			$dbx::query('c', 'revolver__talk', $STRUCT_TALK);
-
-		}
-
-		// update success
 		file_put_contents($log_file, $actual_version);
+
+	} 
+	else {
+
+		if( (int)$current_version < (int)$actual_version ) {
+
+			// Fix Files and directories permissons
+
+			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0770 {} +'); // for sub directory
+			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
+
+			// update db struct
+
+			if( (int)$current_version <= 2007 ) {
+
+				// Recreate table rates
+
+				$dbx::query('d', 'revolver__rates', $STRUCT_RATES);
+				$dbx::query('c', 'revolver__rates', $STRUCT_RATES);
+
+			}
+
+			if( (int)$current_version <= 2000 ) {
+
+				// Update table talk
+
+				$dbx::query('d', 'revolver__talk', $STRUCT_TALK);
+				$dbx::query('c', 'revolver__talk', $STRUCT_TALK);
+
+			}
+
+			// update success
+
+			file_put_contents($log_file, $actual_version);
+
+		}
 
 	}
 
