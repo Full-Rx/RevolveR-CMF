@@ -64,9 +64,9 @@ define('rr_version', '2.0.0.7');
 define('BigNumericX64', 9223372036854775806);
 
 // Debug mode
-ini_set('error_reporting', E_WARNING | E_STRICT | E_DEPRECATED | E_USER_DEPRECATED | E_PARSE | E_RECOVERABLE_ERROR);
+//ini_set('error_reporting', E_WARNING | E_STRICT | E_DEPRECATED | E_USER_DEPRECATED | E_PARSE | E_RECOVERABLE_ERROR);
 
-//error_reporting(0);
+error_reporting(0);
 
 // Hide GET parameters for interface and store it
 $uri_segment = explode('?', $_SERVER['REQUEST_URI']);

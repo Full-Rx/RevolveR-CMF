@@ -1922,7 +1922,7 @@ $STRUCT_RATES = [
 
 	'field_change' => [
 
-		'type'   => 'num', // int
+		'type'   => 'text', // int
 		'length' => 70,
 		'fill'   => null
 
@@ -1944,7 +1944,7 @@ $STRUCT_RATES = [
 
 	'field_value' => [
 
-		'type'   => 'num', // int
+		'type'   => 'text', // int
 		'length' => 1000,
 		'fill'   => true
 
