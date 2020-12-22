@@ -167,7 +167,6 @@ if( !defined('ROUTE') ) {
 
 ?>
 
-
 <?php if( $mainWrap ): 
 
 	$render_node = '';
@@ -435,9 +434,7 @@ if( $RKV->installed ) {
 
 <?php 
 
-	print implode("\n", $RKI->Template::$b);
-
-	$RKI->Template::$b = [];
+	$RKI->Template::print();
 
 ?>
 

@@ -6,7 +6,7 @@
   *
   * make exit and frees resources
   *
-  * v.2.0.0.4
+  * v.2.0.0.8
   *
   *                .,ad88888888baa,
   *            ,d8P"""        ""9888ba.
@@ -46,6 +46,14 @@ final class Conclude {
 	function __construct( File $f ) {
 
 		self::$file = $f;
+
+	}
+
+	public static function print(): void {
+
+		print implode("\n", self::$b);
+
+		self::$b = [];
 
 	}
 
@@ -169,9 +177,9 @@ final class Conclude {
 				if( !is_readable( $root . $dir . $resFile .'-'. $File) ) {
 
 						// Clean static interface files cache
-						foreach( self::$file::getDir( $root . $dir ) as $cf) {
+					foreach( self::$file::getDir( $root . $dir ) as $cf) {
 
-							if( !is_dir( $root . $dir . $cf ) ) {
+						if( !is_dir( $root . $dir . $cf ) ) {
 
 							if( (bool)preg_match('/'. $resFile .'/i', $cf) ) {
 
@@ -305,13 +313,11 @@ final class Conclude {
 
 				}
 
-				$Hash = shell_exec('openssl dgst -sha'. $s['alg'] .' -binary '. $root . $dir . $resFile .'-'. $File .' | openssl base64 -A');
-
 				switch( $m ) {
 
 					case 'script':
 
-						$Tag = '<script data-part="'. $s['name'] .'" src="'. site_host . $dir . $resFile .'-'. $File .'" integrity="sha'. $s['alg'] .'-'. $Hash .'" crossorigin="use-credentials"';
+						$Tag = '<script data-part="'. $s['name'] .'" src="'. site_host . $dir . $resFile .'-'. $File .'"';
 
 					switch( $s['part'] ) {
 
@@ -341,7 +347,7 @@ final class Conclude {
 
 						}
 
-						$Tag = '<link data-part="'. $s['name'] .'" media="all" '. $attr .' href="'. site_host . $dir . $resFile .'-'. $File .'" integrity="sha'. $s['alg'] .'-'. $Hash .'" crossorigin="use-credentials" />';
+						$Tag = '<link data-part="'. $s['name'] .'" media="all" '. $attr .' href="'. site_host . $dir . $resFile .'-'. $File .'" />';
 
 					break;
 

@@ -63,9 +63,7 @@
 
                 }
 
-                print implode("\n", $RKI->Template::$b);
-
-                $RKI->Template::$b = [];
+                $RKI->Template::print();
 
             ?>
 
@@ -75,12 +73,16 @@
 
         </main>
 
-<?="\n\n";
+<?php 
+
+$RKI->Template::$b[] = "\n\n";
 
 foreach( $scripts as $s ) {
 
-    print $s ."\n"; 
+    $RKI->Template::$b[] = $s ."\n"; 
 
 }
+
+$RKI->Template::print();
 
 ?>

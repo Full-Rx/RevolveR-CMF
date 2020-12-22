@@ -4,7 +4,7 @@
   * 
   * RevolveR Kernel configuration
   *
-  * v.2.0.0.0
+  * v.2.0.0.8
   *
   *
   *
@@ -52,7 +52,6 @@ define('scripts', array_merge([
 			'path' => '/Interface/revolver.js',
 			'name' => 'revolver kernel',
 			'part' => 'kernel',
-			'alg'  => 384,
 			'min'  => 1
 
 		],
@@ -62,7 +61,6 @@ define('scripts', array_merge([
 			'path' => '/Interface/timeThemes.js',
 			'name' => 'revolver interface time futures',
 			'part' => 'module',
-			'alg'  => 256,
 			'min'  => 1
 
 		],
@@ -72,7 +70,6 @@ define('scripts', array_merge([
 			'path' => '/Interface/interface.js',
 			'name' => 'revolver interface',
 			'part' => 'module',
-			'alg'  => 256,
 			'min'  => 1
 
 		]
@@ -89,7 +86,6 @@ define('styles', array_merge([
 			'path'  => '/Interface/revolver.css',
 			'name'  => 'revolver kernel',
 			'part'  => 'kernel',
-			'alg'   => 256,
 			'min'   => 1,
 			'defer' => 1
 
@@ -100,7 +96,6 @@ define('styles', array_merge([
 			'path'  => '/Interface/revolver-interface.css',
 			'name'  => 'revolver interface',
 			'part'  => 'kernel',
-			'alg'   => 256,
 			'min'   => 1,
 			'defer' => 1
 

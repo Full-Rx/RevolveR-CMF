@@ -3,7 +3,7 @@
  /*
   * RevolveR Dashboard Node
   *
-  * v.2.0.0.3
+  * v.2.0.0.8
   *
   *
   *
@@ -211,8 +211,14 @@ if( !empty( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('status', '<div>Data Base cache will be updated when using.</div>', null);
 
+								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache/') as $f ) {
+
+									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache/' . $f );
+
+								}
+
 								rmdir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache');
-								mkdir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache', 0777);
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache', 0775);
 
 								break;
 
@@ -220,8 +226,14 @@ if( !empty( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('status', '<div>Template cache will be updated when using.</div>', null);
 
+								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache/') as $f ) {
+
+									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache/' . $f );
+
+								}
+
 								rmdir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache');
-								mkdir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache', 0777);
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache', 0775);
 
 								break;
 
@@ -229,11 +241,23 @@ if( !empty( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('status', '<div>Interface cache refreshed.</div>', null);
 
+								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/scripts/') as $f ) {
+
+									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/scripts/' . $f );
+
+								}
+
+								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/styles/') as $f ) {
+
+									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/styles/' . $f );
+
+								}
+
 								rmdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/scripts');
 								rmdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/styles');
 
-								mkdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/scripts', 0777);
-								mkdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/styles', 0777);
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/scripts', 0775);
+								mkdir($_SERVER['DOCUMENT_ROOT'] . '/public/cache/styles', 0775);
 
 								break;
 
@@ -801,7 +825,7 @@ $contents .= $RKI->HTMLForm::build( $form_parameters, true );
 
 $node_data[] = [
 
-	'title'		=> $RNV->lang['Dashboard panel'] .' <span style="float:right">:: RevolveR CMF v.'. rr_version .'</span>',
+	'title'		=> $RNV->lang['Dashboard panel'] .' :: v.'. rr_version,
 	'route'		=> '/dashboard/',
 	'id'		=> 'dashboard',
 	'contents'	=> $contents,

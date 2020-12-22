@@ -112,9 +112,7 @@ if( $RKV->installed ) {
 
 	}
 
-    print implode("\n", $RKI->Template::$b);
-
-    $RKI->Template::$b = [];
+	$RKI->Template::print();
 
 	$comments = iterator_to_array(
 
@@ -201,9 +199,7 @@ if( $RKV->installed ) {
 
 		if( !$RKV->auth && $show_comments || $RKV->auth ) {
 
-			print implode("\n", $RKI->Template::$b);
-
-			$RKI->Template::$b = [];
+			$RKI->Template::print();
 
 		}
 

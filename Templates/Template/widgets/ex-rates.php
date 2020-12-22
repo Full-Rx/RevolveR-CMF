@@ -55,8 +55,29 @@
 
 		$xcur = [
 
-			'USD' => 0, 
-			'EUR' => 0
+			'EUR' => 0,
+			'GBP' => 0,
+			'JPY' => 0,
+			'CHF' => 0,
+			'AUD' => 0,
+			'CAD' => 0,
+			'CRC' => 0,
+			'BRL' => 0,
+			'TMT' => 0,
+			'DOP' => 0,
+			'COP' => 0,
+			'ARS' => 0,
+			'JMD' => 0,
+			'TRY' => 0,
+			'RUB' => 0,
+			'TWD' => 0,
+			'BYN' => 0,
+			'HKD' => 0,
+			'XCD' => 0,
+			'CUP' => 0,
+			'MXN' => 0,
+			'EGP' => 0,
+			'USD' => 0
 
 		];
 
@@ -68,7 +89,45 @@
 
 			$xfc = ( $r['value'] - $xcur[ $r['currency'] ] >= 0 ) ? 1 : 0;
 
-			$RKI->Template::$b[] = '<li title="↻ USD x1 '. $r['name'] .'" class="'. strtolower( $r['currency'] ) .'"><span class="exchange-currency">'. $r['currency'] .'</span> <span class="exchange-value">'. $r['value'] .'</span>';
+			switch( $r['currency'] ) {
+
+				case 'EUR':
+				case 'GBP':
+				case 'JPY':
+				case 'CHF':
+				case 'AUD':
+				case 'CAD':
+				case 'CRC':
+				case 'BRL':
+				case 'TMT':
+				case 'DOP':
+				case 'COP':
+				case 'ARS':
+				case 'JMD':
+				case 'TRY':
+				case 'RUB':
+				case 'TWD':
+				case 'BYN':
+				case 'HKD':
+				case 'XCD':
+				case 'CUP':
+				case 'MXN':
+				case 'EGP':
+				case 'USD':
+
+					$xtitle = 'title="↻ '. $r['name'] .' x1 USD"';
+
+					break;
+
+				default:
+
+					$xtitle = 'title="↻ USD x1 '. $r['name'] .'"';
+
+					break;
+
+			}
+
+			$RKI->Template::$b[] = '<li '. $xtitle .' class="'. strtolower( $r['currency'] ) .'"><span class="exchange-currency">'. $r['currency'] .'</span> <span class="exchange-value">'. $r['value'] .'</span>';
 			$RKI->Template::$b[] = ' <span>'. ((bool)$xfc ? '⬆' : '⬇') .'</span></li>';
 
 		}
@@ -92,6 +151,7 @@
 
 				switch( $v->targetCurrency ) {
 
+					case 'USD':
 					case 'EUR':
 					case 'GBP':
 					case 'JPY':
@@ -119,7 +179,7 @@
 
 						$xfc = ( $val - $xcur[ $v->targetCurrency ] >= 0 ) ? 1 : 0; 
 
-						$RKI->Template::$b[] = '<li title="↻ USD x1 '. $v->targetName .'" class="'. strtolower( $v->targetCurrency ) .'"><span class="exchange-currency">'. $v->targetCurrency .'</span> <span class="exchange-value">'. $val .'</span>';
+						$RKI->Template::$b[] = '<li title="↻ '. $v->targetName .' x1 USD" class="'. strtolower( $v->targetCurrency ) .'"><span class="exchange-currency">'. $v->targetCurrency .'</span> <span class="exchange-value">'. $val .'</span>';
 						$RKI->Template::$b[] = ' <span>'. ((bool)$xfc ? '⬆' : '⬇') .' </span></li>';
 
 						$model::set('rates', [
@@ -142,6 +202,16 @@
 	}
 
 	if( !$rates ) {
+
+		foreach( $dbx::getCachesList( true ) as $fnumber => $fname ) {
+
+			if( preg_match('/(^homepage|contents|categories|wiki|forum|store|services|blog)\w*.?/is', $fname) ) {
+
+				unlink( TCache . $fname );
+
+			}
+
+		}
 
 		$cbase = 'https://api.cryptonator.com/api/ticker/';
 

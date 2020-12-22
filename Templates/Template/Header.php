@@ -20,7 +20,7 @@
 
 			if( $RKV->installed ) {
 
-				require_once('./Templates/'. TEMPLATE .'/widgets/ex-rates.inc'); 
+				require_once('./Templates/'. TEMPLATE .'/widgets/ex-rates.php'); 
 
 			}
 

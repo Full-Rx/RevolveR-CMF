@@ -3,7 +3,7 @@
  /*
   * RevolveR CMF Kernel
   *
-  * v.2.0.0.7
+  * v.2.0.1.0
   *
   *                                            ,   ,                                
   *                                            $,  $,     ,                         
@@ -58,7 +58,7 @@
   */
 
 // Kernel version
-define('rr_version', '2.0.0.7');
+define('rr_version', '2.0.1.0');
 
 // X64 guest number
 define('BigNumericX64', 9223372036854775806);
@@ -719,42 +719,6 @@ if( !defined('Auth') ) {
 
 }
 
-
-if( defined('CONTENTS_FLAG') ) {
-
-	if( CONTENTS_FLAG && INSTALLED ) {
-
-		$prefetched = null;
-
-		foreach( $all_nodes as $xnode ) {
-
-			// Hide GET parameters for interface and store it
-			$xuri_segment = explode('?', $xnode['route']);
-
-			$xuri = 'contents_'. (!isset( $xuri_segment[ 1 ] ) ? '' : '-'. str_replace( '=', '-', $xuri_segment[ 1 ] ));
-
-			$payload = TCache . $xuri . rtrim( str_replace( '/', '_', $xnode['route'] ), '_' ) .'-'. md5( $xuri ) .'.tpreload';
-
-			if( is_readable( $payload ) ) {
-
-				$prefetches .= str_ireplace(['Link: ', 'preload'], ['', 'prefetch'], file_get_contents( $payload )) .', ';
-
-				$prefetched = true;
-
-			}
-
-		}
-
-		if( $prefetched ) {
-
-			define('PrefetchesList', $prefetches);
-
-		}
-
-	}
-
-}
-
 // URI template cache
 $TCache	= !(bool)Auth ? $resolve::getCacheFile( $uri_segment ) : 0;
 
@@ -1068,62 +1032,17 @@ if( !defined('ROUTE') ) {
 
 }
 
-# [__ Update futures __ ] #
+# __ Upgrade futures __ #
 
 if( INSTALLED ) {
 
-	$log_file = $_SERVER['DOCUMENT_ROOT'] .'/private/version';
+	// performs automatic database modification, 
+	// caches clean and fix rights 
+	// when Kernel version upgrades
 
-	$current_version = file_get_contents( $log_file );
-
-	$actual_version = str_replace('.', '', rr_version);
-
-	if( !$current_version ) {
-
-		file_put_contents($log_file, $actual_version);
-
-	} 
-	else {
-
-		if( (int)$current_version < (int)$actual_version ) {
-
-			// Fix Files and directories permissons
-
-			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0770 {} +'); // for sub directory
-			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
-
-			// update db struct
-
-			if( (int)$current_version <= 2007 ) {
-
-				// Recreate table rates
-
-				$dbx::query('d', 'revolver__rates', $STRUCT_RATES);
-				$dbx::query('c', 'revolver__rates', $STRUCT_RATES);
-
-			}
-
-			if( (int)$current_version <= 2000 ) {
-
-				// Update table talk
-
-				$dbx::query('d', 'revolver__talk', $STRUCT_TALK);
-				$dbx::query('c', 'revolver__talk', $STRUCT_TALK);
-
-			}
-
-			// update success
-
-			file_put_contents($log_file, $actual_version);
-
-		}
-
-	}
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/Kernel/Upgrade.php');
 
 }
-
-# [__ Update futures __ ] #
-
 
 // 404
 define('N', $not_found);
@@ -1150,7 +1069,7 @@ if( !(bool)$TCache ) {
 
 	}
 
-	########################### [ TPL VARS ] ##########################
+	########################### TPL VARS ##########################
 
 	// Website branding
 	$brand = !empty( BRAND ) ? BRAND : 'RevolveR';

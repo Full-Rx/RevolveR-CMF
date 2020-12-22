@@ -31,13 +31,15 @@
 
 		if( $f++ > 0 ) {
 
-			$css = '	'. $css;			
+			$RKI->Template::$b[] = '	'. $css;			
 
 		}
 
-		print $css ."\n";
+		$RKI->Template::$b[] = $css ."\n";
 
 	}
+
+	$RKI->Template::print();
 
 	?>
 
