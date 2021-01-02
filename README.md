@@ -13,6 +13,17 @@ RevolveR CMF v.2.0.1.2
  - Animations for px now works in vw
  - Upgrade script impprovements
 
+
+RevolveR CMF v.2.0.1.0
+
+ - Integrity future disabled for static resources because it have some bugs in browser(caches loose after files touched that corrupts interface look)
+ - Currency widget updated
+ - New upgrade algorithm for fast automatic Kerenel version update(caches cleanup, permissons fix, database modifications)
+ - File system cleanup
+ - Dashboard update
+ - Misc interface changes
+ - Template builder updated with Template::print() future that is buffer print and garbage cleaner
+
 RevolveR CMF v.2.0.0.7 ::
 
  - Crypto currency rates added
