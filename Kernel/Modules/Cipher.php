@@ -46,7 +46,7 @@ final class Cipher {
 
 		$key = file_get_contents( $_SERVER['DOCUMENT_ROOT'] .'/private/Domain.key', true );
 
-		if( (bool)strlen($key) ) {
+		if( strlen($key) > 0 ) {
 
 			$secret_key = $key . base64_decode('UmVWb0x2RXIjeDM0NiFAKg==');
 

@@ -38,7 +38,7 @@
 
 if( in_array( ROLE, ['Admin', 'Writer'] ) ) {
 
-  if( !empty(SV['p']) ) {
+  if( isset(SV['p']) ) {
 
     $session_control = null;
 
@@ -143,7 +143,7 @@ if( in_array( ROLE, ['Admin', 'Writer'] ) ) {
 
         }
 
-        if( isset( $m[0] ) && !$erased ) {
+        if( isset( $m[ 0 ] ) && !$erased ) {
 
           if( $comments_all ) {
 
@@ -479,7 +479,7 @@ if( in_array( ROLE, ['Admin', 'Writer'] ) ) {
 
 }
 
-$node_data[0] = [
+$node_data[ 0 ] = [
 
 	'title'      => $RNV->lang['Moderation'],
 	'id'         => 'moderation',

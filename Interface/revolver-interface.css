@@ -2668,6 +2668,20 @@ fieldset legend::before {
 
 	}
 
+	.revolver__scalable-main .revolver__store-goods-cover .rebate-container .guilloche {
+
+		position: absolute;
+
+	}
+
+	.revolver__scalable-main .revolver__store-goods-cover .revolver__store_rebate,
+	.revolver__scalable-main .revolver__store-goods-cover .revolver__store_rebate-span {
+
+		position: relative;
+		top: 4.4vw;
+
+	}
+
 	.revolver__scalable-main .revolver__store-goods-cover .revolver__store_rebate-span {
 
 		font: bold 1.4vw Tahoma;

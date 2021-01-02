@@ -116,10 +116,6 @@ final class Markup {
 
 		$output = tidy_parse_string( $html, $config, $encoding )->value;
 
-		//$tidy->cleanRepair();
-
-		//tidy_clean_repair($output);
-
 		preg_match_all('@src="([^"]+)"@', $output, $src);
 
 		$preload_list = array_pop($src);

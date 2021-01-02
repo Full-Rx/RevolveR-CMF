@@ -44,7 +44,7 @@ final class eMail {
 
     self::$escape = new Markup();
 
-    self::$from   = default_email;
+    self::$from = default_email;
 
   }
 

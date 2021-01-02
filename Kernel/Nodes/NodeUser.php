@@ -72,7 +72,7 @@ foreach( iterator_to_array(
 }
 
 /* Edit profile */
-if( !empty( SV['p'] ) && ROLE !== 'none') {
+if( isset( SV['p'] ) && ROLE !== 'none') {
 
 	$user_telephone = '';
 
@@ -225,19 +225,23 @@ if( $flag_pass ) {
 
 	$upload = 'default';
 
-	if( count(SV['f']) > 0 ) {
+	if( isset( SV['f'] ) ) {
 
-		if( isset(SV['f']['revolver_user_avatar-0'][0]) ) {
+		if( count(SV['f']) > 0 ) {
 
-			if( (bool)SV['f']['revolver_user_avatar-0'][0]['valid'] ) {
+			if( isset(SV['f']['revolver_user_avatar-0'][0]) ) {
 
-				if( in_array(SV['f']['revolver_user_avatar-0'][0]['type'][1], ['jpg', 'jpeg', 'png', 'webp']) ) {
+				if( (bool)SV['f']['revolver_user_avatar-0'][0]['valid'] ) {
 
-					$upload = 'public/avatars/'. SV['f']['revolver_user_avatar-0'][0]['name'];
+					if( in_array(SV['f']['revolver_user_avatar-0'][0]['type'][1], ['jpg', 'jpeg', 'png', 'webp']) ) {
 
-					move_uploaded_file( SV['f']['revolver_user_avatar-0'][0]['temp'], $upload );
+						$upload = 'public/avatars/'. SV['f']['revolver_user_avatar-0'][0]['name'];
 
-					$upload = '/'. $upload;
+						move_uploaded_file( SV['f']['revolver_user_avatar-0'][0]['temp'], $upload );
+
+						$upload = '/'. $upload;
+
+					}
 
 				}
 
@@ -252,8 +256,6 @@ if( $flag_pass ) {
 		if( $revolver_user_new_password === $revolver_user_confirm_password ) { 
 				
 			$user_password = $RKI->Cipher::crypt('encrypt', $revolver_user_confirm_password);
-
-			//$notify::set('status', TRANSLATIONS[$ipl]['Accaunt password changed'] .' '. $revolver_user_confirm_password, null);
 
 		} 
 		else {

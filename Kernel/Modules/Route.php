@@ -136,7 +136,7 @@ final class Route {
 
 	private static function isSegment( string $c ): ?bool {
 
-		return (bool)strlen($c) ? true : null;
+		return strlen($c) > 0 ? true : null;
 
 	}
 
@@ -144,7 +144,7 @@ final class Route {
 
 		preg_match('/\?/i', $c, $m);
 
-		return isset( $m[0] ) ? null : true;
+		return isset( $m[ 0 ] ) ? null : true;
 
 	}
 

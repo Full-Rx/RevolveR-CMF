@@ -42,7 +42,7 @@ if( ROLE !== 'none' ) {
 
 	if( in_array(ROLE, ['Admin', 'Writer'], true) ) {
 
-		if( !empty(SV['p']) ) {
+		if( isset(SV['p']) ) {
 
 			if( isset(SV['p']['revolver_category_title']) ) {
 

@@ -40,7 +40,7 @@ $output = '<p>'. $RNV->lang['Welcome Pick networks'] .'!</p>';
 
 $query = null;
 
-if( !empty(SV['p']) ) {
+if( isset(SV['p']) ) {
 
   if( isset(SV['p']['revolver_pick_query']) ) {
 

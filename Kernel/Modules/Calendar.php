@@ -41,7 +41,7 @@ final class Calendar {
 	// Simple machine readable HTML time format :: YYYY-MM-DD
 	public static function formatTime( string $time ): string {
 
-		$dateTime = explode( '.', str_replace( '-', '.', explode(' ', $time)[0] ) );
+		$dateTime = explode( '.', str_replace( '-', '.', explode(' ', $time)[ 0 ] ) );
 
 		return $dateTime[ 2 ] .'-'. $dateTime[ 1 ] .'-'. $dateTime[ 0 ];
 

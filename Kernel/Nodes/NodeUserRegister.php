@@ -43,7 +43,7 @@ $user_data_password_confirm = '';
 
 $lng = $ipl;
 
-if( !empty(SV['p']) ) {
+if( isset(SV['p']) ) {
 
 	if( isset(SV['p']['revolver_registration_name']) ) {
 

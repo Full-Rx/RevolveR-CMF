@@ -43,7 +43,7 @@ if( $RNV->auth ) {
 
 		$index_language = '840';
 
-		if( !empty(SV['p']) ) {
+		if( isset(SV['p']) ) {
 
 			$node_title = $node_content = $node_description = $node_route = '';
 
@@ -207,34 +207,38 @@ if( $RNV->auth ) {
 
 					]);
 
-					if( count(SV['f']) > 0 ) {
+					if( isset( SV['f'] ) ) {
 
-						foreach( SV['f'] as $file ) {
+						if( count(SV['f']) > 0 ) {
 
-							foreach( $file as $f ) {
+							foreach( SV['f'] as $file ) {
 
-								$upload_allow = null;
+								foreach( $file as $f ) {
 
-								if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name']) ) {
+									$upload_allow = null;
 
-									if( (bool)$f['valid'] ) {
+									if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name']) ) {
 
-										$upload_allow = true;
+										if( (bool)$f['valid'] ) {
+
+											$upload_allow = true;
+
+										}
 
 									}
 
-								}
+									if( $upload_allow ) {
 
-								if( $upload_allow ) {
+										$RKI->Model::set('files', [
 
-									$RKI->Model::set('files', [
+											'node'			=> $node_route,
+											'name'			=> $f['name']
 
-										'node'			=> $node_route,
-										'name'			=> $f['name']
+										]);
 
-									]);
+										move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name'] );
 
-									move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name'] );
+									}
 
 								}
 

@@ -44,7 +44,7 @@ if( ROLE !== 'none' ) {
 
 	if( in_array(ROLE, ['Admin', 'Writer'], true) ) {
 
-		if( !empty(SV['p']) ) {
+		if( isset(SV['p']) ) {
 
 			if( isset(SV['p']['revolver_category_title']) ) {
 
@@ -347,7 +347,7 @@ foreach( iterator_to_array(
 
 		$contents .= '<li>';
 		$contents .= '<dl class="revolver__categories-by-country">';
-		$contents .= '<dt>'. $RNV->lang['exchange currency'] .' &#8226; <span class="state-attribution revolver__sa-iso-'. strtolower( $desc[3] ) .'"></span><span class="revolver__stats-system">[ '. $desc[0] .' :: '. $desc[4] .' :: '. $desc[5] .' ]</span></dt>';
+		$contents .= '<dt>'. $RNV->lang['exchange currency'] .' &#8226; <span class="state-attribution revolver__sa-iso-'. strtolower( $desc[ 3 ] ) .'"></span><span class="revolver__stats-system">[ '. $desc[ 0 ] .' :: '. $desc[ 4 ] .' :: '. $desc[ 5 ] .' ]</span></dt>';
 
 		$contents .= '<dd><ul>';
 

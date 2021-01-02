@@ -39,7 +39,7 @@
 
 if( in_array(ROLE, ['Admin', 'Writer', 'User'], true) ) {
 
-	if( !empty(SV['p']) ) {
+	if( isset(SV['p']) ) {
 
 		$advanced_action = 'update';
 
@@ -175,7 +175,7 @@ if( in_array(ROLE, ['Admin', 'Writer', 'User'], true) ) {
 		}
 		else {
 
-			if( (bool)strlen( $contents ) ) {
+			if( strlen( $contents ) > 0 ) {
 
 				$RKI->Model::set('store_comments', [
 
@@ -235,9 +235,9 @@ if( in_array(ROLE, ['Admin', 'Writer', 'User'], true) ) {
 
 		if( $email_users ) {
 
-			$user_id_to = $email_users[0]['id'];
-			$user_email = $email_users[0]['email'];
-			$user_name  = $email_users[0]['nickname'];
+			$user_id_to = $email_users[ 0 ]['id'];
+			$user_email = $email_users[ 0 ]['email'];
+			$user_name  = $email_users[ 0 ]['nickname'];
 
 			$email  = '<p>'. $RNV->lang['Posted'];
 
@@ -249,7 +249,7 @@ if( in_array(ROLE, ['Admin', 'Writer', 'User'], true) ) {
 
 			$RKI->Email::send( 
 
-				$email_users[0]['email'], $RNV->lang['New comment for you contents'], $email
+				$email_users[ 0 ]['email'], $RNV->lang['New comment for you contents'], $email
 
 			);
 

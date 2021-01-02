@@ -39,7 +39,7 @@
 
 if( in_array(ROLE, ['Admin', 'Writer', 'User'], true) ) {
 
-	if( !empty(SV['p']) ) {
+	if( isset(SV['p']) ) {
 
 		$advanced_action = 'update';
 
@@ -173,7 +173,7 @@ if( in_array(ROLE, ['Admin', 'Writer', 'User'], true) ) {
 		}
 		else {
 
-			if( (bool)strlen( $contents ) ) {
+			if( strlen( $contents ) > 0 ) {
 
 				$RKI->Model::set('froom_comments', [
 

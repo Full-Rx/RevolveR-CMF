@@ -4,7 +4,7 @@
   * 
   * RevolveR Kernel configuration
   *
-  * v.2.0.0.8
+  * v.2.0.1.1
   *
   *
   *
@@ -30,8 +30,6 @@
   *
   *
   *
-  * Developer: Dmitry Maltsev
-  *
   * License: Apache 2.0
   *
   */
@@ -52,6 +50,15 @@ define('scripts', array_merge([
 			'path' => '/Interface/revolver.js',
 			'name' => 'revolver kernel',
 			'part' => 'kernel',
+			'min'  => 1
+
+		],
+
+		[
+
+			'path' => '/Interface/renderer.js',
+			'name' => 'revolver renderer futures',
+			'part' => 'module',
 			'min'  => 1
 
 		],
@@ -104,6 +111,7 @@ define('styles', array_merge([
 	], $extensionsStyles )
 
 );
+
 
 /* Main framework routing */
 define('main_nodes', array_merge([

@@ -41,7 +41,7 @@ if( in_array( ROLE, ['Admin', 'Writer'] ) ) {
 
   $node = null;
 
-  if(!empty(SV['p'])) {
+  if( isset(SV['p']) ) {
 
     $token_explode = explode('|', $RKI->Cipher::crypt('decrypt', SV['c']['usertoken']));
 
@@ -281,7 +281,7 @@ if( $node ) {
 
           ]);
 
-          file_get_contents('http://www.google.com/ping?sitemap=' . $RNV->host .'/sitemap/');
+          file_get_contents('http://www.google.com/ping?sitemap='. $RNV->host .'/sitemap/');
 
           // Files
           if( count($files_to_delete) > 0 ) {
@@ -296,47 +296,51 @@ if( $node ) {
               ]);
 
               // Delete file from filesystem
-              unlink( $_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. explode(':', $file_to_delete)[1] );
+              unlink( $_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. explode(':', $file_to_delete)[ 1 ] );
 
             }
 
           }
 
-          if( count(SV['f']) > 0 ) {
+          if( isset( SV['f'] ) ) {
 
-            foreach( SV['f'] as $file ) {
+	          if( count(SV['f']) > 0 ) {
 
-              foreach( $file as $f ) {
+	            foreach( SV['f'] as $file ) {
 
-                $upload_allow = null;
+	              foreach( $file as $f ) {
 
-                if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name']) ) {
+	                $upload_allow = null;
 
-                  if( (bool)$f['valid'] ) {
+	                if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name']) ) {
 
-                    $upload_allow = true;
+	                  if( (bool)$f['valid'] ) {
 
-                  }
+	                    $upload_allow = true;
 
-                }
+	                  }
 
-                if( $upload_allow ) {
+	                }
 
-                  $RKI->Model::set('files', [
+	                if( $upload_allow ) {
 
-                    'node'      => $node_route,
-                    'name'      => $f['name'],
-                    'criterion' => 'node'
+	                  $RKI->Model::set('files', [
 
-                  ]);
+	                    'node'      => $node_route,
+	                    'name'      => $f['name'],
+	                    'criterion' => 'node'
 
-                  move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name'] );
+	                  ]);
 
-                }
+	                  move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/uploads/'. $f['name'] );
 
-              }
+	                }
 
-            }
+	              }
+
+	            }
+
+	          }
 
           }
 

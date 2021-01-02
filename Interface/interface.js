@@ -2,7 +2,7 @@
  /* 
   * RevolveR Front-end :: main interface
   *
-  * v.2.0.0.6
+  * v.2.0.1.1
   *
   *			          ^
   *			         | |
@@ -246,8 +246,8 @@ R.switchAttendanceDate = ( x ) => {
 
 R.useCaptcha = ( p ) => {
 
-	self.overprint = atob( p.split('*')[2] );
-	self.oprintvar = atob( p.split('*')[0] );
+	self.overprint = atob( p.split('*')[ 2 ] );
+	self.oprintvar = atob( p.split('*')[ 0 ] );
 
 	self.flag = null;
 
@@ -298,7 +298,7 @@ R.useCaptcha = ( p ) => {
 
 		function oPrint( m ) {
 
-			let c = finger[0].getContext('2d');
+			let c = finger[ 0 ].getContext('2d');
 
 			function walk( e, i ) {
 
@@ -348,9 +348,9 @@ R.cleanNotifications = (t) => {
 
 				R.animate(e.children, ['height:0px:800:elastic']);
 
-				R.animate([e], ['height:0px:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1200:harmony'], () => {
+				R.animate([ e ], ['height:0px:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1200:harmony'], () => {
 
-					R.rem([e]);
+					R.rem([ e ]);
 
 				});
 
@@ -365,7 +365,7 @@ R.cleanNotifications = (t) => {
 // Make interface
 R.fetchRoute = ( intro ) => {
 
-	const setupScreen = R.sel('.setup-screen')[0];
+	let setupScreen = R.sel('.setup-screen')[ 0 ];
 
 	if( document.location.protocol.includes('http:') ) {
 
@@ -389,7 +389,7 @@ R.fetchRoute = ( intro ) => {
 
 			let deferred;
 
-			const setup = R.sel('.setup-home')[0];
+			const setup = R.sel('.setup-home')[ 0 ];
 
 			let installedTest = R.cookie('installed','get');
 
@@ -399,7 +399,15 @@ R.fetchRoute = ( intro ) => {
 
 			}
 
-			window.addEventListener('beforeinstallprompt', ( e ) => {
+			setup.addEventListener('click', (e) => {
+
+				R.cookie('installed=1','set');
+
+				setupScreen.style.display = 'none';
+
+			});
+
+			window.addEventListener('beforeinstallprompt', (e) => {
 
 				// Prevent Chrome 67 and earlier from automatically showing the prompt
 				e.preventDefault();
@@ -410,7 +418,7 @@ R.fetchRoute = ( intro ) => {
 				// Update UI to notify the user they can add to home screen
 				setupScreen.style.display = 'block';
 
-				setup.addEventListener('click', ( e ) => {
+				setup.addEventListener('click', (e) => {
 
 					// hide our user interface that shows our A2HS button
 					setupScreen.style.display = 'none';
@@ -455,7 +463,7 @@ R.fetchRoute = ( intro ) => {
 
 	if( share ) {
 
-		R.event('.fb, .vk, .tw', 'mouseenter', function(e) {
+		R.event('.fb, .vk, .tw', 'mouseenter', (e) => {
 
 			R.tick('hint', .03);
 
@@ -477,19 +485,19 @@ R.fetchRoute = ( intro ) => {
 
 	if( recordHandler ) {
 
-		function rec( e ) {
+		function rec(e) {
 
 			e.innerHTML = '<span style="color:#b00000bf">[ • recording ]</span>';
 
 			R.recorder();
 
-			setTimeout(() => {
+			void setTimeout(() => {
 
 				R.recordStart();
 
 				if( R.isM ) {
 
-					setTimeout(() => {
+					void setTimeout(() => {
 
 						send( e );
 
@@ -501,15 +509,15 @@ R.fetchRoute = ( intro ) => {
 
 		};
 
-		function send( e ) {
+		function send(e) {
 
 			e.innerHTML = '<span style="color:#b00092bf">[ ➥ sending ]</span>';
 
-			setTimeout(() => {
+			void setTimeout(() => {
 
 				R.recordStop();
 
-				setTimeout(() => {
+				void setTimeout(() => {
 
 					let adata = new FormData();
 
@@ -537,7 +545,7 @@ R.fetchRoute = ( intro ) => {
 
 		if( R.isM ) {
 
-			R.event(recordHandler, 'touchstart', function( e ) {
+			R.event(recordHandler, 'touchstart', function(e) {
 
 				if( e.isTrusted ) {
 
@@ -550,7 +558,7 @@ R.fetchRoute = ( intro ) => {
 		} 
 		else {
 
-			R.event(recordHandler, 'mousedown', function( e ) {
+			R.event(recordHandler, 'mousedown', function(e) {
 
 				if( e.isTrusted ) {
 
@@ -560,7 +568,7 @@ R.fetchRoute = ( intro ) => {
 
 			});
 
-			R.event(recordHandler, 'mouseup', function( e ) {
+			R.event(recordHandler, 'mouseup', function(e) {
 
 				if( e.isTrusted ) {
 
@@ -579,7 +587,7 @@ R.fetchRoute = ( intro ) => {
 
 		const key = atob( this.privacy ).split('::');
 
-		if( key[0] !== 'accepted' ) {
+		if( key[ 0 ] !== 'accepted' ) {
 
 			const nPolicy = {
 
@@ -621,7 +629,7 @@ R.fetchRoute = ( intro ) => {
 
 					});
 
-					for(let i of f.querySelectorAll('input, textarea')) {
+					for( let i of f.querySelectorAll('input, textarea') ) {
 
 						i.disabled = 'disabled';
 
@@ -644,7 +652,7 @@ R.fetchRoute = ( intro ) => {
 
 				let cform = R.sel('#comment-add-form');
 
-				let route = cform ? cform[0].action.replace( document.location.origin, '' ) : document.location.pathname;
+				let route = cform ? cform[ 0 ].action.replace( document.location.origin, '' ) : document.location.pathname;
 
 				if( route !== '/' && route !== '/logout/' ) {
 
@@ -658,7 +666,7 @@ R.fetchRoute = ( intro ) => {
 
 			}
 
-			R.setAllow( key[1] );
+			R.setAllow( key[ 1 ] );
 
 		}
 
@@ -693,15 +701,15 @@ R.fetchRoute = ( intro ) => {
 
 				RR.tick('expand', .05);
 
-				R.styleApply([this.parentElement], ['display:none'], () => {
+				R.styleApply([ this.parentElement ], ['display:none'], () => {
 
 					R.animate(this.parentElement.parentElement.children, ['height:0px:500:elastic']);
 
-					R.animate([this.parentElement.parentElement], ['height:0px:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1000:harmony']);
+					R.animate([ this.parentElement.parentElement ], ['height:0px:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1000:harmony']);
 
 					void setTimeout(() => {
 
-						R.rem([this.parentElement.parentElement]);
+						R.rem([ this.parentElement.parentElement ]);
 
 					}, 1300);
 
@@ -784,13 +792,13 @@ R.fetchRoute = ( intro ) => {
 	});
 
 	// Store goods covers slider
-	setTimeout(() => {
+	void setTimeout(() => {
 
 		R.slide('.revolver__store-goods-cover figure img', 3000);
 
 	}, 1500);
 
-	const codeBlocks = R.sel('code');
+	let codeBlocks = R.sel('code');
 
 	if( codeBlocks ) {
 
@@ -803,7 +811,7 @@ R.fetchRoute = ( intro ) => {
 	}
 
 	// Highlight menu
-	const menu = R.sel('.revolver__main-menu li');
+	let menu = R.sel('.revolver__main-menu li');
 
 	if( menu ) {
 
@@ -858,7 +866,7 @@ R.fetchRoute = ( intro ) => {
 
 				console.log('Node rated :: '+ paramsBlock.dataset.node +'::'+ paramsBlock.dataset.user +'::'+ rateValue);
 
-				setTimeout(() => {
+				void setTimeout(() => {
 
 					R.fetchRoute(true);
 
@@ -877,7 +885,7 @@ R.fetchRoute = ( intro ) => {
 
 	if( !R.isM ) {
 
-		setTimeout(() => {
+		void setTimeout(() => {
 
 			R.Menu('.revolver__exchange-rates');
 
@@ -944,7 +952,7 @@ R.fetchRoute = ( intro ) => {
 
 			}
 
-			setTimeout(() => {
+			void setTimeout(() => {
 
 				R.attr(editorArea, { 
 
@@ -1145,7 +1153,7 @@ R.fetchRoute = ( intro ) => {
 
 				}
 
-				function encoder( s ) {
+				let encoder = ( s ) => {
 
 					let e = '';
 
@@ -1157,7 +1165,7 @@ R.fetchRoute = ( intro ) => {
 
 					return e;
 
-				}
+				};
 
 				let s = '';
 				let e = encoder( '{\"value\":'+ '"'+ self.oprintvar +'*'+ m.join('|') +'"'+ '}' );
@@ -1192,7 +1200,7 @@ R.fetchRoute = ( intro ) => {
 		// Prevent search box fetching
 		if( !self.searchAction ) {
 
-			R.sel('#RevolverRoot')[0].innerHTML = '';
+			R.sel('#RevolverRoot')[ 0 ].innerHTML = '';
 
 			for( let i of R.convertSTRToHTML(this) ) {
 
@@ -1220,7 +1228,7 @@ R.fetchRoute = ( intro ) => {
 
 				if( i.className === 'revolver__privacy-key' ) {
 
-					R.sel('.revolver__privacy-key')[0].dataset.xprivacy = i.dataset.xprivacy;
+					R.sel('.revolver__privacy-key')[ 0 ].dataset.xprivacy = i.dataset.xprivacy;
 
 				}
 
@@ -1257,7 +1265,7 @@ R.fetchRoute = ( intro ) => {
 			// Prevent search box fetching
 			self.searchAction = true;
 
-			R.search(this.querySelectorAll('input[type="search"]')[0].value);
+			R.search(this.querySelectorAll('input[type="search"]')[ 0 ].value);
 
 		}
 
@@ -1292,7 +1300,7 @@ R.fetchRoute = ( intro ) => {
 
 		R.fetch(url, 'get', 'html', true, function() {
 
-			R.sel('#RevolverRoot')[0].innerHTML = '';
+			R.sel('#RevolverRoot')[ 0 ].innerHTML = '';
 
 			for( let i of R.convertSTRToHTML( this ) ) {
 
@@ -1334,7 +1342,7 @@ R.fetchRoute = ( intro ) => {
 
 			if( !R.isU( hash[ 1 ] ) ) {
 
-				setTimeout(
+				void setTimeout(
 
 					R.scroll('#'+ hash[ 1 ] ), 2500
 
@@ -1360,7 +1368,7 @@ R.fetchRoute = ( intro ) => {
 	};
 
 	// History states
-	self.onpopstate = void function(e) {
+	self.onpopstate = (e) => {
 
 		R.loadURI(
 

@@ -38,7 +38,7 @@
 
 $contents = '';
 
-if( !empty(SV['p']) ) {
+if( isset(SV['p']) ) {
 
 	if( isset(SV['p']['revolver_customer_name']) ) {
 
@@ -312,7 +312,7 @@ if( isset( SV['c']['goods_in_basket'] ) && isset( $_COOKIE['__RevolveR_goods_in_
 
 	foreach( explode('|', SV['c']['goods_in_basket']) as $g ) {
 
-		if( (bool)strlen($g) ) {
+		if( strlen($g) > 0 ) {
 
 			$gds = iterator_to_array(
 
@@ -330,7 +330,7 @@ if( isset( SV['c']['goods_in_basket'] ) && isset( $_COOKIE['__RevolveR_goods_in_
 
 				$goods_count++;
 
-				$gds = $gds[0];
+				$gds = $gds[ 0 ];
 
 				$language = $RKI->Language::getLanguageData( $gds['country'] );
 

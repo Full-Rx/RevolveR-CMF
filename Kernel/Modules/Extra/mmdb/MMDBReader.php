@@ -85,7 +85,7 @@ final class Reader {
 
       for( $o = $fsSize - 14; $o >= ($fsSize - min(131072, $fsSize)); --$o ) { // 128 * 1024 = 128KB -- 132072
 
-        if( (bool)fseek(self::$mmdbs[ $dbn ]['init']['resource'], $o) ) {
+        if( fseek(self::$mmdbs[ $dbn ]['init']['resource'], $o) > 0 ) {
 
           break;
 
@@ -104,7 +104,7 @@ final class Reader {
       // Create metatdata
       $meta = [];
 
-      foreach ( $metaDecoder->decode($start)[0] as $k => $v ) {
+      foreach( $metaDecoder->decode($start)[ 0 ] as $k => $v ) {
 
        $c = 0;
        $i = '';
@@ -133,10 +133,6 @@ final class Reader {
 
   }
 
-  protected function __clone() {
-
-  }
-
   // Retrieves the record for the IP address.
   public static function get( string $ip, string $m = 'LOC' ): iterable {
 
@@ -152,13 +148,13 @@ final class Reader {
 
     );
 
-    return self::getWithPrefixLen($ip, $m)[0];
+    return self::getWithPrefixLen($ip, $m)[ 0 ];
 
   }
 
   protected static function utilRead( string $m, int $o, int $numberOfBytes ): string {
 
-    if ( !(bool)$numberOfBytes ) {
+    if( !(bool)$numberOfBytes ) {
 
       return '';
 
@@ -166,14 +162,14 @@ final class Reader {
 
     $s = self::$mmdbs[ $m ]['init']['resource'];
 
-    if ( !(bool)fseek($s, $o) ) {
+    if( fseek($s, $o) === 0 ) {
 
       $v = fread($s, $numberOfBytes);
 
       // We check that the number of bytes read is equal to the number
       // asked for. We use ftell as getting the length of $value is
       // much slower.
-      if (ftell($s) - $o === $numberOfBytes) {
+      if( ftell($s) - $o === $numberOfBytes ) {
 
         return $v;
 
@@ -188,7 +184,7 @@ final class Reader {
   // Retrieves the record for the IP address and its associated network prefix length.
   private static function getWithPrefixLen( string $ip, string $m ): iterable {
 
-    if ( !filter_var($ip, FILTER_VALIDATE_IP) ) {
+    if( !filter_var($ip, FILTER_VALIDATE_IP) ) {
 
       self::$status[] = 'The value \'$ip\' is not a valid IP address.';
 
@@ -221,16 +217,16 @@ final class Reader {
 
     // Check if we are looking up an IPv4 address in an IPv6 tree. If this
     // is the case, we can skip over the first 96 nodes.
-    if (self::$mmdbs[ $m ]['init']['metadata']->ipVersion === 6) {
+    if( self::$mmdbs[ $m ]['init']['metadata']->ipVersion === 6 ) {
 
-      if ($bitCount === 32) {
+      if( $bitCount === 32 ) {
 
         $node = self::ipV4StartNode($m);
 
       }
 
     } 
-    else if (self::$mmdbs[ $m ]['init']['metadata']->ipVersion === 4 && $bitCount === 128) {            
+    else if( self::$mmdbs[ $m ]['init']['metadata']->ipVersion === 4 && $bitCount === 128 ) {
 
       self::$status[] = 'Error looking up ipAddress. You attempted to look up an IPv6 address in an IPv4-only database.';
 
@@ -238,7 +234,7 @@ final class Reader {
 
     $nc = self::$mmdbs[ $m ]['init']['metadata']->nodeCount;
 
-    for ($i = 0; $i < $bitCount && $node < $nc; ++$i) {
+    for( $i = 0; $i < $bitCount && $node < $nc; ++$i ) {
 
       $bit = 1 & (0xFF & $rawAddress[($i >> 3) + 1] >> 7 - ($i % 8));
 
@@ -246,13 +242,13 @@ final class Reader {
 
     }
 
-    if ($node === $nc) {
+    if( $node === $nc ) {
 
       // Record is empty
       return [ 0, $i ];
 
     } 
-    else if ($node > $nc) {
+    else if( $node > $nc ) {
 
       // Record is a data pointer
       return [ $node, $i ];
@@ -266,7 +262,7 @@ final class Reader {
   private static function ipV4StartNode( string $m ): int {
 
     // If we have an IPv4 database, the start node is the first node
-    if (self::$mmdbs[ $m ]['init']['metadata']->ipVersion === 4) {
+    if( self::$mmdbs[ $m ]['init']['metadata']->ipVersion === 4 ) {
 
       return 0;
 
@@ -274,7 +270,7 @@ final class Reader {
 
     $node = 0;
 
-    for ($i = 0; $i < 96 && $node < self::$mmdbs[ $m ]['init']['metadata']->nodeCount; ++$i) {
+    for( $i = 0; $i < 96 && $node < self::$mmdbs[ $m ]['init']['metadata']->nodeCount; ++$i ) {
 
       $node = self::readNode($node, 0, $m);
 
@@ -288,7 +284,7 @@ final class Reader {
 
     $baseOffset = $nn * self::$mmdbs[ $m ]['init']['metadata']->nodeByteSize;
 
-    switch (self::$mmdbs[ $m ]['init']['metadata']->recordSize) {
+    switch( self::$mmdbs[ $m ]['init']['metadata']->recordSize ) {
 
       case 24:
 
@@ -327,7 +323,7 @@ final class Reader {
 
     $resolved = $p - self::$mmdbs[ $m ]['init']['metadata']->nodeCount + self::$mmdbs[ $m ]['init']['metadata']->searchTreeSize;
 
-    if ( $resolved >= self::$mmdbs[ $m ]['init']['filesize'] ) {
+    if( $resolved >= self::$mmdbs[ $m ]['init']['filesize'] ) {
 
       self::$status[] = 'The MaxMind DB file\'s search tree is corrupt';
 
@@ -337,13 +333,13 @@ final class Reader {
 
     unset( self::$mmdbs[ $m ]['init']['decode'] );
 
-    return [ $r[0], $r[ count($r) - 1 ] ];
+    return [ $r[ 0 ], $r[ count($r) - 1 ] ];
 
   }
 
   public static function close(): void {
 
-    foreach (self::$mmdbs as $dbn => $dbp) {
+    foreach( self::$mmdbs as $dbn => $dbp ) {
 
       unset( self::$mmdbs[ $dbn ]['init']['decode'], self::$mmdbs[ $dbn ]['init']['metadata'] );
 

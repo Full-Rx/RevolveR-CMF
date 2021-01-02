@@ -7,7 +7,7 @@
 
 	if( (PASS[ 1 ] === 'blog' && !empty( PASS[ 2 ] )) || (PASS[ 1 ] === 'wiki' && !empty( PASS[ 3 ] )) ) {
 
-		$descr = $node_data[0]['description'];
+		$descr = $node_data[ 0 ]['description'];
 
 	}
 

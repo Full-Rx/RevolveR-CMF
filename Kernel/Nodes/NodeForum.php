@@ -84,7 +84,7 @@ if( ROLE !== 'none' ) {
 
 	if( in_array(ROLE, ['Admin', 'Writer'], true) ) {
 
-		if( !empty(SV['p']) ) {
+		if( isset(SV['p']) ) {
 
 			if( isset(SV['p']['revolver_forum_container_title']) ) {
 
@@ -487,7 +487,7 @@ if( ROUTE['node'] === '#forum' && is_numeric( PASS[ 2 ] ) ) {
 
 			foreach( $forum_rooms as $froom ) {
 
-				$datetime = explode( '.', str_replace( '-', '.', explode(' ', $froom['time'])[0] ) );
+				$datetime = explode( '.', str_replace( '-', '.', explode(' ', $froom['time'])[ 0 ] ) );
 
 				$forum_room_contents .= '<dl class="revolver__forum-topic-list">';
 				
@@ -677,7 +677,7 @@ if( ROUTE['node'] === '#forum' && is_numeric( PASS[ 2 ] ) ) {
 
 			])
 
-		)['model::forums'][0];
+		)['model::forums'][ 0 ];
 
 		$forum_rooms = iterator_to_array(
 

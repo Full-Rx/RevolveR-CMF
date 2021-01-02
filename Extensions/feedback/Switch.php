@@ -14,7 +14,7 @@ if( defined('ROUTE') ) {
 
 		case '#preview':
 
-			if( !empty(SV['p']) ) {
+			if( isset(SV['p']) ) {
 
 				if( isset(SV['p']['revolver_preview_mode']) ) {
 
@@ -144,7 +144,7 @@ if( defined('ROUTE') ) {
 
 			$contents  = '';
 
-			if( !empty(SV['p']) ) {
+			if( isset(SV['p']) ) {
 
 				$message_title = $message_text = $sender_name = $sender_email = $sender_phone = $action_process = null;
 
@@ -266,7 +266,7 @@ if( defined('ROUTE') ) {
 
 				$enabled_lock = $cache_lock = $installed = $enabled = $post_status = null;
 
-				if( !empty(SV['p']) ) {
+				if( isset(SV['p']) ) {
 
 					$post_status = true;
 
@@ -545,7 +545,7 @@ if( defined('ROUTE') ) {
 
 								]);
 
-								if( (bool)count(SV['f']) ) {
+								if( count(SV['f']) > 0 ) {
 
 									foreach( SV['f'] as $file ) {
 

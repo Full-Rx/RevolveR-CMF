@@ -41,7 +41,7 @@ if( $RNV->auth ) {
 
   if( in_array( ROLE, ['Admin', 'Writer', 'User'] ) ) {
 
-    if(!empty(SV['p'])) {
+    if( isset(SV['p']) ) {
 
       $token_explode = explode('|', $cipher::crypt('decrypt', SV['c']['usertoken']));
 
@@ -219,43 +219,47 @@ if( $RNV->auth ) {
 
       }
 
-      if( count(SV['f']) > 0 ) {
+		if( isset( SV['f'] ) ) {
 
-        foreach( SV['f'] as $file ) {
+	      if( count(SV['f']) > 0 ) {
 
-          foreach( $file as $f ) {
+	        foreach( SV['f'] as $file ) {
 
-            $upload_allow = null;
+	          foreach( $file as $f ) {
 
-            if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/bfiles/'. $f['name']) ) {
+	            $upload_allow = null;
 
-              if( (bool)$f['valid'] ) {
+	            if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/bfiles/'. $f['name']) ) {
 
-                $upload_allow = true;
+	              if( (bool)$f['valid'] ) {
 
-              }
+	                $upload_allow = true;
 
-            }
+	              }
 
-            if( $upload_allow ) {
+	            }
 
-              $RKI->Model::set('blog_files', [
+	            if( $upload_allow ) {
 
-                'node'      => $blog_route,
-                'name'      => $f['name'],
-                'criterion' => 'node'
+	              $RKI->Model::set('blog_files', [
 
-              ]);
+	                'node'      => $blog_route,
+	                'name'      => $f['name'],
+	                'criterion' => 'node'
 
-              move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/bfiles/'. $f['name'] );
+	              ]);
 
-            }
+	              move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/bfiles/'. $f['name'] );
 
-          }
+	            }
 
-        }
+	          }
 
-      }
+	        }
+
+	      }
+
+	    }
 
       header( 'Location: '. $RNV->host . $blog_route, true, 301 );
 

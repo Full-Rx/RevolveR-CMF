@@ -36,7 +36,7 @@
   *
   */
 
-if( !empty(SV['p']) ) {
+if( isset(SV['p']) ) {
 
 	if( isset(SV['p']['revolver_login_user_email']) ) {
 
@@ -99,10 +99,10 @@ if( defined('form_pass') ) {
 
 		if( $user ) {
 
-			if( $user[0]['password'] === $password ) {
+			if( $user[ 0 ]['password'] === $password ) {
 
 				// Secure session
-				$token = $user[0]['email'] .'|'. $user[0]['password'] .'|'. $user[0]['nickname'];
+				$token = $user[ 0 ]['email'] .'|'. $user[ 0 ]['password'] .'|'. $user[ 0 ]['nickname'];
 
 				if( form_pass === 'pass' && (bool)SV['p']['identity']['validity'] ) {
 

@@ -43,10 +43,13 @@ final class Auth {
 
   protected static $cipher;
 
-  function __construct( Model $model, Cipher $cipher ) {
+  public static $ssl;
+
+  function __construct( Model $model, Cipher $cipher, ?bool $ssl ) {
 
     self::$model = $model;
     self::$cipher = $cipher;
+    self::$ssl = $ssl;
 
   }
 
@@ -54,7 +57,7 @@ final class Auth {
 
     $te = explode( '|', $token );
 
-    if( isset($te[0]) && isset($te[1]) && isset($te[2]) ) {
+    if( isset($te[ 0 ]) && isset($te[ 1 ]) && isset($te[ 2 ]) ) {
 
       if( !in_array(session_status(), [ PHP_SESSION_DISABLED, PHP_SESSION_NONE ], true) ) { 
 
@@ -78,7 +81,7 @@ final class Auth {
 
       session_regenerate_id(true);
 
-      $session = md5( uniqid() .'|'. $token[0] .'|'. $token[1] .'|'. $token[2] );
+      $session = md5( uniqid() .'|'. $token[ 0 ] .'|'. $token[ 1 ] .'|'. $token[ 2 ] );
 
       $_SESSION['session_token'] = $session;
 
@@ -128,7 +131,7 @@ final class Auth {
 
     $s = 'Set-Cookie: __RevolveR_'. $c[0] .'='. rawurlencode( $c[1] ) .'; Expires='. date('D, d M Y H:i:s', $c[2]) . 'GMT' .'; Path='. $c[3] .'; Domain='. $_SERVER['HTTP_HOST'] .';';
 
-    if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || (int)$_SERVER['SERVER_PORT'] === 443 ) {
+    if( self::$ssl ) {
 
       $s .= ' SameSite=Strict; Secure; httpOnly;';
 
@@ -140,7 +143,7 @@ final class Auth {
 
   public static function setCookie( iterable $d ): void {
 
-    if( isset($d[0]) ) {
+    if( isset($d[ 0 ]) ) {
 
       foreach( $d as $dc ) {
 

@@ -295,9 +295,13 @@ final class SecureVariablesDispatcher {
 
 	public static $notify;
 
-	function __construct( Notifications $notify ) {
+	public static $ssl;
+
+	function __construct( Notifications $notify, ?bool $ssl ) {
 
 		self::$notify = $notify;
+
+		self::$ssl = $ssl;
 
 	}
 
@@ -305,7 +309,7 @@ final class SecureVariablesDispatcher {
 
 		$vars = [];
 
-		if( (bool)count( $_FILES ) ) {
+		if( count( $_FILES ) > 0 ) {
 
 			foreach( $_FILES as $F ) {
 
@@ -338,7 +342,7 @@ final class SecureVariablesDispatcher {
 		}
 
 		// [SESSION]
-		if( (bool)count($_SESSION) ) {
+		if( count($_SESSION) > 0 ) {
 
 			foreach( $_SESSION as $sn => $sv ) {
 
@@ -349,7 +353,7 @@ final class SecureVariablesDispatcher {
 		}
 
 		// [COOKIES]
-		if( (bool)count($_COOKIE) ) {
+		if( count($_COOKIE) > 0 ) {
 
 			foreach( filter_input_array(INPUT_COOKIE, FILTER_SANITIZE_STRING | FILTER_SANITIZE_FULL_SPECIAL_CHARS | FILTER_SANITIZE_ENCODED, FILTER_REQUIRE_ARRAY) as $cn => $cv ) {
 
@@ -495,7 +499,7 @@ final class SecureVariablesDispatcher {
 
 		$cst = 'Set-Cookie: __'. $name .'='. rawurlencode( $value ) .'; Expires='. date('D, d M Y H:i:s', $exp) . 'GMT' .'; Path='. $path .'; Domain='. ltrim('.', $_SERVER['HTTP_HOST']) .';';
 
-		header((((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || (int)$_SERVER['SERVER_PORT'] === 443) ? $cst . ' SameSite=Strict; Secure=true;' : $cst));
+		header( self::$ssl ? $cst . ' SameSite=Strict; Secure=true;' : $cst );
 
 	}
 
@@ -602,13 +606,13 @@ final class SecureVariablesDispatcher {
 			case 'checkbox':
 			case 'password':
 
-				$flag = (bool)strlen($v) ? 1 : 0;
+				$flag = strlen($v) > 0 ? 1 : 0;
 
 				break;
 
 			case 'color':
 
-				if( preg_match('/#?([[:xdigit:]]{3}){1,2}\b/i', $v) && (bool)strlen($v) ) {
+				if( preg_match('/#?([[:xdigit:]]{3}){1,2}\b/i', $v) && strlen($v) > 0 ) {
 
 					$flag = 1;
 
@@ -618,7 +622,7 @@ final class SecureVariablesDispatcher {
 
 			case 'email':
 
-				if( filter_var($v, FILTER_VALIDATE_EMAIL) && (bool)strlen($v) ) {
+				if( filter_var($v, FILTER_VALIDATE_EMAIL) && strlen($v) > 0 ) {
 
 					$flag = 1;
 
@@ -628,7 +632,7 @@ final class SecureVariablesDispatcher {
 
 			case 'url':
 
-				if( filter_var($v, FILTER_VALIDATE_URL) && (bool)strlen($v) ) {
+				if( filter_var($v, FILTER_VALIDATE_URL) && strlen($v) > 0 ) {
 
 					$flag = 1;
 
@@ -639,7 +643,7 @@ final class SecureVariablesDispatcher {
 			case 'number':
 			case 'range':
 
-				if( ( filter_var($v, FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_THOUSAND) || !(bool)$v ) && (bool)strlen($v) ) {
+				if( ( filter_var($v, FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_THOUSAND) || !(bool)$v ) && strlen($v) > 0 ) {
 
 					$flag = 1;
 
@@ -649,7 +653,7 @@ final class SecureVariablesDispatcher {
 
 			case 'tel':
 
-				if( preg_match('/^[\+0-9\-\(\)\s]*$/', $v) && (bool)strlen($v) ) {
+				if( preg_match('/^[\+0-9\-\(\)\s]*$/', $v) && strlen($v) > 0 ) {
 
 					$flag = 1;
 
@@ -661,7 +665,7 @@ final class SecureVariablesDispatcher {
 
 				$d = explode('-', $v);
 
-				if( checkdate((int)$d[ 1 ], (int)$d[ 2 ], (int)$d[ 0 ]) && (bool)strlen($v) ) { 
+				if( checkdate((int)$d[ 1 ], (int)$d[ 2 ], (int)$d[ 0 ]) && strlen($v) > 0 ) { 
 
 					$flag = 1;
 
@@ -671,7 +675,7 @@ final class SecureVariablesDispatcher {
 
 			case 'time':
 
-				if( preg_match('/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/', $v) && (bool)strlen($v) ) {
+				if( preg_match('/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/', $v) && strlen($v) > 0 ) {
 
 					$flag = 1;
 

@@ -96,7 +96,7 @@ foreach( iterator_to_array(
 
 		$date = explode('-', 
 
-					str_replace('.', '-', explode(' ', $n['time'])[0])
+			str_replace('.', '-', explode(' ', $n['time'])[0])
 		);
 
 		$sitemap .= '<loc>'. $RNV->host . $n['route'] .'</loc>'. "\n";

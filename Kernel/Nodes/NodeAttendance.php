@@ -151,7 +151,7 @@ if( in_array(ROLE, ['Admin', 'Writer'], true) )  {
 
 								)
 
-							)[0] .'/'. $browser[0] .'/'. $location  => [
+							)[ 0 ] .'/'. $browser[ 0 ] .'/'. $location  => [
 
 								'time'		=> $s['time'],
 								'identify'	=> $s['track'],
@@ -413,9 +413,9 @@ if( in_array(ROLE, ['Admin', 'Writer'], true) )  {
 
 		$port = '43';
 
-		$return = $whoisvalue[$ext];
+		$return = $whoisvalue[ $ext ];
 
-		$reqprefix = $whoisreqprefix[$ext];
+		$reqprefix = $whoisreqprefix[ $ext ];
 
 		if( $server === '' ) {
 
@@ -539,14 +539,14 @@ if( in_array(ROLE, ['Admin', 'Writer'], true) )  {
 		
 		$ua_data = explode('/', key($v));
 
-		if( $ua_data[0] === 'bot' ) {
+		if( $ua_data[ 0 ] === 'bot' ) {
 
 			$count_bot++;
 
 		}
 		else {
 
-			if( $key[ count( $key ) - 1]['identify'] !== 'guest' ) {
+			if( $key[ count( $key ) - 1 ]['identify'] !== 'guest' ) {
 
 				$count_users++;
 

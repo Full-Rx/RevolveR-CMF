@@ -37,7 +37,7 @@
   *
   */
 
-if( !empty(SV['p']) && ROLE !== 'none' ) {
+if( isset(SV['p']) && ROLE !== 'none' ) {
 
 	if( isset( SV['p']['revolver_user_action'] ) ) {
 
@@ -155,7 +155,7 @@ if( $action === 'message' ) {
 		
 		$allow_send = true;
 
-		$user_m = $user[0];
+		$user_m = $user[ 0 ];
 
 		$user_id_to = $user_m['id'];
 
@@ -179,53 +179,57 @@ if( $action === 'message' ) {
 
 			]);
 
-			if( count(SV['f']) > 0 ) {
+			if( isset( SV['f'] ) ) {
 
-				foreach( SV['f'] as $file ) {
+				if( count(SV['f']) > 0 ) {
 
-					foreach( $file as $f ) {
+					foreach( SV['f'] as $file ) {
 
-						$upload_allow = null;
+						foreach( $file as $f ) {
 
-						if( !is_readable( $_SERVER['DOCUMENT_ROOT'] .'/public/files/'. $f['name']) ) {
+							$upload_allow = null;
 
-							if( (bool)$f['valid'] ) {
+							if( !is_readable( $_SERVER['DOCUMENT_ROOT'] .'/public/files/'. $f['name']) ) {
 
-								$upload_allow = true;
+								if( (bool)$f['valid'] ) {
+
+									$upload_allow = true;
+
+								}
 
 							}
 
-						}
+							if( $upload_allow ) {
 
-						if( $upload_allow ) {
+								$id = iterator_to_array(
 
-							$id = iterator_to_array(
+										$RKI->Model::get( 'messages', [
 
-									$RKI->Model::get( 'messages', [
+											'criterion' => 'to::'. $mailTo,
 
-										'criterion' => 'to::'. $mailTo,
+											'bound'		=> [
 
-										'bound'		=> [
+												1,   // limit
 
-											1,   // limit
+											],
 
-										],
+											'course'	=> 'backward',
+											'sort' 		=> 'id'
 
-										'course'	=> 'backward',
-										'sort' 		=> 'id'
+										])
 
-									])
+									)['model::messages'];
 
-								)['model::messages'];
+								$RKI->Model::set('messages_files', [
 
-							$RKI->Model::set('messages_files', [
+									'message_id'	=> $id[0]['id'],
+									'file'			=> $f['name']
 
-								'message_id'	=> $id[0]['id'],
-								'file'			=> $f['name']
+								]);
 
-							]);
+								move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/files/'. $f['name'] );
 
-							move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/files/'. $f['name'] );
+							}
 
 						}
 
@@ -404,14 +408,14 @@ if( $messages_list ) {
 
 		if( $user ) {
 
-			if( $user[0]['avatar'] === 'default' ) {
+			if( $user[ 0 ]['avatar'] === 'default' ) {
 
 				$avatar = '<img src="/public/avatars/default.png" alt="'. $v['from'] .'" />';
 
 			}
 			else {
 
-				$avatar = '<img src="'. $user[0]['avatar'] .'" alt="'. $v['from'] .'" />';
+				$avatar = '<img src="'. $user[ 0 ]['avatar'] .'" alt="'. $v['from'] .'" />';
 
 			}
 

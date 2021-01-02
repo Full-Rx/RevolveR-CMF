@@ -77,14 +77,14 @@ final class DetectUserAgent {
 				}
 				else {
 
-					$platform = $result['platform'][0];
+					$platform = $result['platform'][ 0 ];
 
 				}
 
 			}
-			else if( isset($result['platform'][0]) ) {
+			else if( isset($result['platform'][ 0 ]) ) {
 
-				$platform = $result['platform'][0];
+				$platform = $result['platform'][ 0 ];
 
 			}
 
@@ -104,11 +104,8 @@ final class DetectUserAgent {
 		preg_match_all('%(?P<browser>Camino|Kindle(\ Fire)?|Firefox|PrivacyBrowser|Iceweasel|IceCat|Safari|MSIE|Trident|AppleWebKit|TizenBrowser|Chrome|Vivaldi|IEMobile|Opera|OPR|Silk|Midori|Edge|CriOS|UCBrowser|Puffin|SamsungBrowser|Baiduspider|YandexBot|YandexAccessibilityBot|YandexMobileBot|YandexDirectDyn|YandexScreenshotBot|YandexImages|YandexVideo|YandexVideoParser|YandexMedia|YandexBlogs|YandexFavicons|YandexWebmaster|YandexPagechecker|YandexImageResizer|YandexAdNet|YandexDirect|YaDirectFetcher|YandexCalendar|YandexSitelinks|YandexMetrika|YandexNews|YandexNewslinks|YandexCatalog|YandexAntivirus|YandexMarket|YandexVertis|YandexForDomain|YandexSpravBot|YandexSearchShop|YandexMedianaBot|YandexOntoDB|YandexOntoDBAPI|Googlebot|Googlebot-Image|Mediapartners-Google|AdsBot-Google|Mail.RU_Bot|bingbot|Accoona|ia_archiver|Ask|Jeeves|OmniExplorer_Bot|W3C_Validator|WebAlta|YahooFeedSeeker|Yahoo!|Ezooms||Tourlentabot|MJ12bot|AhrefsBot|SearchBot|SiteStatus|Nigma.ru|Baiduspider|Statsbot|SISTRIX|AcoonBot|findlinks|proximic|OpenindexSpider|statdom.ru|Exabot|Spider|SeznamBot|oBot|C-T bot|Updownerbot|Snoopy|heritrix|Yeti|DomainVader|DCPbot|PaperLiBot|Lynx|Version|Wget|curl|Valve\ Steam\ Tenfoot|NintendoBrowser|PLAYSTATION\ (\d|Vita)+)(?:\)?;?)(?:(?:[:/ ])(?P<version>[0-9A-Z.]+)|/(?:[A-Z]*))%ix', $ua, $result, PREG_PATTERN_ORDER);
 
 
-
-
-
 		// If nothing matched, return null (to avoid undefined index errors)
-		if( !isset($result['browser'][0]) || !isset($result['version'][0]) ) {
+		if( !isset($result['browser'][ 0 ]) || !isset($result['version'][ 0 ]) ) {
 
 			if( preg_match('%^(?!Mozilla)(?P<browser>[A-Z0-9\-]+)(/(?P<version>[0-9A-Z.]+))?%ix', $ua, $result) ) {
 
@@ -133,24 +130,24 @@ final class DetectUserAgent {
 		}
 
 
-		$browser = $result['browser'][0] === 'AppleWebKit' ? 'Chromium' : $result['browser'][0]; //$result['browser'][0];
+		$browser = $result['browser'][ 0 ] === 'AppleWebKit' ? 'Chromium' : $result['browser'][ 0 ];
 
-		$version = $result['version'][0];
+		$version = $result['version'][ 0 ];
 
 		$test_for_edge = explode(' ', $ua);
 		$test_for_edge = explode('/', $test_for_edge[ count( $test_for_edge ) - 1 ] );
 
-		if( $test_for_edge[0] === 'Edg' ) {
+		if( $test_for_edge[ 0 ] === 'Edg' ) {
 
 			$browser = 'Microsoft Edge';
 
-			$version = $test_for_edge[1];
+			$version = $test_for_edge[ 1 ];
 
 		}
 
 		self::$lbs = array_map('strtolower', $result['browser']);
 
-		if( $result['browser'][0] === 'PrivacyBrowser' ) {
+		if( $result['browser'][ 0 ] === 'PrivacyBrowser' ) {
 
 			$platform = 'Privacy';
 
@@ -174,7 +171,7 @@ final class DetectUserAgent {
 
 			$browser  = 'Silk';
 
-			if( !($version = $result['version'][0]) || !is_numeric($version[0]) ) {
+			if( !($version = $result['version'][ 0 ]) || !is_numeric($version[ 0 ]) ) {
 
 				$version = $result['version'][array_search('Version', $result['browser'])];
 
@@ -183,33 +180,33 @@ final class DetectUserAgent {
 		}
 		else if( self::checkAgent(['NintendoBrowser']) || $platform === 'Nintendo 3DS' ) {
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 			$browser = 'NintendoBrowser';
 
 		}
 		else if( self::checkAgent(['Kindle']) ) {
 
-			$browser = $result['browser'][0];
+			$browser = $result['browser'][ 0 ];
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 		}
 		else if( self::checkAgent(['OPR']) ) {
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 			$browser = 'Opera Next';
 
 		}
 		else if( self::checkAgent(['Opera']) ) {
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 		}
 		else if( self::checkAgent(['Puffin']) ) {
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 			if( strlen($version) > 3 ) {
 
@@ -243,7 +240,7 @@ final class DetectUserAgent {
 		}
 		else if( self::checkAgent(['IEMobile', 'Edge', 'Midori', 'Vivaldi', 'SamsungBrowser', 'Valve Steam Tenfoot', 'Chrome']) ) {
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 		}
 		else if( $rv_result && self::checkAgent(['Trident']) ) {
@@ -255,14 +252,14 @@ final class DetectUserAgent {
 		}
 		else if( self::checkAgent(['UCBrowser']) ) {
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 			$browser = 'UC Browser';
 
 		}
 		else if( self::checkAgent(['CriOS']) ) {
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 			$browser = 'Chrome';
 
@@ -274,7 +271,7 @@ final class DetectUserAgent {
 				$browser = 'Android Browser';
 
 			}
-			else if( !(bool)strpos($platform, 'BB') ) {
+			else if( strpos($platform, 'BB') === 0 ) {
 
 				$browser  = 'BlackBerry Browser';
 
@@ -287,7 +284,7 @@ final class DetectUserAgent {
 
 			}
 
-			$version = $result['version'][0];
+			$version = $result['version'][ 0 ];
 
 		}
 		else if( $pKey = preg_grep('/playstation \d/i', array_map('strtolower', $result['browser'])) ) {
@@ -317,7 +314,7 @@ final class DetectUserAgent {
 
 			foreach( $search as $v ) {
 
-				if( (bool)preg_grep('/'. $v .'/i', self::$lbs )[1] ) {
+				if( preg_grep('/'. $v .'/i', self::$lbs )[ 1 ] ) {
 
 					$match = true;
 

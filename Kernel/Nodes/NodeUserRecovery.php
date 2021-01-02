@@ -38,7 +38,7 @@
 
 $user = $recovered = null;
 
-if( !empty(SV['p']) ) {
+if( isset(SV['p']) ) {
 
 	if( isset(SV['p']['revolver_recovery_user_email']) ) {
 
@@ -100,7 +100,7 @@ if( defined('form_pass') ) {
 
 				$recovery_email, 'RevolveR Contents Management Framework :: '. $RNV->lang['Account recovery'], 
 
-				'<p>'. $RNV->lang['Hello'] .', '. $user[0]['nickname'] .'! Use your account email: '. $recovery_email .' and password: '. $recovery_password .' to login <a href="'. site_host .'/user/auth/">here</a>.</p>'
+				'<p>'. $RNV->lang['Hello'] .', '. $user[ 0 ]['nickname'] .'! Use your account email: '. $recovery_email .' and password: '. $recovery_password .' to login <a href="'. site_host .'/user/auth/">here</a>.</p>'
 
 			);
 

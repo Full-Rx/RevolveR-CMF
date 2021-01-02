@@ -39,7 +39,7 @@
 
 $contents  = '';
 
-if( !empty(SV['p']) ) {
+if( isset(SV['p']) ) {
 
 	if( isset(SV['p']['revolver_captcha']) ) {
 
@@ -115,17 +115,17 @@ $feedbacks = iterator_to_array(
 
 foreach( $feedback_process as $n => $m ) {
 
-	if( isset($m[0]) ) {
+	if( isset($m[ 0 ]) ) {
 
 		if( $feedbacks ) {
 
 			foreach( $feedbacks as $k => $f ) {
 
-				$cmd = explode('::', $m[0]);
+				$cmd = explode('::', $m[ 0 ]);
 
-				if( (int)$f['id'] === (int)$cmd[0] ) {
+				if( (int)$f['id'] === (int)$cmd[ 0 ] ) {
 
-					if( (int)$f['processed'] !== (int)$cmd[1] ) {
+					if( (int)$f['processed'] !== (int)$cmd[ 1 ] ) {
 
 						if( defined('form_pass') ) {
 
@@ -134,7 +134,7 @@ foreach( $feedback_process as $n => $m ) {
 								$RKI->Model::set('store_orders', [
 
 									'id'				=> (int)$f['id'],
-									'processed' 		=> (int)$cmd[1],
+									'processed' 		=> (int)$cmd[ 1 ],
 									'criterion' 		=> 'id'
 
 								]);
@@ -145,7 +145,7 @@ foreach( $feedback_process as $n => $m ) {
 
 					}
 
-					if( $f['paid'] !== $cmd[1] ) {
+					if( $f['paid'] !== $cmd[ 1 ] ) {
 
 						if( defined('form_pass') ) {
 
@@ -154,7 +154,7 @@ foreach( $feedback_process as $n => $m ) {
 								$RKI->Model::set('store_orders', [
 
 									'id'				=> (int)$f['id'],
-									'paid' 				=> (int)$cmd[1],
+									'paid' 				=> (int)$cmd[ 1 ],
 									'criterion' 		=> 'id'
 
 								]);

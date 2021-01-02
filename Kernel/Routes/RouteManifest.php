@@ -84,8 +84,8 @@ $manifest = '{
 
    }
  ],
- "start_url": "'. $RNV->host .'",
- "background_color": "#7ACCE5",
+ "start_url": "/",
+ "background_color": "#790a61fa",
  "theme_color": "#7ACCE5",
  "orientation": "any",
  "display": "standalone"

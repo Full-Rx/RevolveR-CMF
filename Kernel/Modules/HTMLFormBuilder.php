@@ -271,12 +271,12 @@ final class HTMLFormBuilder {
 
             if( $labels[1] ) {
 
-              $HTMLFormFieldsetsAfter .= $labels[0];
+              $HTMLFormFieldsetsAfter .= $labels[ 0 ];
 
             }
             else {
 
-              $HTMLFormFieldsets .= $labels[0];
+              $HTMLFormFieldsets .= $labels[ 0 ];
 
             }
 
@@ -381,14 +381,14 @@ final class HTMLFormBuilder {
             $type = explode(':', $i);
 
             // Make valid tag with attrs
-            switch ( $type[0] ) {
+            switch ( $type[ 0 ] ) {
 
               case 'input':
 
                 $HTMLFormFields .= '<input';
 
                 // Choose input type
-                switch ( $type[1] ) {
+                switch ( $type[ 1 ] ) {
 
                   case 'password':
                   case 'hidden':
@@ -399,14 +399,14 @@ final class HTMLFormBuilder {
                   case 'tel':
                   case 'url':
 
-                    $HTMLFormFields .= ' type="'. $type[1] .'"';
+                    $HTMLFormFields .= ' type="'. $type[ 1 ] .'"';
 
                     break;
 
                   case 'checkbox':
                   case 'radio':
 
-                    $HTMLFormFields .= ' type="'. $type[1] .'"'. ( $type[2] === 'checked' ? ' checked="checked"' : '' );
+                    $HTMLFormFields .= ' type="'. $type[ 1 ] .'"'. ( $type[ 2 ] === 'checked' ? ' checked="checked"' : '' );
 
                     break;
 
@@ -492,13 +492,13 @@ final class HTMLFormBuilder {
 
           case 'value':
 
-            $HTMLFormFields .= (bool)strlen( $i ) ? ' value="'. $i .'"' : '';
+            $HTMLFormFields .= strlen( $i ) > 0 ? ' value="'. $i .'"' : '';
 
             break;
 
           case 'rows':
 
-            $HTMLFormFields .= (bool)strlen( $i ) ? ' rows="'. $i .'"' : '';
+            $HTMLFormFields .= strlen( $i ) > 0 ? ' rows="'. $i .'"' : '';
 
             break;
 
@@ -524,7 +524,7 @@ final class HTMLFormBuilder {
 
       }
 
-      if( (bool)strlen( $HTMLContents ) ) {
+      if( strlen( $HTMLContents ) > 0 ) {
 
         $HTMLFormFields = $HTMLContents;
 

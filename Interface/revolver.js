@@ -3,7 +3,7 @@
   *
   * RevolveR CMF interface :: ECMA Script 7
   *
-  * v.2.0.0.4
+  * v.2.0.1.0
   *
   * RevolveR ECMA Script is a fast, simple and
   *
@@ -57,21 +57,21 @@
 		xhint: null,
 
 		// Allow Sense
-		setAllow: function( k ) {
+		setAllow: async function( k ) {
 
-			((_k, _this, _f) => {
+			await (async ( _k, _this, _f ) => {
 
-				_f( _k, _this );
+				await _f( _k, _this );
 
-			})(k, this, ( _k, _this ) => {
+			})( k, this, async ( _k, _this ) => {
 
-				RR._manageKeys( _k, _this );
+				await RR._manageKeys( _k, _this );
 
 			});
 
 		},
 
-		_manageKeys: function( k, _that ) {
+		_manageKeys: ( k, _that ) => {
 
 			if( !k ) {
 
@@ -84,7 +84,7 @@
 
 			}
 
-			const keyChain_ = setInterval(() => {
+			const keyChain_ = void setInterval(() => {
 
 				const xPrivacy = RR.sel('.revolver__privacy-key')[0].dataset.xprivacy;
 
@@ -98,7 +98,7 @@
 
 					if( RR._privacyKeys.length > 0 ) {
 
-						if( RR._privacyKeys[ RR._privacyKeys.length - 1 ] == JSON.parse(
+						if( RR._privacyKeys[ RR._privacyKeys.length - 1 ] === JSON.parse(
 
 									atob(
 
@@ -144,7 +144,7 @@
 		get browser() {
 
 			// Interface application version
-			RR.coreVer = '2.0.0.4';
+			RR.coreVer = '2.0.1.2';
 
 			// Is mobile support available
 			RR.isM = /(Privacy|Android|BackBerry|phone|iPad|iPod|IEMobile|Nokia|Mobile)/.test(navigator.userAgent);
@@ -154,7 +154,7 @@
 			RR.sizes = [self.screen.width, self.screen.height];
 
 			// Get available CSS styles list from body element
-			RR.styles = RR.sel('body')[0].style;
+			RR.styles = RR.sel('body')[ 0 ].style;
 
 			// Make absolutely positioned child elements of body element  is relative to parent 
 			RR.styles.position = 'relative';
@@ -164,7 +164,7 @@
 
 			RR.AxisEvent = null;
 
-			RR.curxy = [0, 0];
+			RR.curxy = [ 0, 0 ];
 
 			// Refresh window size on every resize
 			// values stored in RR.currentSizes[ 0, 1 ];
@@ -197,29 +197,29 @@
 
 			};
 
-			RR.events.push([RR.that.body, 'mousemove', () => {}, 'bodyMouseMove']);
+			RR.events.push([ RR.that.body, 'mousemove', () => {}, 'bodyMouseMove' ]);
 
 			if( RR.isM ) {
 
 				window.addEventListener('deviceorientation', (e) => {  
 
-					RR.XYZ = [e.alpha, e.beta, e.gamma];  
+					RR.XYZ = [ e.alpha, e.beta, e.gamma ];
 
-				}, false);
+				}, null);
 				
-				R.events.push([window, 'deviceorientation', () => {}, 'deviceOrientation']);
+				R.events.push([ window, 'deviceorientation', () => {}, 'deviceOrientation' ]);
 
 			}
 
 		},
 
 		// Launch RevoveR Inteface and allow Senses
-		set launch( xhash = true ) {
+		set launch( x = true ) {
 
 			RR.nullRun = null;
 
 			// Zeem prevention
-			RR.event('html', 'keydown:lock', e => {
+			RR.event('html', 'keydown:lock', (e) => {
 
 				if( e.ctrlKey ) {
 
@@ -244,7 +244,7 @@
 
 			});
 
-			RR.event('html', 'wheel:lock', e => {
+			RR.event('html', 'wheel:lock', (e) => {
 
 				if( e.ctrlKey ) {
 
@@ -257,9 +257,15 @@
 			});
 
 			// Preload to resource
-			for( let l of RR.sel('[rel="preload"]') ) {
+			let preload = RR.sel('[rel="preload"]');
 
-				l.rel = 'stylesheet';
+			if( preload ) {
+
+				for( let l of preload ) {
+
+					l.rel = 'stylesheet';
+
+				}
 
 			}
 
@@ -283,7 +289,7 @@
 			}
 
 			// Set title fot history
-			self.onpopstate = (e) => {
+			self.onpopstate = ( e ) => {
 
 				document.title = (self.history.state) ? self.history.state.title : RR.title;
 
@@ -300,7 +306,7 @@
 
 				let chunks = [];
 
-				let recorder = function( s ) {
+				let recorder = function(s) {
 
 					RR.mediaRecorder = new MediaRecorder(s);
 
@@ -324,7 +330,7 @@
 
 						}, 250);
 
-						setTimeout(() => {
+						void setTimeout(() => {
 
 							if( RR.recording ) {
 
@@ -352,19 +358,19 @@
 
 					};
 
-					RR.recordStore = ( data ) => {
+					RR.recordStore = (data) => {
 
 						RR.audioStorage = data;
 
 					};
 
-					RR.mediaRecorder.onstop = ( e ) => {
+					RR.mediaRecorder.onstop = (e) => {
 
-						RR.recordStore = new Blob(chunks, { 'type' : 'audio/wav' });
+						RR.recordStore = new Blob(chunks, { 'type' : 'audio/ogg' });
 
 					};
 
-					RR.mediaRecorder.ondataavailable = ( e ) => {
+					RR.mediaRecorder.ondataavailable = (e) => {
 
 						chunks.push(e.data);
 
@@ -372,21 +378,21 @@
 
 				};
 
-				navigator.mediaDevices.getUserMedia({ audio: {sampleRate: 1000} }).then(recorder);
+				navigator.mediaDevices.getUserMedia({ audio: {sampleRate: 2000} }).then(recorder);
 
 			}
 
 		},
 
 		// Screen position future
-		screenPosition: (current, maximum, mode) => {
+		screenPosition: ( current, maximum, mode ) => {
 
 			(() => {
 
 				if( !RR.sel('#screen-position') ) {
 
 					// define events lock
-					RR.screenPositionDefined = [null, null];
+					RR.screenPositionDefined = [ null, null ];
 
 					// screen position progress
 					RR.new('progress', 'body', 'before', {
@@ -404,7 +410,7 @@
 
 			})();
 
-			function setPosition(current, maximum, m) {
+			let setPosition = ( current, maximum, m ) => {
 
 				var current = m ? current : self.scrollY;
 				var maximum = m ? maximum : self.document.body.scrollHeight - self.innerHeight;
@@ -418,31 +424,31 @@
 
 				});
 
-			}
+			};
 
 			if( !mode ) {
 
-				if( !RR.screenPositionDefined[0] ) {
+				if( !RR.screenPositionDefined[ 0 ] ) {
 
 					RR.event(document, 'scroll:lock', () => {
 
 						setPosition();
 
-						RR.screenPositionDefined[0] = true;
+						RR.screenPositionDefined[ 0 ] = true;
 
 					});
 
 				}
 
-				if( !RR.screenPositionDefined[1] ) {
+				if( !RR.screenPositionDefined[ 1 ] ) {
 
 					RR.event(self, 'resize:lock', () => {
 
-						R.reParallax();
+						RR.reParallax();
 
 						setPosition();
 
-						RR.screenPositionDefined[1] = true;
+						RR.screenPositionDefined[ 1 ] = true;
 
 					});
 
@@ -465,13 +471,13 @@
 
 		Menu: ( menu ) => {
 
-			let menues = RR.sel(menu)[0];
+			let menues = RR.sel(menu)[ 0 ];
 
 			let menuContainer = menues.querySelector('ul');
 
 			let prioritywidth, menuContainerwidth, menuoffsetLeft, resizetimer, curscrollDir, rightmost;
 
-			function updateMeasures() {
+			let updateMeasures = () => {
 
 				menuoffsetLeft = RR.getoffset(menues, 'offsetLeft');
 
@@ -479,32 +485,32 @@
 
 				menuContainerwidth = menuContainer.scrollWidth;
 
-				menuContainer.style['transform'] = 'translateX(0)';
+				menuContainer.style[ 'transform' ] = 'translateX(0)';
 
-			}
+			};
 
 			updateMeasures();
 
-			RR.event([menuContainer], 'mousemove', function(e) {
+			RR.event([ menuContainer ], 'mousemove', (e) => {
 
 				let rangenumber = prioritywidth * 20 / 100;
 
-				let therange = [rangenumber, prioritywidth - rangenumber];
+				let therange = [ rangenumber, prioritywidth - rangenumber ];
 
 				let relativemouseX = e.pageX - menuoffsetLeft;
 
 				if( relativemouseX < therange[ 0 ] ) {
 
-					menuContainer.style['transform'] = 'translateX(0)';
+					menuContainer.style[ 'transform' ] = 'translateX(0)';
 
 					curscrollDir = 'left';
 
 				}
-				else if( relativemouseX > therange[1] && menuContainerwidth > prioritywidth ) {
+				else if( relativemouseX > therange[ 1 ] && menuContainerwidth > prioritywidth ) {
 
 					rightmost = -(menuContainerwidth - prioritywidth + 17);
 
-					menuContainer.style['transform'] = 'translateX(' + rightmost +'px)';
+					menuContainer.style[ 'transform' ] = 'translateX('+ rightmost +'px)';
 
 					curscrollDir = 'right';
 
@@ -512,7 +518,7 @@
 
 			});
 
-			RR.event([menuContainer], 'mouseleave', function(e) {
+			RR.event([menuContainer], 'mouseleave', (e) => {
 
 				let matrix = window.getComputedStyle(menuContainer).getPropertyValue('transform').replace(/[^0-9\-.,]/g, '').split(',');
 
@@ -524,11 +530,11 @@
 
 			});
 
-			RR.event([window], 'resize', () => {
+			RR.event([ window ], 'resize', () => {
 
 				clearTimeout(resizetimer);
 
-				resizetimer = setTimeout(() => {
+				resizetimer = void setTimeout(() => {
 
 					updateMeasures();
 
@@ -536,7 +542,7 @@
 
 			});
 
-			RR.event([window], 'load', () => {
+			RR.event([ window ], 'load', () => {
 
 				updateMeasures();
 
@@ -545,7 +551,7 @@
 		},
 
 		// Intended to play short interface sounds
-		tick: function( t, v ) {
+		tick: ( t, v ) => {
 
 			let path = '/Interface/sounds/';
 
@@ -619,7 +625,7 @@
 
 			}
 
-			const tick = new Audio(path);
+			let tick = new Audio(path);
 
 			tick.volume = v;
 
@@ -627,47 +633,49 @@
 
 		},
 
- 		syntax: function(code) {
+ 		syntax: ( code ) => {
 
 			let comments = [];
 			let strings	 = [];
 			let res		 = [];
 			let all		 = { 'C': comments, 'S': strings, 'R': res };
 			let safe	 = { '<': '<', '>': '>', '&': '&' };
+			let l;
 
-			return code.replace(/[<>&]/g, function( m ) { 
+			return code.replace(/[<>&]/g, ( m ) => { 
 			
 				return safe[ m ]; 
 
-			}).replace(/\/\*[\s\S]*\*\//g, function( m ) { 
+			}).replace(/\/\*[\s\S]*\*\//g, ( m ) => { 
 
-				var l = comments.length; comments.push( m ); 
+				l = comments.length; comments.push( m ); 
 
 				return '~~~C'+ l +'~~~';
 
-			}).replace(/([^\\])\/\/[^\n]*\n/g, function( m, f ) { 
+			}).replace(/([^\\])\/\/[^\n]*\n/g, ( m, f ) => { 
 
-				var l = comments.length; comments.push( m ); 
+				l = comments.length; comments.push( m ); 
 
 				return f +'~~~C'+ l +'~~~'; 
 
-			}).replace(/\/(\\\/|[^\/\n])*\/[gim]{0,3}/g, function( m ){ 
+			}).replace(/\/(\\\/|[^\/\n])*\/[gim]{0,3}/g, ( m ) => { 
 
-				var l = res.length; res.push( m ); 
+				l = res.length; res.push( m ); 
 
 				return '~~~R'+ l +'~~~';
 
-			}).replace(/([^\\])((?:'(?:\\'|[^'])*')|(?:"(?:\\"|[^"])*"))/g, function( m, f, s )	{ 
+			}).replace(/([^\\])((?:'(?:\\'|[^'])*')|(?:"(?:\\"|[^"])*"))/g, ( m, f, s ) => { 
 
-				var l = strings.length; 
+				l = strings.length;
+
 				strings.push(s); 
 
 				return f +'~~~S'+ l +'~~~'; 
 
-			}).replace(/(var|function|typeof|new|return|if|for|in|while|break|do|continue|switch|case)([^a-z0-9\$_])/gi,
+			}).replace(/(var|let|const|function|typeof|new|return|if|for|in|while|break|do|continue|switch|case)([^a-z0-9\$_])/gi,
 				'<span class="kwrd">$1</span>$2').replace(/(\{|\}|\]|\[|\|)/gi,
 				'<span class="gly">$1</span>').replace(/([a-z\_\$][a-z0-9_]*)[\s]*\(/gi,
-				'<span class="func">$1</span>(').replace(/~~~([CSR])(\d+)~~~/g, function( m, t, i ) { 
+				'<span class="func">$1</span>(').replace(/~~~([CSR])(\d+)~~~/g, ( m, t, i ) => { 
 
 					return '<span class="'+ t +'">'+ all[ t ][ i ] +'</span>'; 
 
@@ -707,15 +715,15 @@
 
 					}
 
-				}, function() {
+				}, () => {
 
-					let hSizeX = RR.sel('.hint')[0].offsetWidth;
-					let overflowSizeX = hSizeX + RR.curxy[0] + 20;
+					let hSizeX = RR.sel('.hint')[ 0 ].offsetWidth;
+					let overflowSizeX = hSizeX + RR.curxy[ 0 ] + 20;
 
 					that.setAttribute('data-title', that.title); 
 					that.title = '';
 
-					RR.event([that], 'mousemove', (evt) => {
+					RR.event([ that ], 'mousemove', (evt) => {
 
 						let hint = RR.sel('.hint');
 
@@ -765,24 +773,24 @@
 		},
 
 		// Browser events futures support
-		event: (e, evt, c) => {
+		event: ( e, evt, c ) => {
 
-			var e = (e.length) ? RR.htmlObj(e) : [e];
+			var e = (e.length) ? RR.htmlObj(e) : [ e ];
 
 			var eMode = evt;
 			var eLock = null;
 
 			var eventsHahses = [];
 
-			if(e) {
+			if( e ) {
 
 				for( let i of e ) {
 
-					if(RR.isC(c)) {
+					if( RR.isC(c) ) {
 
 						if( evt.includes(':lock') ) {
 
-							eMode = evt.split(':')[0];  
+							eMode = evt.split(':')[ 0 ];
 							eLock = true;
 
 						}
@@ -827,7 +835,7 @@
 						let eventIdMD5 = RR.md5( c.toString() + i.outerHTML );
 
 						// log event
-						RR.events.push([i, eLock ? m +'::lock' : m, c, eventIdMD5]);
+						RR.events.push([ i, eLock ? m +'::lock' : m, c, eventIdMD5 ]);
 
 						i.addEventListener(m, c, {
 
@@ -837,7 +845,7 @@
 
 						console.log( 'Event created: '+ eventIdMD5 );
 
-						eventsHahses.push([i, eMode, eventIdMD5]);
+						eventsHahses.push([ i, eMode, eventIdMD5 ]);
 
 					}
 
@@ -850,7 +858,7 @@
 		},
 
 		// Fetch future
-		fetch: function(u = null, m = 'get', d = 'text', e = null , f = null, preview = null) {
+		fetch: function( u = null, m = 'get', d = 'text', e = null , f = null, preview = null ) {
 
 			let params = {
 
@@ -863,16 +871,16 @@
 
 			};
 
-			if( ['POST', 'PUT'].includes(m.toUpperCase()) && f ) {
+			if( [ 'POST', 'PUT' ].includes(m.toUpperCase()) && f ) {
 
 				params.body = RR.FormData ? RR.FormData : d;
 
 			}
 
-			const R = new Request(u, params);
+			let R = new Request(u, params);
 
 			// Fetch URI
-			fetch(R).then(( r ) => {
+			fetch( R ).then(( r ) => {
 
 				RR.screenPosition(.4, 1, true);
 
@@ -880,7 +888,7 @@
 
 					let f;
 
-					switch(d) {
+					switch( d ) {
 
 						default:
 						case 'text':
@@ -945,36 +953,36 @@
 
 			for( let i = RR.events.length; i--; ) {
 
-				if( RR.isset( RR.events[i][3] ) ) {
+				if( RR.isset( RR.events[ i ][ 3 ] ) ) {
 
-					if( hash === RR.events[i][3] ) {
+					if( hash === RR.events[ i ][ 3 ] ) {
 
-						if( !RR.events[i][1].includes('::lock') ) {
+						if( !RR.events[ i ][ 1 ].includes('::lock') ) {
 
-							RR.events[i][0].removeEventListener(RR.events[i][1], RR.events[i][2], false);
+							RR.events[ i ][ 0 ].removeEventListener(RR.events[ i ][ 1 ], RR.events[ i ][ 2 ], null);
 
 							console.log('Event '+ hash +' detached!');
 
 						}
 						else {
 
-							newEvents.push( RR.events[i] );
+							newEvents.push( RR.events[ i ] );
 
-							console.log('Event '+ RR.events[i][3] +' locked! Can\'t detach');
+							console.log('Event '+ RR.events[ i ][ 3 ] +' locked! Can\'t detach');
 
 						}
 
 					}
 					else {
 
-						newEvents.push( RR.events[i] );
+						newEvents.push( RR.events[ i ] );
 
 					}
 
 				} 
 				else {
 
-					newEvents.push( RR.events[i] );
+					newEvents.push( RR.events[ i ] );
 
 				}
 
@@ -989,9 +997,9 @@
 
 			for( let i = RR.events.length; i--; ) {
 
-				RR.events[i][0].removeEventListener(RR.events[i][1], RR.events[i][2], false);
+				RR.events[ i ][ 0 ].removeEventListener(RR.events[ i ][ 1 ], RR.events[ i ][ 2 ], null);
 
-				if ( !RR.events[i][1].includes('::lock')) { // ignore locked events
+				if ( !RR.events[ i ][ 1 ].includes('::lock')) { // ignore locked events
 
 					RR.events.pop();
 
@@ -1002,7 +1010,7 @@
 		},
 
 		// Form submission future based on fetch API
-		fetchSubmit: (f, t = 'text', c) => {
+		fetchSubmit: ( f, t = 'text', c ) => {
 
 			RR.event(f, 'submit', function(e) {
 
@@ -1011,7 +1019,7 @@
 				if( e.isTrusted ) {
 
 					let action = this.action !== document.location.pathname ? this.action : document.location.pathname;
-					let method = RR.attr(this, 'method')[0].toUpperCase();
+					let method = RR.attr(this, 'method')[ 0 ].toUpperCase();
 
 					let formInputs = this.querySelectorAll("input[type='text'], input[type='file'], input[type='hidden'], input[type='email'], input[type='number'], input[type='password'], input[type='date'], input[type='time'], input[type='tel'], input[type='url'], input[type='month'], input[type='week'], input[type='search'], input[type='color'], input[type='range']"); 
 					let formRadiosCheckboxes = this.querySelectorAll("input[type='radio'], input[type='checkbox']");
@@ -1021,9 +1029,9 @@
 					let data = new FormData();
 
 					// text and other formats
-					if(formInputs.length) {
+					if( formInputs.length ) {
 
-						for(let j of formInputs) { 
+						for( let j of formInputs ) { 
 
 							if( j.type === 'file' ) {
 
@@ -1053,9 +1061,9 @@
 					}
 
 					// multi string long text
-					if(formTextareas.length) {
+					if( formTextareas.length ) {
 
-						for(let u of formTextareas) {
+						for( let u of formTextareas ) {
 
 							data.append( btoa(u.name), RR.utoa(u.value +'~:::~text' +'~:::~'+ ( u.maxLength ? u.maxLength : -1)) );
 
@@ -1064,9 +1072,9 @@
 					}
 
 					// boolean elements
-					if(formRadiosCheckboxes.length) {
+					if( formRadiosCheckboxes.length ) {
 
-						for(let l of formRadiosCheckboxes) {
+						for( let l of formRadiosCheckboxes ) {
 
 							if( RR.attr(l, 'checked').includes('checked') ) {
 
@@ -1078,16 +1086,16 @@
 
 					}
 
-					if(formSelect.length) {
+					if( formSelect.length ) {
 
 						// selects elements
-						for(let s of formSelect) {
+						for( let s of formSelect ) {
 
 							if( !RR.isU(s.name) ) {
 
 								let options = s.querySelectorAll('option'), name = s.name, c = 0;
 
-								for(let i of options) {
+								for( let i of options ) {
 
 									let option = i;
 
@@ -1125,13 +1133,13 @@
 		// Parallaxing Effects core
 		parallaxBlocks: ( t ) => {
 
-			const blocks = RR.isO( t ) || RR.isA( t ) ? t : [ t ];
+			let blocks = RR.isO( t ) || RR.isA( t ) ? t : [ t ];
 
 			R.reParallax();
 
 			if( RR.isO(blocks) && blocks ) {
 
-				setTimeout(() => {
+				void setTimeout(() => {
 
 					for( let parallax of blocks ) {
 
@@ -1159,7 +1167,7 @@
 
 									});
 
-								}, false);
+								}, null);
 
 							}
 
@@ -1175,17 +1183,23 @@
 
 		reParallax: ( relax = 'article' )  => {
 
-			setTimeout(() => {
+			void setTimeout(() => {
 
-				for( let plax of RR.sel( relax ) ) {
+				let parallax = RR.sel( relax );
 
-					for( let block of plax.querySelectorAll('.parallax-1, .parallax-2') ) {
+				if( parallax ) {
 
-						RR.animate([ block ], ['height:0px:150:linear'], () => {
+					for( let plax of parallax ) {
 
-							RR.animate([ block ], ['height:'+ plax.offsetHeight +'px:2000:elastic', 'width:'+ plax.offsetWidth +'px:2000:elastic']);
+						for( let block of plax.querySelectorAll('.parallax-1, .parallax-2') ) {
 
-						});
+							RR.animate([ block ], ['height:0px:150:linear'], () => {
+
+								RR.animate([ block ], ['height:'+ plax.offsetHeight +'px:2000:elastic', 'width:'+ plax.offsetWidth +'px:2000:elastic']);
+
+							});
+
+						}
 
 					}
 
@@ -1220,7 +1234,7 @@
 
 			let list = RR.sel('img[data-src]');
 
-			const loadImages = (image) => {
+			let loadImages = (image) => {
 
 				image.setAttribute('src', image.getAttribute('data-src'));
 				
@@ -1234,9 +1248,9 @@
 
 			};
 
-			if('IntersectionObserver' in window) {
+			if( 'IntersectionObserver' in window ) {
 
-				const observer = new IntersectionObserver((items, observer) => {
+				let observer = new IntersectionObserver(( items, observer ) => {
 
 					items.forEach((item) => {
 
@@ -1265,7 +1279,6 @@
 			} 
 			else {
 
-
 				if( list ) {
 
 					list.forEach((img) => {
@@ -1291,10 +1304,10 @@
 
 				if( checkboxes ) {
 
-					for (let i of checkboxes) {
+					for( let i of checkboxes ) {
 
 						let parent = i.parentElement;
-						let checked = RR.attr(i, 'checked')[0];
+						let checked = RR.attr(i, 'checked')[ 0 ];
 
 						i.outerHTML = '<div class="revolver__form-hidden-input">'+ i.outerHTML +'</div>';
 
@@ -1304,16 +1317,16 @@
 
 						} 
 
-						RR.addClass([parent], 'checkbox-style');
+						RR.addClass([ parent ], 'checkbox-style');
 
-						if( RR.attr(i, 'type')[0] === 'checkbox' ) {
+						if( RR.attr(i, 'type')[ 0 ] === 'checkbox' ) {
 
-							RR.addClass([parent], 'checkbox');
+							RR.addClass([ parent ], 'checkbox');
 
 						} 
 						else {
 
-							RR.addClass([parent], 'radiobox');
+							RR.addClass([ parent ], 'radiobox');
 
 						}
 
@@ -1321,7 +1334,7 @@
 
 						if( ['checked', ''].includes(checked) ) {
 
-							RR.addClass([parent], 'label-active');
+							RR.addClass([ parent ], 'label-active');
 							RR.addClass(parent.querySelectorAll('.checkbox-marker'), 'checkbox-checked');
 
 						}
@@ -1335,7 +1348,7 @@
 							let check = this.querySelectorAll('input[type="checkbox"], input[type="radio"]');
 							let label = this.querySelectorAll('.checkbox-marker'); 
 
-							if( RR.attr(check[0], 'type')[0] === 'radio' ) { 
+							if( RR.attr(check[ 0 ], 'type')[ 0 ] === 'radio' ) { 
 
 								let allRadios   = this.closest('fieldset').querySelectorAll('input[type="radio"]');
 								let allLabels   = this.closest('fieldset').querySelectorAll('.checkbox-marker');
@@ -1347,15 +1360,15 @@
 
 									RR.attr(x, {'checked': null});
 
-									RR.removeClass([allWrappers[cnt]], 'label-active');
+									RR.removeClass([ allWrappers[ cnt ] ], 'label-active');
 									RR.removeClass(label, 'checkbox-checked');
 
 									RR.addClass(label, 'checkbox-unchecked');
-									RR.removeClass([allLabels[cnt]],'checkbox-checked');
+									RR.removeClass([ allLabels[ cnt ] ],'checkbox-checked');
 
 									RR.addClass(label, 'checkbox-checked');
 
-									RR.addClass([this], 'label-active');
+									RR.addClass([ this ], 'label-active');
 
 									RR.removeClass(label, 'checkbox-unchecked');
 
@@ -1364,19 +1377,19 @@
 
 								RR.tick('check', .02);
 
-								RR.attr(this.querySelectorAll('input[type="radio"]')[0], {'checked': 'checked'});
+								RR.attr(this.querySelectorAll('input[type="radio"]')[ 0 ], {'checked': 'checked'});
 
 							} 
 
-							if( RR.attr(check[0], 'type')[0] === 'checkbox' ) {
+							if( RR.attr(check[ 0 ], 'type')[ 0 ] === 'checkbox' ) {
 
-								if( !check[0].disabled ) {
+								if( !check[ 0 ].disabled ) {
 
-									if( check[0].checked ) {
+									if( check[ 0 ].checked ) {
 
-										RR.attr(check[0], {'checked': null});
+										RR.attr(check[ 0 ], {'checked': null});
 
-										RR.removeClass([this], 'label-active');
+										RR.removeClass([ this ], 'label-active');
 
 										RR.removeClass(label, 'checkbox-checked');
 										RR.addClass(label, 'checkbox-unchecked');
@@ -1386,9 +1399,9 @@
 
 										RR.tick('check', .02);
 
-										RR.attr(check[0], {'checked': 'checked'});
+										RR.attr(check[ 0 ], {'checked': 'checked'});
 
-										RR.addClass([this], 'label-active');
+										RR.addClass([ this ], 'label-active');
 
 										RR.addClass(label, 'checkbox-checked');
 										RR.removeClass(label, 'checkbox-unchecked');
@@ -1411,17 +1424,17 @@
 
 					RR.event('body', 'click', function(x) {
 
-						let target = this.querySelectorAll('.revolver__form-option-target')[0];
+						let target = this.querySelectorAll('.revolver__form-option-target')[ 0 ];
 
 						if( target && x.isTrusted ) {
 
 							x.cancelBubble = true;
 
-							if( !RR.hasClass([x.target], 'revolver__form-option-target') ) {
+							if( !RR.hasClass([ x.target ], 'revolver__form-option-target') ) {
 
 								let listToHide = RR.htmlObj('.styled-select dfn');
 
-								for (let h of listToHide) {
+								for( let h of listToHide ) {
 
 									if( h ) {
 
@@ -1467,13 +1480,13 @@
 
 						if( parent.tagName === 'LABEL' ) {
 
-							RR.addClass([parent], 'styled-select' );
+							RR.addClass([ parent ], 'styled-select' );
 
 						} 
 						else {
 
-							RR.wrap([u], 'label');
-							RR.addClass([parent], 'styled-select');
+							RR.wrap([ u ], 'label');
+							RR.addClass([ parent ], 'styled-select');
 
 						}
 
@@ -1483,9 +1496,9 @@
 
 						if( selected.length ) {
 
-							var wrp = selected[0].closest('label');
+							var wrp = selected[ 0 ].closest('label');
 
-							wrp.innerHTML = '<span style="width:50%" class="revolver__form-option-target target">'+ selected[0].innerText +'</span>'+ wrp.innerHTML;
+							wrp.innerHTML = '<span style="width:50%" class="revolver__form-option-target target">'+ selected[ 0 ].innerText +'</span>'+ wrp.innerHTML;
 
 						} 
 						else {
@@ -1494,9 +1507,9 @@
 
 							if( selected.length ) {
 
-								var wrp = selected[0].closest('label');
+								var wrp = selected[ 0 ].closest('label');
 
-								wrp.innerHTML = '<span style="width:50%" class="revolver__form-option-target target">'+ selected[0].innerText +'</span>'+ wrp.innerHTML;
+								wrp.innerHTML = '<span style="width:50%" class="revolver__form-option-target target">'+ selected[ 0 ].innerText +'</span>'+ wrp.innerHTML;
 
 							}
 
@@ -1504,7 +1517,7 @@
 
 						void setTimeout(() => { 
 
-							parent.querySelectorAll('.revolver__form-options-container')[0].style.visibility = 'hidden';
+							parent.querySelectorAll('.revolver__form-options-container')[ 0 ].style.visibility = 'hidden';
 
 						}, 1150);
 
@@ -1516,12 +1529,12 @@
 
 						if( e.isTrusted ) {
 
-							let list = this.closest('label').querySelectorAll('dfn')[0];
+							let list = this.closest('label').querySelectorAll('dfn')[ 0 ];
 							let tgtx = this;
 
 							RR.tick('hint', .02);
 
-							RR.addClass([tgtx], 'select-opened');
+							RR.addClass([ tgtx ], 'select-opened');
 
 							list.style.visibility = 'visible';
 
@@ -1535,36 +1548,36 @@
 
 						if( e.isTrusted ) {
 
-							let selectItem = this.parentNode.parentNode.querySelectorAll('select')[0];
+							let selectItem = this.parentNode.parentNode.querySelectorAll('select')[ 0 ];
 							let callback   = selectItem.dataset.callback;
 
 							let label = this.closest('label');
-							let list  = label.querySelectorAll('dfn')[0];
+							let list  = label.querySelectorAll('dfn')[ 0 ];
 
 							let tgt   = label.querySelectorAll('.target');
 							let slc   = label.querySelectorAll('option');
 							let cls   = label.querySelectorAll('.styled-option');
 
-							label.querySelectorAll('.target')[0].innerHTML = this.innerText;
+							label.querySelectorAll('.target')[ 0 ].innerHTML = this.innerText;
 
 							let current = this.dataset.index - 0;
 
-							for(let k of slc) {
+							for( let k of slc ) {
 
 								RR.attr(k, {'selected': null});
 
 							}
 
-							for(let x of cls) {
+							for( let x of cls ) {
 
-								RR.removeClass([x], 'selected');
+								RR.removeClass([ x ], 'selected');
 
 							}
 
 							RR.tick('check', 0.02);
 
-							RR.attr(slc[current], {'selected': 'selected'});
-							RR.addClass([cls[current]], 'selected');;
+							RR.attr(slc[ current ], {'selected': 'selected'});
+							RR.addClass([ cls[current] ], 'selected');;
 
 							list.style.visibility = 'hidden';
 
@@ -1579,9 +1592,9 @@
 
 									let sopts = [];
 
-									for(let o of slc) {
+									for( let o of slc ) {
 
-										sopts.push( o.selected ? ['choosen', o.value] : ['inlist', o.value] );
+										sopts.push( o.selected ? [ 'choosen', o.value ] : [ 'inlist', o.value ] );
 
 									}
 
@@ -1615,11 +1628,11 @@
 
 					let className = 'revolver__editor-'+ ( i.name.includes('=') ? atob( i.name ) : i.name );
 
-					RR.addClass([i.parentElement], className);
+					RR.addClass([ i.parentElement ], className);
 
 					RR.wrap('textarea', 'output');
 
-					RR.addClass([i.parentElement], 'revolver__editor-area');
+					RR.addClass([ i.parentElement ], 'revolver__editor-area');
 
 					RR.new('dfn', '.revolver__editor-area', 'before', {
 
@@ -1647,19 +1660,19 @@
 
 							let tag = this.innerText.replace('[', '').replace(']', '');
 
-							function cursorPosition(textarea) {
+							let cursorPosition = ( textarea ) => {
 
-								return [textarea.selectionStart, textarea.selectionEnd];
+								return [ textarea.selectionStart, textarea.selectionEnd ];
 
-							}
+							};
 
-							function getSelection(textarea, positions) {
+							let getSelection = ( textarea, positions ) => {
 
-								return textarea.value.substring(positions[0], positions[1]);
+								return textarea.value.substring(positions[ 0 ], positions[ 1 ]);
 
-							}
+							};
 
-							function makeTag( t, text ) {
+							let makeTag = ( t, text ) => {
 
 								let HTMLMarkup;
 
@@ -1694,34 +1707,33 @@
 
 								return HTMLMarkup;
 
-							}
+							};
 
-							function wrappedText( textarea, t ) {
+							let wrappedText = ( textarea, t ) => {
 
 								return makeTag(t, getSelection(textarea, cursorPosition( textarea )));
 
-							}
+							};
 
-
-							function insertText( textarea, contents ) {
+							let insertText = ( textarea, contents ) => {
 
 								textarea.focus();
 
-								textarea.value = textarea.value.substring(0, cursorPosition(textarea)[0]) + contents + textarea.value.substring(cursorPosition(textarea)[1], textarea.value.length);
+								textarea.value = textarea.value.substring(0, cursorPosition(textarea)[ 0 ]) + contents + textarea.value.substring(cursorPosition(textarea)[ 1 ], textarea.value.length);
 
-							}
+							};
 
 							if( tag === 'IMG') {
 
 								RR.modal('Insert image media', '<form id="revolver__editor-insert"><input name="alt" type="text" placeholder="Type alternative text" /><input type="url" placeholder="Input url" name="address"/><input type="button" value="Insert"></form>');
 
-								RR.event('#revolver__editor-insert input[type="button"]', 'click', function(e) {
+								RR.event('#revolver__editor-insert input[type="button"]', 'click', (e) => {
 
 									e.preventDefault();
 
 									if( e.isTrusted ) {
 
-										insertText( i, '<figure>\n<img src="'+ RR.sel('#revolver__editor-insert input[name="address"]')[0].value +'" alt="'+ RR.sel('#revolver__editor-insert input[name="alt"]')[0].value +'" />\n<figcaption>'+ RR.sel('#revolver__editor-insert input[name="alt"]')[0].value +'</figcaption>\n</figure>' );
+										insertText( i, '<figure>\n<img src="'+ RR.sel('#revolver__editor-insert input[name="address"]')[ 0 ].value +'" alt="'+ RR.sel('#revolver__editor-insert input[name="alt"]')[ 0 ].value +'" />\n<figcaption>'+ RR.sel('#revolver__editor-insert input[name="alt"]')[ 0 ].value +'</figcaption>\n</figure>' );
 
 									}
 
@@ -1732,13 +1744,13 @@
 
 								RR.modal('Insert anchor','<form id="revolver__editor-insert"><input name="text" type="text" placeholder="Type anchor text" /><input type="url" placeholder="Type href url" name="address"/><input type="button" value="Insert"></form>');
 
-								RR.event('#revolver__editor-insert input[type="button"]', 'click', function(e) {
+								RR.event('#revolver__editor-insert input[type="button"]', 'click', (e) => {
 
 									e.preventDefault();
 
 									if( e.isTrusted ) {
 
-										insertText( i, '<a href="'+ RR.sel('#revolver__editor-insert input[name="address"]')[0].value +'" title="'+ RR.sel('#revolver__editor-insert input[name="text"]')[0].value +'">'+ RR.sel('#revolver__editor-insert input[name="text"]')[0].value +'</a>' );
+										insertText( i, '<a href="'+ RR.sel('#revolver__editor-insert input[name="address"]')[ 0 ].value +'" title="'+ RR.sel('#revolver__editor-insert input[name="text"]')[ 0 ].value +'">'+ RR.sel('#revolver__editor-insert input[name="text"]')[ 0 ].value +'</a>' );
 
 									}
 
@@ -1759,7 +1771,7 @@
 
 								);
 
-								RR.event('#mBoxContent .smiles-row b', 'click', function(e) {
+								RR.event('#mBoxContent .smiles-row b', 'click', (e) => {
 
 									e.preventDefault();
 
@@ -1929,7 +1941,7 @@
 
 											RR.FormData.append(btoa('revolver_preview_mode'), RR.utoa(pmode +'~:::~text~:::~-1'));
 
-											let inputs = RR.sel('.revolver__content-preview')[0].closest('form').querySelectorAll('input, textarea');
+											let inputs = RR.sel('.revolver__content-preview')[ 0 ].closest('form').querySelectorAll('input, textarea');
 
 											let pass = true;
 
@@ -2082,9 +2094,9 @@
 
 													var preview = RR.sel('.revolver__preview');
 
-													if( RR.isset(preview[0]) ) {
+													if( RR.isset(preview[ 0 ]) ) {
 
-														RR.event(preview[0].querySelectorAll('.revolver__status-notifications .revolver__statuses-heading i'), 'click', function(e) {
+														RR.event(preview[ 0 ].querySelectorAll('.revolver__status-notifications .revolver__statuses-heading i'), 'click', function(e) {
 
 															e.preventDefault();
 
@@ -2092,15 +2104,15 @@
 
 																RR.tick('expand', .05);
 
-																RR.styleApply([this.parentElement], ['display:none'], () => {
+																RR.styleApply([ this.parentElement ], ['display:none'], () => {
 
 																	RR.animate(this.parentElement.parentElement.children, ['height:0px:500:elastic']);
 
-																	RR.animate([this.parentElement.parentElement], ['height:0px:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1000:harmony']);
+																	RR.animate([ this.parentElement.parentElement ], ['height:0px:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1000:harmony']);
 
 																	void setTimeout(() => {
 
-																		RR.rem([this.parentElement.parentElement]);
+																		RR.rem([ this.parentElement.parentElement ]);
 
 																	}, 1300);
 
@@ -2116,9 +2128,9 @@
 
 														RR.reParallax();
 
-														if( RR.isset(preview[1]) ) {
+														if( RR.isset(preview[ 1 ]) ) {
 
-															RR.rem([preview[1]]);
+															RR.rem([preview[ 1 ]]);
 
 														}
 
@@ -2167,28 +2179,28 @@
 
 		// Location API 
 		// c - is a callback
-		location: (title, url, c = null) => {
+		location: ( title, url, c = null ) => {
 
 			document.title = title;
 
 			self.history.pushState({'title': title, 'url': url}, '', url);
 
-			RR.callback(c, [title, url]);
+			RR.callback(c, [ title, url ]);
 
 		},
 
 		// Modal window future
-		modal: (t = 'mBox title', d = 'mBox contents', q, c) => {
+		modal: ( t = 'mBox title', d = 'mBox contents', q, c = null ) => {
 
 			// Make new modal window with overlay or without
 			var q = (q) ? '#overlay' : 'body';
 
 			// Calculate default sizes s[0:width,1:height]
-			if(d && d.length > 10 && !RR.lockModalBox) {
+			if( d && d.length > 10 && !RR.lockModalBox ) {
 
-				let setPosition = (e, xy) => {
+				let setPosition = ( e, xy ) => {
 
-					RR.styleApply([e], ['left:'+ Math.round(xy[0]) +'px', 'top:'+ Math.round(xy[1]) +'px']);
+					RR.styleApply([ e ], ['left:'+ Math.round(xy[ 0 ]) +'px', 'top:'+ Math.round(xy[ 1 ]) +'px']);
 
 				};
 
@@ -2207,14 +2219,14 @@
 
 				});
 
-				let modalBox = RR.htmlObj('#mBox')[0];
+				let modalBox = RR.htmlObj('#mBox')[ 0 ];
 
 				// Centering positions 
-				let CenterTop  = ( RR.currentSizes[1] - (modalBox.offsetHeight - 0) ) / 3;
-				let CenterLeft = ( RR.currentSizes[0] - (modalBox.offsetWidth - 0) ) / 2;
+				let CenterTop  = ( RR.currentSizes[ 1 ] - modalBox.offsetHeight ) / 3;
+				let CenterLeft = ( RR.currentSizes[ 0 ] - modalBox.offsetWidth ) / 2;
 
 				// Center modal window
-				setPosition(modalBox, [CenterLeft, CenterTop]);
+				setPosition(modalBox, [ CenterLeft, CenterTop ]);
 
 				// Animate opacity
 				RR.animate('#mBox', ['opacity:1:1500:linear']);
@@ -2222,7 +2234,7 @@
 				// Redraw position
 				RR.event(self, 'resize', () => {
 
-					setPosition(modalBox, [(RR.currentSizes[0] - (modalBox.offsetWidth - 0) ) / 2, ( RR.currentSizes[1] - (modalBox.offsetHeight - 0) ) / 3]);
+					setPosition(modalBox, [ (RR.currentSizes[ 0 ] - modalBox.offsetWidth ) / 2, ( RR.currentSizes[ 1 ] - modalBox.offsetHeight ) / 3 ]);
 
 				});
 
@@ -2242,7 +2254,7 @@
 
 							if( !RR.StopMoving && e.isTrusted ) {
 
-								setPosition(x.parentElement, [RR.curxy[0] - mFixRealPosL, RR.curxy[1] - mFixRealPosT]);
+								setPosition(x.parentElement, [ RR.curxy[ 0 ] - mFixRealPosL, RR.curxy[ 1 ] - mFixRealPosT ]);
 
 							}
 
@@ -2286,47 +2298,48 @@
 		},
 
 		// Show or hide elements
-		toggle: (e, c) => {
+		toggle: ( e, c ) => {
 
-			for(let i of RR.htmlObj(e)) {
+			for( let i of RR.htmlObj(e) ) {
 
 				var x = RR.treeHacks(i);
 
 				if( x.style.overflow === 'hidden' ) {
 
-					RR.styleApply([x], ['overflow:visible', 'width', 'height', 'display', 'line-height']);
+					RR.styleApply([ x ], ['overflow:visible', 'width', 'height', 'display', 'line-height']);
 
 				}
 				else {
 
-					RR.styleApply([x], ['display:inline-block', 'overflow:hidden', 'width:0px', 'height:0px', 'line-height:0px']);
+					RR.styleApply([ x ], ['display:inline-block', 'overflow:hidden', 'width:0px', 'height:0px', 'line-height:0px']);
 
 				};
 
-				RR.callback(x, c)
+				RR.callback(x, c);
+
 			}
 
 		},
 
 		// Scroll screen position to an element
-		scroll: (e = 'body') => {
+		scroll: ( e = 'body' ) => {
 
 			let t = RR.htmlObj(e);
 
 			if( t && !RR.isM ) {
 
-				let y = t[0].offsetTop - t[0].offsetHeight - 50;
+				let y = t[ 0 ].offsetTop - t[ 0 ].offsetHeight - 50;
 
-				RR.styleApply([t[0]], ['opacity:.1']);
+				RR.styleApply([ t[0] ], ['opacity:.1']);
 
-				RR.animateMove(t[0], 'scroll', [RR.curOffset[1], y], 1500, 'linear', e);
+				RR.animateMove(t[ 0 ], 'scroll', [ RR.curOffset[ 1 ], y ], 1500, 'linear', e);
 
 			}
 
 		},
 
 		// Expand future for animatable elements 
-		expand: (s, c) => {
+		expand: ( s, c ) => {
 
 			// Collapsible toggle
 			RR.event(s, 'click', function(e) {
@@ -2339,47 +2352,47 @@
 					var expanded = null;
 
 					// RevolveR CMF Exception :: Definition Lists Expand future
-					if(this.tagName.toLowerCase() === 'dt') {
+					if( this.tagName.toLowerCase() === 'dt' ) {
 
-						RR.toggle([expander]);
+						RR.toggle([ expander ]);
 
 						return;
 
 					}
 
-					RR.toggleClass([this], 'collapse-expanded');
-					RR.toggleClass([expander], 'expander-expanded');
+					RR.toggleClass([ this ], 'collapse-expanded');
+					RR.toggleClass([ expander ], 'expander-expanded');
 
-					if( RR.hasClass([this], 'collapse-expanded') ) {
+					if( RR.hasClass([ this ], 'collapse-expanded') ) {
 
-						RR.toggle([expander]);
+						RR.toggle([ expander ]);
 
-						RR.styleApply([expander], ['width: 100%', 'display: inline-block', 'min-height:'+ expander.offsetHeight +'px', 'opacity: 0', 'transform:scale(.1,.1,.1)']);
+						RR.styleApply([ expander ], ['width: 100%', 'display: inline-block', 'min-height:'+ expander.offsetHeight +'px', 'opacity: 0', 'transform:scale(.1,.1,.1)']);
 
 						RR.tick('expand', .05);
 
-						RR.animate([expander], ['opacity:1:2000:linear','transform:scale(1,1,1):2000:elastic'], () => {
+						RR.animate([ expander ], ['opacity:1:2000:linear','transform:scale(1,1,1):2000:elastic'], () => {
 
 							R.reParallax();
 
-							RR.callback(expander, c, [true]);
+							RR.callback(expander, c, [ true ]);
 
 						});
 
 					}
 					else {
 
-						RR.styleApply([expander], ['display: inline-block', 'min-height: 0', 'height:'+ expander.offsetHeight +'px', 'opacity:1']);
+						RR.styleApply([ expander ], ['display: inline-block', 'min-height: 0', 'height:'+ expander.offsetHeight +'px', 'opacity:1']);
 
-						RR.animate([expander], ['opacity:0:800:linear', 'height:0px:1500:linear'], () => {
+						RR.animate([ expander ], ['opacity:0:800:linear', 'height:0px:1500:linear'], () => {
 
-							RR.toggle([expander]);
+							RR.toggle([ expander ]);
 
-							RR.styleApply([expander], ['overflow: hidden', 'height:0px']);
+							RR.styleApply([ expander ], ['overflow: hidden', 'height:0px']);
 
 							R.reParallax();
 
-							RR.callback(expander, c, [null]);
+							RR.callback(expander, c, [ null ]);
 
 						});
 
@@ -2392,9 +2405,9 @@
 		},
 
 		// Toggle class ( [el] [class name] )
-		toggleClass: (e, c) => {
+		toggleClass: ( e, c ) => {
 
-			for(let i of RR.htmlObj(e)) {
+			for( let i of RR.htmlObj(e) ) {
 
 				i.classList.toggle(c);
 
@@ -2403,9 +2416,9 @@
 		},
 
 		// This helper removes class
-		removeClass: (e, c) => {
+		removeClass: ( e, c ) => {
 
-			for(let i of RR.htmlObj(e)) {
+			for( let i of RR.htmlObj(e) ) {
 
 				i.classList.remove(c);
 
@@ -2414,9 +2427,9 @@
 		},
 
 		// This helper add class
-		addClass: (e, c) => {
+		addClass: ( e, c ) => {
 
-			for(let i of RR.htmlObj(e)) {
+			for( let i of RR.htmlObj(e) ) {
 
 				i.classList.add(c);
 
@@ -2425,13 +2438,13 @@
 		},
 
 		// This helper test for class value with given name are defined
-		hasClass: (e, c) => {
+		hasClass: ( e, c ) => {
 
-			var f = null;
+			let f = null;
 
-			for(let i of c.split(' ')) {
+			for( let i of c.split(' ') ) {
 
-				if(RR.treeHacks(RR.htmlObj(e)).classList.contains(i)) {
+				if( RR.treeHacks(RR.htmlObj(e)).classList.contains(i) ) {
 
 					f = true;
 
@@ -2444,26 +2457,26 @@
 		},
 
 		// Apply styles to element  
-		styleApply: (e, s, c = null) => {
+		styleApply: ( e, s, c = null ) => {
 
 			var e = RR.htmlObj(e);
 
 			if( e ) {
 
-				for(let t of e) {
+				for( let t of e ) {
 
-					for(let i of s) {
+					for( let i of s ) {
 
 						let sets = RR.arguments(i, ':');
 
-						if( RR.isset(sets[1]) ) {
+						if( RR.isset(sets[ 1 ]) ) {
 
-							t.style[RR.normalizeStyleName(sets[0])] = sets[1];
+							t.style[RR.normalizeStyleName(sets[ 0 ])] = sets[ 1 ];
 
 						}
 						else {
 
-							t.style[RR.normalizeStyleName(sets[0])] = 'inherit';
+							t.style[RR.normalizeStyleName(sets[ 0 ])] = 'inherit';
 
 						}
 
@@ -2478,36 +2491,36 @@
 		},
 
 		// Get CSS properties value
-		styleGet: (e, p) => {
+		styleGet: ( e, p ) => {
 
 			var p = RR.normalizeStyleName(p);
 
-			var s = e.style[p] ? e.style[p] : getComputedStyle(e, null)[p];
+			var s = e.style[ p ] ? e.style[ p ] : getComputedStyle(e, null)[ p ];
 
 			return RR.isU(s) ? '0' : s;
 
 		},
 
 		// Show elements
-		show: (e, t) => {
+		show: ( e, t ) => {
 
 			var e = RR.htmlObj(e);
 
-			for(let s of e) {
+			for( let s of e ) {
 
 				let	sh = s.savedHeight ? s.savedHeight : null; // return stored height
 				let sd = s.savedDisplay ? s.savedDisplay : 'inherit';
 
-				RR.styleApply([s], ['display:'+ sd]);
+				RR.styleApply([ s ], [ 'display:'+ sd ]);
 
 				if( sh ) {
 
-					RR.animate([s], ['height:'+ sh +':'+ t]);
+					RR.animate([ s ], [ 'height:'+ sh +':'+ t ]);
 
 				}
 				else {
 
-					RR.styleApply([s], ['height:auto']);
+					RR.styleApply([ s ], ['height:auto']);
 
 				}
 
@@ -2516,11 +2529,11 @@
 		},
 
 		// Hide elements
-		hide: (e, t) => {
+		hide: ( e, t ) => {
 
 			var e = RR.htmlObj(e);
 
-			for(let s of e) {
+			for( let s of e ) {
 
 				s.savedHeight  = RR.styleGet(s, 'height'); // save states for show module
 				s.savedDisplay = RR.styleGet(s, 'display');
@@ -2529,36 +2542,36 @@
 
 			RR.animate(e, ['height:0px:'+ t], () => {
 
-				RR.styleApply([this], ['display:none']);
+				RR.styleApply([ this ], ['display:none']);
 
 			});
 
 		},
 
 		// Animations for CSS properties
-		animate: (e, g, c = null) => {
+		animate: ( e, g, c = null ) => {
 
 			var e = RR.htmlObj(e);
 
 			// Execute animation queue
 			let queueStack = [];
 
-			for(let k of g) {
+			for( let k of g ) {
 
-				queueStack.push( RR.arguments(k, ':')[2] );
+				queueStack.push( RR.arguments(k, ':')[ 2 ] );
 
 			}
 
 			// Get max value
-			function ArrayMax(stack) {
+			let ArrayMax = (stack) => {
 
-				let max = stack[0];
+				let max = stack[ 0 ];
 
-				for(let i = 1; i < stack.length; i++) {
+				for( let i = 1; i < stack.length; i++ ) {
 
-					if(RR.stripNum( stack[i] ) > max) {
+					if( RR.stripNum( stack[ i ] ) > max ) {
 
-						max = stack[i];
+						max = stack[ i ];
 
 					}
 
@@ -2566,10 +2579,10 @@
 
 				return max;
 
-			}
+			};
 
 			// Higher time for callback
-			const LQ = ArrayMax(queueStack);
+			let LQ = ArrayMax(queueStack);
 
 			// Callback definitions
 			let callbackProp;
@@ -2579,19 +2592,19 @@
 			// Walk around selectors and properties
 			for( let x of e ) {
 
-				for(let i of g) {
+				for( let i of g ) {
 
 					let p = RR.arguments(i, ':');
-					let z = [...RR.shortToFull(x, p)];
+					let z = [ ...RR.shortToFull(x, p) ];
 
-					if(z[0][0] === 'transform') {
+					if( z[ 0 ][ 0 ] === 'transform' ) {
 
-						p[1] = z[0][1] + '';
+						p[ 1 ] = z[ 0 ][ 1 ] + '';
 
 					}
 
 					// Move queue
-					if( (p[2] - 0) >= (RR.stripNum(LQ) - 0) && callbackCounter < 1 ) {
+					if( (p[ 2 ] - 0) >= (RR.stripNum(LQ) - 0) && callbackCounter < 1 ) {
 
 						callback = c;
 						callbackCounter++;
@@ -2603,19 +2616,19 @@
 
 					}
 
-					for(let l in z) {
+					for( let l in z ) {
 
-						let prop = z[l][0];
-						let dest = z[l][1];
-						let unit = z[l][2];
+						let prop = z[ l ][ 0 ];
+						let dest = z[ l ][ 1 ];
+						let unit = z[ l ][ 2 ];
 
-						if( ['width', 'height', 'top', 'left', 'bottom', 'right'].includes(prop) ) {
+						if( [ 'width', 'height', 'top', 'left', 'bottom', 'right' ].includes(prop) ) {
 
-							if( ['top', 'left', 'bottom', 'right'].includes(prop) ) {
+							if( [ 'top', 'left', 'bottom', 'right' ].includes(prop) ) {
 
 								let pos = x.style.position;
 
-								if( !['absolute', 'relative' ].includes( pos ) ) {
+								if( ![ 'absolute', 'relative' ].includes( pos ) ) {
 
 									x.style.position = 'relative';
 
@@ -2623,10 +2636,10 @@
 
 							}
 
-							var from = RR.numberCSS(RR.styleGet(x, p[0]), p[0])[0];
+							var from = RR.numberCSS(RR.styleGet(x, p[ 0 ]), p[ 0 ])[ 0 ];
 
 							// Convert % to px
-							if(unit === '%' && from !== 0) {
+							if( unit === '%' && from !== 0 ) {
 
 								dest *= from / 100;
 								unit = 'px';
@@ -2634,11 +2647,11 @@
 							}
 
 						}
-						else if( ['backgroundColor', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'color', 'outlineColor', 'textDecorationColor', 'columnRuleColor', 'textEmphasisColor', 'caretColor'].includes(prop) ) {
+						else if( [ 'backgroundColor', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'color', 'outlineColor', 'textDecorationColor', 'columnRuleColor', 'textEmphasisColor', 'caretColor' ].includes(prop) ) {
 
 							if( /color/i.test(prop) ) {
 
-								RR.colorMix(x, p[0], p[1], p[2], p[3], callback);
+								RR.colorMix(x, p[ 0 ], p[ 1 ], p[ 2 ], p[ 3 ], callback);
 
 								if( callback ) {
 
@@ -2652,39 +2665,39 @@
 						else if ( prop === 'transform' ) {
 
 							// get default matrix defined as 2D
-							let M2D = RR.arguments(RR.getValFromPropsBrackets('matrix', self.getComputedStyle(x, null)[prop] === 'none' ? 'matrix(1, 0, 0, 1, 0, 0)' : self.getComputedStyle(x, null)[prop])[1], ','); 
+							let M2D = RR.arguments(RR.getValFromPropsBrackets('matrix', self.getComputedStyle(x, null)[ prop ] === 'none' ? 'matrix(1, 0, 0, 1, 0, 0)' : self.getComputedStyle(x, null)[ prop ])[ 1 ], ','); 
 
 							// convert 2D matrix to 3D align
-							let M3D = RR.arguments(RR.getValFromPropsBrackets('matrix3d', M2D.length <= 6 ? 'matrix3d('+ M2D[0] +', '+ M2D[1] +', 0, 0, '+ M2D[2] +', '+ M2D[3] +', 0, 0, 0, 0, 1, 0,'+ M2D[4] +','+ M2D[5] +', 0, 1)' : self.getComputedStyle(x, null)['transform'])[1], ',');
+							let M3D = RR.arguments(RR.getValFromPropsBrackets('matrix3d', M2D.length <= 6 ? 'matrix3d('+ M2D[ 0 ] +', '+ M2D[ 1 ] +', 0, 0, '+ M2D[ 2 ] +', '+ M2D[ 3 ] +', 0, 0, 0, 0, 1, 0,'+ M2D[ 4 ] +','+ M2D[ 5 ] +', 0, 1)' : self.getComputedStyle(x, null)['transform'])[ 1 ], ',');
 
 							// get current scale from matrix
-							let scale3d = [M3D[0], M3D[5], M3D[10]];
+							let scale3d = [ M3D[ 0 ], M3D[ 5 ], M3D[ 10 ] ];
 
 							// get current rotate from matrix in degrees
 							let pi = Math.PI;
-							let sinB = parseFloat(M3D[8]);
+							let sinB = parseFloat(M3D[ 8 ]);
 
 							let b = Math.round(Math.asin(sinB) * 180 / pi);
 							let cosB = Math.cos(b * pi / 180);
 
-							let a = Math.round(Math.asin(-M3D[9] / cosB) * 180 / pi);
-							let c = Math.round(Math.acos(M3D[0] / cosB) * 180 / pi);
+							let a = Math.round(Math.asin(-M3D[ 9 ] / cosB) * 180 / pi);
+							let c = Math.round(Math.acos(M3D[ 0 ] / cosB) * 180 / pi);
 
-							let angle3d = [a, b, isNaN(c) ? 0 : c ];
+							let angle3d = [ a, b, isNaN(c) ? 0 : c ];
 
 							// get translate
-							let translate3d = [M3D[12] - 0, M3D[13] - 0, M3D[14] - 0];
+							let translate3d = [ M3D[ 12 ] - 0, M3D[ 13 ] - 0, M3D[ 14 ] - 0 ];
 
 							// get skew
-							let skew3d = [Math.floor(M3D[4] / 0.0174532925),  Math.floor(M3D[1] / 0.0174532925)];
+							let skew3d = [ Math.floor(M3D[ 4 ] / 0.0174532925),  Math.floor(M3D[ 1 ] / 0.0174532925) ];
 
 							// get perspective TODO: calculate it
-							let perspective3d = -1 / (M3D[11] - 0); 
+							let perspective3d = -1 / (M3D[ 11 ] - 0); 
 
 							// compare transforms to animate
 							var transforms = [];
 
-							function * compareTransformProp(p, s) {
+							function * compareTransformProp( p, s ) {
 
 								let exe = RR.getValFromPropsBrackets(p, s);
 
@@ -2692,11 +2705,11 @@
 
 									let start;
 
-									function axisIndex(a, p) {
+									let axisIndex = ( a, p ) => {
 
 										let i; 
 
-										switch(a.replace(p, '')) {
+										switch( a.replace(p, '') ) {
 
 											case 'X': i = 0;
 
@@ -2714,11 +2727,11 @@
 
 										return i;
 
-									}
+									};
 
-									function propAxis(p) {
+									let propAxis = ( p ) => {
 
-										let match = ['translate', 'skew', 'rotate', 'scale', 'perspective'];
+										let match = [ 'translate', 'skew', 'rotate', 'scale', 'perspective' ];
 
 										for( let i of match ) {
 
@@ -2731,25 +2744,25 @@
 
 													case 'translate':
 
-														s = translate3d[index];
+														s = translate3d[ index ];
 
 														break;
 
 													case 'skew':
 
-														s = skew3d[index];
+														s = skew3d[ index ];
 
 														break;
 
 													case 'rotate':
 
-														s = angle3d[index];
+														s = angle3d[ index ];
 
 														break;
 
 													case 'scale':
 
-														s = scale3d[index];
+														s = scale3d[ index ];
 
 														break;
 
@@ -2767,24 +2780,24 @@
 
 										}
 
-									}
+									};
 
-									yield !!p ? [p, [propAxis(p), RR.numberCSS(exe[1])[0], RR.numberCSS(exe[1])[1]]] : null;
+									yield !!p ? [ p, [ propAxis(p), RR.numberCSS(exe[ 1 ])[ 0 ], RR.numberCSS(exe[ 1 ])[ 1 ]] ] : null;
 
 								}
 
 							}
 
-							function packTransform(p, d) {
+							let packTransform = ( p, d )=> {
 
-								let axis = ['X', 'Y', 'Z'];
+								let axis = [ 'X', 'Y', 'Z' ];
 								let c = [];
 
-								for(let i in axis) {
+								for( let i in axis ) {
 
 									let prop;
 
-									switch(p) {
+									switch( p ) {
 
 										case 'scale':
 										case 'translate': 
@@ -2815,7 +2828,7 @@
 											break;
 									}
 
-									if(prop) {
+									if( prop ) {
 
 										c.push(prop);
 
@@ -2823,47 +2836,47 @@
 
 								}
 
-								for(let o of c) {
+								for( let o of c ) {
 
-									transforms.push([...compareTransformProp(o, d)][0]);
+									transforms.push([ ...compareTransformProp(o, d) ][ 0 ]);
 
 								}
 
-							}
+							};
 
-							if( p[1].includes('rotate') ) {
+							if( p[ 1 ].includes('rotate') ) {
 
-								packTransform('rotate', p[1]);
-
-							}
-
-							if( p[1].includes('skew') ) {
-
-								packTransform('skew', p[1]);
+								packTransform('rotate', p[ 1 ]);
 
 							}
 
-							if( p[1].includes('translate') ) {
+							if( p[ 1 ].includes('skew') ) {
 
-								packTransform('translate', p[1]);
-
-							}
-
-							if( p[1].includes('scale') ) {
-
-								packTransform('scale', p[1]);
+								packTransform('skew', p[ 1 ]);
 
 							}
 
-							if( p[1].includes('perspective') ) {
+							if( p[ 1 ].includes('translate') ) {
 
-								packTransform('perspective', p[1]);
+								packTransform('translate', p[ 1 ]);
+
+							}
+
+							if( p[ 1 ].includes('scale') ) {
+
+								packTransform('scale', p[ 1 ]);
+
+							}
+
+							if( p[ 1 ].includes('perspective') ) {
+
+								packTransform('perspective', p[ 1 ]);
 
 							}
 
 							if( transforms.length > 0 ) {
 
-								RR.animateMatrix(x, transforms, p[2], p[3], callback);
+								RR.animateMatrix(x, transforms, p[ 2 ], p[ 3 ], callback);
 
 								if( callback ) {
 
@@ -2878,11 +2891,11 @@
 						// Other CSS values
 						else {
 
-							var from = RR.numberCSS(RR.styleGet(x, p[0]))[0];
+							var from = RR.numberCSS(RR.styleGet(x, p[ 0 ]))[ 0 ];
 
-							if(!from && from !== 0) {
+							if( !from && from !== 0 ) {
 
-								from = RR.numberCSS(RR.styleGet(x, z[l][3]))[0];
+								from = RR.numberCSS(RR.styleGet(x, z[ l ][ 3 ]))[ 0 ];
 
 							}
 
@@ -2891,7 +2904,7 @@
 						// Perform animation for element with propertie
 						if( prop !== 'transform' && prop !== 'color' ) {
 
-							RR.animateMove(x, prop, [from, dest, unit], p[2], p[3], callback);
+							RR.animateMove(x, prop, [ from, dest, unit ], p[ 2 ], p[ 3 ], callback);
 
 							if( callback ) {
 
@@ -2911,7 +2924,7 @@
 
 		// Module slide
 		// [element] :: ( #parents fixed container -> .slide selector )
-		slide: (e, t = 3000) => {
+		slide: ( e, t = 3000 ) => {
 
 			var e = RR.htmlObj(e);
 
@@ -2969,9 +2982,9 @@
 		// Module tabs 
 		// p - control selectors   ( like  [ul > li] )
 		// e - switchable contents ( like [div] )
-		tabs: (e, p, c) => {
+		tabs: ( e, p, c ) => {
 			
-			let t = p.split(' ')[0]; // get parents selector to prevent other tabs to be switched
+			let t = p.split(' ')[ 0 ]; // get parents selector to prevent other tabs to be switched
 
 			var e = RR.htmlObj(e);
 			var p = RR.htmlObj(p +'[data-content]');
@@ -3013,11 +3026,11 @@
 		},
 
 		// Move some units
-		animateMove: (e, p, v, t, r, c) => {
+		animateMove: ( e, p, v, t, r, c ) => {
 
 			// v arg - [from, dest, unit);
 			let s = performance.now();
-			let m = (v[0] - v[1]) / t;
+			let m = (v[ 0 ] - v[ 1 ]) / t;
 
 			let cnt = 0;
 
@@ -3027,10 +3040,10 @@
 
 					// g - time gone; s - start time; m - speed;  z - delta
 					let g = d - s;
-					let z = v[0] - (m * g);
+					let z = v[ 0 ] - (m * g);
 
 					// Time escape preventing
-					if (g > t) {
+					if( g > t ) {
 
 						g = t;
 
@@ -3039,26 +3052,26 @@
 					// Apply FX's
 					let f = RR.effects(r, g / t);
 
-					if(p === 'scroll') {
+					if( p === 'scroll' ) {
 
 						self.scrollTo(0, z * f);
 
 					} 
 					else {
 
-						e.style[p] = (v[2]) ? Math.floor(z * f) + v[2] : z * f;		
+						e.style[ p ] = v[ 2 ] ? Math.floor(z * f) + v[ 2 ] : z * f;		
 
 					}
 
 					// Animation time is over? If not perform next frame
-					if (g < t) {
+					if( g < t ) {
 
 						requestAnimationFrame(frame);
 
 					} 
 					else {
 
-						if(p === 'scroll') {
+						if( p === 'scroll' ) {
 
 							RR.animate(c, ['opacity:1:700:easeInBack']);
 
@@ -3066,7 +3079,7 @@
 						else {
 
 							// Hard fix CSS to prevent escaping ranges
-							e.style[p] = v[1] + v[2];
+							e.style[ p ] = v[ 1 ] + v[ 2 ];
 
 							if( c && cnt < 1) {
 
@@ -3087,10 +3100,10 @@
 		},
 
 		// Get values propertie from brackets
-		getValFromPropsBrackets: (p, v) => (new RegExp(p +'\\(([^)]+)\\)').exec(v)),
+		getValFromPropsBrackets: ( p, v ) => (new RegExp(p +'\\(([^)]+)\\)').exec(v)),
 
 		// Replaces values in CSS matrix
-		setMatrixCss: (e, p, v) => {
+		setMatrixCss: ( e, p, v ) => {
 
 			let c = e.style['transform'];
 
@@ -3100,16 +3113,16 @@
 
 			}
 
-			e.style['transform'] = c.replace(RR.getValFromPropsBrackets(p, c)[0], '').trim() +' '+ p +'('+ v +')'; 
+			e.style['transform'] = c.replace(RR.getValFromPropsBrackets(p, c)[ 0 ], '').trim() +' '+ p +'('+ v +')'; 
 
 		},
 
 		// Animate transformable CSS matrix properties
-		animateMatrix: (e, tr, t, fx, c) => {
+		animateMatrix: ( e, tr, t, fx, c ) => {
 
 			var cnt = 0;
 
-			for(let i of tr) {
+			for( let i of tr ) {
 
 				if( i ) {
 
@@ -3120,18 +3133,18 @@
 					//y = i[1][2]; 				   // units
 					//p = i[0];    				   // propertie
 
-					((s, p, m, x, y, h) => {
+					(( s, p, m, x, y, h ) => {
 
 						void requestAnimationFrame(
 
-							function frame(d) {
+							function frame( d ) {
 
 								// g - time gone; s - start time; m - speed;  z - delta
 								let g = d - s;
 								let z = x - (m * g);
 
 								// Time escape preventing
-								if (g > t) {
+								if( g > t ) {
 
 									g = t;
 
@@ -3144,7 +3157,7 @@
 								RR.setMatrixCss(e, p, z * f + (y ? y : ''));
 
 								// Animation time is over? if not perform next frame
-								if (g < t) {
+								if( g < t ) {
 
 									requestAnimationFrame(frame);
 
@@ -3167,7 +3180,7 @@
 
 						);
 
-					})(performance.now(), i[0], (i[1][0] - i[1][1]) / t, i[1][0], i[1][2], i[1][1]);
+					})(performance.now(), i[ 0 ], (i[ 1 ][ 0 ] - i[ 1 ][ 1 ]) / t, i[ 1 ][ 0 ], i[ 1 ][ 2 ], i[ 1 ][ 1 ]);
 
 				}
 
@@ -3176,7 +3189,7 @@
 		},
 
 		// FX's math
-		effects: (fx, f = 1) => {
+		effects: ( fx, f = 1 ) => {
 
 			switch(fx) {
 
@@ -3511,35 +3524,35 @@
 
 			];
 
-			function hsla2rgb(h, s, l) {
+			let hsla2rgb = ( h, s, l ) => {
 
-				function hue2rgb(p, q, t) {
+				let hue2rgb = ( p, q, t ) => {
 
-					if(t < 0) {
+					if( t < 0 ) {
 
 						t += 1;
 
 					}
 
-					if(t > 1) {
+					if( t > 1 ) {
 
 						t -= 1;
 
 					}
 
-					if(t < 1 / 6) {
+					if( t < 1 / 6 ) {
 
 						return p + (q - p) * 6 * t;
 
 					}
 
-					if(t < 1 / 2) {
+					if( t < 1 / 2 ) {
 
 						return q;
 
 					}
 
-					if(t < 2 / 3) {
+					if( t < 2 / 3 ) {
 
 						return p + (q - p) * (2 / 3 - t) * 6;
 
@@ -3547,69 +3560,69 @@
 
 					return p;
 
-				}
+				};
 
-				const q = l < .5 ? l * (1 + s) : l + s - l * s;
+				let q = l < .5 ? l * (1 + s) : l + s - l * s;
 
-				const p = 2 * l - q;
+				let p = 2 * l - q;
 
-				return [parseInt(hue2rgb(p, q, h + 1 / 3) * 255), parseInt(hue2rgb(p, q, h) * 255), parseInt(hue2rgb(p, q, h - 1 / 3) * 255)];
+				return [ parseInt(hue2rgb(p, q, h + 1 / 3) * 255), parseInt(hue2rgb(p, q, h) * 255), parseInt(hue2rgb(p, q, h - 1 / 3) * 255) ];
 
 			};
 
 			let r;
 
-			if(r = patterns[ 0 ].exec(color)) {
+			if( r = patterns[ 0 ].exec(color) ) {
 
-				return [parseInt(r[ 1 ]), parseInt(r[ 2 ]), parseInt(r[ 3 ]), 1];
-
-			}
-
-			if(r = patterns[ 1 ].exec(color)) {
-
-				return [parseFloat(r[ 1 ]) * 2.55, parseFloat(r[ 2 ]) * 2.55, parseFloat(r[ 3 ]) * 2.55, 1];
+				return [ parseInt(r[ 1 ]), parseInt(r[ 2 ]), parseInt(r[ 3 ]), 1 ];
 
 			}
 
-			if(r = patterns[ 2 ].exec(color)) {
+			if( r = patterns[ 1 ].exec(color) ) {
 
-				return [parseInt(r[ 1 ]), parseInt(r[ 2 ]), parseInt(r[ 3 ]), parseFloat(r[ 4 ])];
-
-			}
-
-			if(r = patterns[ 3 ].exec(color)) {
-
-				return [parseFloat(r[ 1 ]) * 2.55, parseFloat(r[ 2 ]) * 2.55, parseFloat(r[ 3 ]) * 2.55, parseFloat(r[ 4 ])];
+				return [ parseFloat(r[ 1 ]) * 2.55, parseFloat(r[ 2 ]) * 2.55, parseFloat(r[ 3 ]) * 2.55, 1 ];
 
 			}
 
-			if(r = patterns[ 4 ].exec(color)) {
+			if( r = patterns[ 2 ].exec(color) ) {
+
+				return [ parseInt(r[ 1 ]), parseInt(r[ 2 ]), parseInt(r[ 3 ]), parseFloat(r[ 4 ]) ];
+
+			}
+
+			if( r = patterns[ 3 ].exec(color) ) {
+
+				return [ parseFloat(r[ 1 ]) * 2.55, parseFloat(r[ 2 ]) * 2.55, parseFloat(r[ 3 ]) * 2.55, parseFloat(r[ 4 ]) ];
+
+			}
+
+			if( r = patterns[ 4 ].exec(color) ) {
 
 				return hsla2rgb( parseInt(r[ 1 ]) / 360, parseInt(r[ 2 ]) / 100, parseInt(r[ 3 ]) / 100 ).concat(parseFloat(r[ 4 ]));
 
 			}
 
-			if(r = patterns[ 5 ].exec(color)) {
+			if( r = patterns[ 5 ].exec(color) ) {
 
 				return hsla2rgb( parseInt(r[ 1 ]) / 360, parseInt(r[ 2 ]) / 100, parseInt(r[ 3 ]) / 100).concat(1);
 
 			}
 
-			if(r = patterns[ 6 ].exec(color)) {
+			if( r = patterns[ 6 ].exec(color) ) {
 
-				return [parseInt(r[ 1 ], 16), parseInt(r[ 2 ], 16), parseInt(r[ 3 ], 16), parseInt(r[ 4 ], 16)];
-
-			}
-
-			if(r = patterns[ 7 ].exec(color)) {
-
-				return [parseInt(r[ 1 ], 16), parseInt(r[ 2 ], 16), parseInt(r[ 3 ], 16), 1];
+				return [ parseInt(r[ 1 ], 16), parseInt(r[ 2 ], 16), parseInt(r[ 3 ], 16), parseInt(r[ 4 ], 16) ];
 
 			}
 
-			if(r = patterns[ 8 ].exec(color)) {
+			if( r = patterns[ 7 ].exec(color) ) {
 
-				return [parseInt(r[ 1 ] + r[ 1 ], 16), parseInt(r[ 2 ] + r[ 2 ], 16), parseInt(r[ 3 ] + r[ 3 ], 16), 1];
+				return [ parseInt(r[ 1 ], 16), parseInt(r[ 2 ], 16), parseInt(r[ 3 ], 16), 1 ];
+
+			}
+
+			if( r = patterns[ 8 ].exec(color) ) {
+
+				return [ parseInt(r[ 1 ] + r[ 1 ], 16), parseInt(r[ 2 ] + r[ 2 ], 16), parseInt(r[ 3 ] + r[ 3 ], 16), 1 ];
 
 			}
 
@@ -3618,7 +3631,7 @@
 		},
 
 		// Color animation helper
-		colorMix: (e, p, v, t, r, callback) => {
+		colorMix: ( e, p, v, t, r, callback ) => {
 
 			// v arg - color destination;
 			// e arg - elem
@@ -3627,22 +3640,22 @@
 			// r arg - fx name
 
 			// Delta interpolation for color animations
-			function lerp(a, b, u) {
+			let lerp = ( a, b, u ) => {
 
 				return (1 - u) * a + u * b;
 
-			}
+			};
 
-			((s, v, c = [0, 0, 0, 0], cnt = 0) => {
+			(( s, v, c = [ 0, 0, 0, 0 ], cnt = 0 ) => {
 
 				void requestAnimationFrame(
 
-					function frame(d) {
+					function frame( d ) {
 
 						// g - time gone; s - start time
 						let g = d - s;
 
-						function colors(h, m) {
+						let colors = ( h, m ) => {
 
 							return parseInt(
 
@@ -3650,7 +3663,7 @@
 
 							);
 
-						}
+						};
 
 						let f = RR.effects(r, g / t);
 
@@ -3702,28 +3715,28 @@
 		},
 
 		// Attributes API helper
-		attr: (e, x) => {
+		attr: ( e, x ) => {
 
-			var e = RR.isO(e) ? [e] : RR.sel(e); 
+			var e = RR.isO(e) ? [ e ] : RR.sel(e); 
 
 			if( e ) {
 
 				let c = 0;
 
-				for(let i of e) {
+				for( let i of e ) {
 
-					if(RR.isO(x)) {
+					if( RR.isO(x) ) {
 
-						for(let b in x) {
+						for( let b in x ) {
 
-							if(x[b] === null) {
+							if( x[ b ] === null ) {
 
 								i.removeAttribute(b);
 
 							} 
 							else {
 
-								i.setAttribute(b, x[b]);
+								i.setAttribute(b, x[ b ]);
 
 							}
 
@@ -3731,14 +3744,14 @@
 
 					}
 
-					if(RR.isS(x)) {
+					if( RR.isS(x) ) {
 						
 						var q = RR.arguments(x, ',');
 						var p = [];
 						
 						for(let w in q) {
 
-							p[c++] = i.getAttribute(q[w]);
+							p[ c++ ] = i.getAttribute(q[ w ]);
 
 						}
 
@@ -3746,7 +3759,7 @@
 
 				}; 
 
-				if(RR.isS(x)) {
+				if( RR.isS(x) ) {
 
 					return p;
 
@@ -3757,26 +3770,26 @@
 		},
 
 		// Replace some element to another element
-		replace: (e, w) => {
+		replace: ( e, w ) => {
 
 			var e = RR.htmlObj(e);
 
-			for(let i of e) {
+			for( let i of e ) {
 
-				i.parentElement.replaceChild( !RR.isO(w) ? RR.convertSTRToHTML(w)[0] : w, i);
+				i.parentElement.replaceChild( !RR.isO(w) ? RR.convertSTRToHTML(w)[ 0 ] : w, i);
 
 			}
 
 		},
 
 		// Collect usefull HTML elements by CSS v.3 selectors syntax
-		sel: (s) => {
+		sel: ( s ) => {
 
 			let t = RR.isO(s) ? s : document.querySelectorAll(s);
 
 			if( t.length ) {
 
-				return [...RR.filterHTML(t)];
+				return [ ...RR.filterHTML(t) ];
 
 			} 
 			else {
@@ -3789,7 +3802,7 @@
 
 		// Create and insert new HTML elements 
 		// contains nodes or text in document with attributes
-		new: (e, where, how, p, c = null) => {
+		new: ( e, where, how, p, c = null ) => {
 
 			let t = RR.treeHacks( RR.sel(where) );
 			let n = RR.that.createElement(e);
@@ -3842,15 +3855,15 @@
 
 		// Insert in element html
 		// or create new element with contents
-		insert: (t, e, c) => {
+		insert: ( t, e, c ) => {
 
 			var t = RR.htmlObj(t);
 
 			if( !c ) {
 
-				for(let i in t) {
+				for( let i in t ) {
 
-					RR.treeHacks(t[i]).innerHTML = e;
+					RR.treeHacks(t[ i ]).innerHTML = e;
 
 				}
 
@@ -3866,9 +3879,9 @@
 		},
 
 		// Remove elements from document
-		rem: (e) => {
+		rem: ( e ) => {
 
-			for(let i of RR.htmlObj(e)) { 
+			for( let i of RR.htmlObj(e) ) { 
 
 				i.remove();
 
@@ -3877,7 +3890,7 @@
 		},
 
 		// Wrap elements
-		wrap: (e, w) => {
+		wrap: ( e, w ) => {
 
 			var w = document.createElement(w);
 
@@ -3891,13 +3904,13 @@
 		},
 
 		// Unwrap elements
-		unwrap: (e) => {
+		unwrap: ( e ) => {
 
-			for(let i of RR.htmlObj(e)) {
+			for( let i of RR.htmlObj(e) ) {
 
 				let parent = i.parentElement;
 
-				while (i.firstChild) {
+				while( i.firstChild ) {
 
 					parent.insertBefore(i.firstChild, i);
 
@@ -3910,7 +3923,7 @@
 		},
 
 		// Local storage API simplifier
-		storage: (p, m) => {
+		storage: ( p, m ) => {
 
 			let args = [];
 
@@ -3934,7 +3947,7 @@
 
 					}
 
-					for(let i in args) {
+					for( let i in args ) {
 
 						localStorage.setItem(args[ i ][ 0 ].trim(), args[ i ][1].trim());
 
@@ -3944,7 +3957,7 @@
 
 				case 'get':
 
-					if(RR.isS(p)) {
+					if( RR.isS(p) ) {
 
 						return localStorage.getItem(p.trim());
 
@@ -3954,15 +3967,15 @@
 
 				case 'rem':
 
-					if(RR.isS(p)) {
+					if( RR.isS(p) ) {
 
 						localStorage.removeItem(p.trim());
 
 					}
 
-					if(RR.isO(p)) {
+					if( RR.isO(p) ) {
 
-						for(let i in p) { 
+						for( let i in p ) { 
 
 							localStorage.removeItem(p[ i ].trim());
 
@@ -3977,7 +3990,7 @@
 		},
 
 		// Cookie API
-		cookie: function ( p, m ) {
+		cookie: ( p, m ) => {
 
 			let args = [];
 
@@ -4057,10 +4070,10 @@
 		// Some HTML collections returned by .class selector have array look
 		// others like #id have not includings and looks like single element
 		// this method helps to align it to plain
-		treeHacks: (e) => (e[0]) ? e[0] : e,
+		treeHacks: ( e ) => (e[ 0 ]) ? e[ 0 ] : e,
 
 		// Test for HTML objects are equal
-		equality: (a, b) => a.offsetLeft === b.offsetLeft && a.offsetTop === b.offsetTop && a.outerHTML === b.outerHTML ? true : null,
+		equality: ( a, b ) => a.offsetLeft === b.offsetLeft && a.offsetTop === b.offsetTop && a.outerHTML === b.outerHTML ? true : null,
 
 		// Filter for HTML objects only in Node Lists and are useful
 		filterHTML: function * f(n) {
@@ -4099,9 +4112,9 @@
 
 			sandbox.innerHTML = html;
 
-			for(let i of sandbox.children) {
+			for( let i of sandbox.children ) {
 
-				if (i.tagName !== 'SCRIPT') {
+				if( i.tagName !== 'SCRIPT' ) {
 
 					shadows.push(i);
 
@@ -4109,23 +4122,23 @@
 
 			}
 
-			return [...RR.filterHTML(shadows)];
+			return [ ...RR.filterHTML(shadows) ];
 
 		},
 
 		// Grep inner HTML inside some tag
-		findElementFromHTMLString: (s, d) => RR.convertSTRToHTML(d)[0].querySelectorAll(s),
+		findElementFromHTMLString: ( s, d ) => RR.convertSTRToHTML(d)[ 0 ].querySelectorAll(s),
 
 		// Get letters by index
 		// 0 - first letter
-		letter: (lt, i = i - 0) => !isNaN(i) ? lt[i] : null,
+		letter: ( lt, i = i - 0 ) => !isNaN(i) ? lt[ i ] : null,
 
 		// Parse modules API arguments
-		arguments: (a, d) => {
+		arguments: ( a, d ) => {
 
 			let args = a.split(d+ '');
 
-			for(let i of args) {
+			for( let i of args ) {
 
 				i = i.trim();
 
@@ -4143,15 +4156,15 @@
 			var s = RR.arguments(s, '-');
 			let r = '';
 
-			for(let z in s) {
+			for( let z in s ) {
 
-				if(z >= 1) {
+				if( z >= 1 ) {
 
-					s[z] = RR.letter(s[z], 0).toUpperCase() + s[z].slice(1);
+					s[ z ] = RR.letter(s[ z ], 0).toUpperCase() + s[ z ].slice(1);
 
 				}
 
-				r += s[z];
+				r += s[ z ];
 
 			}
 
@@ -4160,19 +4173,19 @@
 		},
 
 		// Get offset positions from style name
-		normalizeStyleNameOffset: (e, p) => {
+		normalizeStyleNameOffset: ( e, p ) => {
 
 			let r = 'offset' + RR.letter(p, 0).toUpperCase() + p.slice(1);
 
-			if(!RR.isU(e[r])) {
+			if( !RR.isU(e[ r ]) ) {
 
-				return e[r];
+				return e[ r ];
 
 			}
 
 		},
 
-		getoffset: (e, offsettype) => { // custom get element offset from document (since jQuery version is whack in mobile browsers
+		getoffset: ( e, offsettype ) => { // custom get element offset from document (since jQuery version is whack in mobile browsers
 
 			return (e.offsetParent) ? e[ offsettype ] + RR.getoffset( e.offsetParent, offsettype ) : e[ offsettype ];
 
@@ -4183,58 +4196,70 @@
 
 			let u = [
 
-				'Q', 
-				'cap', 
-				'ch', 
-				'ic', 
-				'lh', 
-				'rlh', 
-				'px', 
-				'ex', 
-				'em', 
-				'%', 
-				'in', 
-				'cm', 
-				'mm', 
-				'pt', 
-				'pc', 
-				'deg', 
-				'vmax', 
-				'vmin', 
-				'vh', 
-				'vw', 
-				'vi', 
-				'vb', 
-				'rem', 
-				'ch', 
-				'rad', 
-				'grad', 
-				'turn', 
-				'dppx', 
-				'x', 
-				'dpcm', 
-				'dpi', 
-				'khz', 
-				'hz', 
-				's', 
+				'Q',
+				'cap',
+				'ch',
+				'ic',
+				'lh',
+				'rlh',
+				'px',
+				'ex',
+				'em',
+				'%',
+				'in',
+				'cm',
+				'mm',
+				'pt',
+				'pc',
+				'deg',
+				'vmax',
+				'vmin',
+				'vh',
+				'vw',
+				'vi',
+				'vb',
+				'rem',
+				'ch',
+				'rad',
+				'grad',
+				'turn',
+				'dppx',
+				'x',
+				'dpcm',
+				'dpi',
+				'khz',
+				'hz',
+				's',
 				'ms'
 
 			];
 
 			let c = 0;
 
-			for (let i of u) {
+			for( let i of u ) {
 
 				if( v.includes(i) ) {
 
-					return [v.replace(i, '') - 0, i];
+					if( i === 'px' ) {
+
+						return [ (100 * +v.replace(i, '')) / self.innerWidth, 'vw' ]; // px to vw
+
+					}
+
+					return [ +v.replace(i, ''), i ];
 
 				}
 				else {
 
-					if(c++ === 34) {
+					if( c++ === 34 ) {
 
-						return [v - 0, null];
+						if( i === 'px' ) {
+
+							return [ (100 * (v - 0)) / self.innerWidth, 'vw' ]; // px to vw
+
+						}
+
+						return [ v - 0, null ];
 
 					}
 
@@ -4245,50 +4270,50 @@
 		},
 
 		// CSS parameters shorthands helper
-		shortToFull: function * f(e, p) {
+		shortToFull: function * f( e, p ) {
 
 			let isShort = null;
 
 			let isTransformShort = null;
 
-			let n = p[0] + '';
-			let w = p[1];
+			let n = p[ 0 ] + '';
+			let w = p[ 1 ];
 
-			var p = RR.arguments( p[1].replace(/\(.*?\)/g, s => s.replace(/\s+/g,'')  ), ' ');
+			var p = RR.arguments( p[ 1 ].replace(/\(.*?\)/g, s => s.replace(/\s+/g,'')  ), ' ');
 			
 			let j = p;
 			let q = 0;
 
 			// collection of shorthands posible properties
-			RR.shorts   = ['border-radius', 'border-width', 'padding', 'margin', 'border-color'];
-			RR.shorts2  = ['skew', 'translate', 'scale', 'rotate'];
-			RR.shorts3  = ['background-position'];
+			RR.shorts   = [ 'border-radius', 'border-width', 'padding', 'margin', 'border-color' ];
+			RR.shorts2  = [ 'skew', 'translate', 'scale', 'rotate' ];
+			RR.shorts3  = [ 'background-position' ];
 
-			RR.fourval1 = ['TopLeft', 'TopRight', 'BottomLeft', 'BottomRight'];
-			RR.fourval2 = ['Top', 'Right', 'Bottom', 'Left'];
+			RR.fourval1 = [ 'TopLeft', 'TopRight', 'BottomLeft', 'BottomRight' ];
+			RR.fourval2 = [ 'Top', 'Right', 'Bottom', 'Left' ];
 			
-			RR.fourval3 = ['X', 'Y', 'Z'];
-			RR.fourval4 = ['backgroundPositionX', 'backgroundPositionY'];
+			RR.fourval3 = [ 'X', 'Y', 'Z' ];
+			RR.fourval4 = [ 'backgroundPositionX', 'backgroundPositionY' ];
 
-			if(n === 'transform') {
+			if( n === 'transform' ) {
 
 				let resultstring = '';
 
-				for(let g of p) {
+				for( let g of p ) {
 
-					for(let k in RR.shorts2) {
+					for( let k in RR.shorts2 ) {
 
 						var shorten = g.split('(')[0];
 
-						if( RR.shorts2[k] === shorten ) {
+						if( RR.shorts2[ k ] === shorten ) {
 
-							for(let r in RR.fourval3) {
+							for( let r in RR.fourval3 ) {
 
-								let valueUnits = RR.arguments( RR.getValFromPropsBrackets(shorten, g)[1], ',' );
+								let valueUnits = RR.arguments( RR.getValFromPropsBrackets(shorten, g)[ 1 ], ',' );
 
-								if( valueUnits[r] ) {
+								if( valueUnits[ r ] ) {
 
-									resultstring += " "+ shorten + RR.fourval3[r] +'('+ valueUnits[r] +')'+' '+ w.replace(g, ''); 
+									resultstring += " "+ shorten + RR.fourval3[ r ] +'('+ valueUnits[ r ] +')'+' '+ w.replace(g, ''); 
 
 								}
 
@@ -4300,13 +4325,13 @@
 
 				}
 
-				yield ['transform', resultstring, 'NaN'];
+				yield [ 'transform', resultstring, 'NaN' ];
 
 			}
 
-			for(let y of RR.shorts) {
+			for( let y of RR.shorts ) {
 
-				if(y === n) {
+				if( y === n ) {
 
 					isShort = true;
 
@@ -4316,13 +4341,11 @@
 
 			if( n === 'background-position' ) {
 
-				const stack = w.split(',');
+				let stack = w.split(',');
 
 				for( let xb in stack ) {
 
-					var pair = stack[xb].trim().split(' ');
-
-					console.log( pair );
+					var pair = stack[ xb ].trim().split(' ');
 
 					switch( pair.length ) {
 
@@ -4337,22 +4360,20 @@
 
 							for( let ix in pair ) {
 
-								nx = pair[(ix - 0) + 1]; 
+								nx = pair[ ix + 1 ]; 
 
 								if( !RR.isU( nx ) ) {
 
 									st = RR.numberCSS(nx);
-									cu = RR.numberCSS(pair[ix]);
+									cu = RR.numberCSS(pair[ ix ]);
 
 									switch( pair.length ) {
 
 										case 2:
 
-											if( !['left', 'right', 'top', 'bottom'].includes(pair[ix]) ) {
+											if( ![ 'left', 'right', 'top', 'bottom' ].includes(pair[ ix ]) ) {
 
-												console.log( pair[ix] );
-
-												cv = (( count < 1 ) ? 'left '+ cu[0] : 'top '+ cu[0]) + cu[1];
+												cv = (( count < 1 ) ? 'left '+ cu[ 0 ] : 'top '+ cu[ 0 ]) + cu[ 1 ];
 
 												count++;
 
@@ -4362,21 +4383,21 @@
 
 										case 4: 
 
-											if( ['left', 'top'].includes(pair[ix]) )  {
+											if( [ 'left', 'top' ].includes(pair[ ix ]) )  {
 
-												cv = pair[ix] +' '+ st[0] + st[1];
+												cv = pair[ ix ] +' '+ st[ 0 ] + st[ 1 ];
 
 											}
 
-											if( pair[ix] === 'right' ) {
+											if( pair[ ix ] === 'right' ) {
 
-												cv = 'left '+ -st[0] + st[1];
+												cv = 'left '+ -st[ 0 ] + st[ 1 ];
 
 											}
 
 											if( pair[ix] === 'bottom' ) {
 
-												cv = 'top '+ -st[0] + st[1];
+												cv = 'top '+ -st[ 0 ] + st[ 1 ];
 
 											}
 
@@ -4404,35 +4425,35 @@
 				// (1-2) * 2 repeated value
 				// (1-2-3) + 2 to 4
 
-				switch( p.length - 0 ) {
+				switch( p.length ) {
 
 					case 1: 
 
-						p.push(p[0], p[0], p[0]);
+						p.push(p[ 0 ], p[ 0 ], p[ 0 ]);
 
 						break;
 
 					case 2: 
 
-						p.push(p[0], p[1]);
+						p.push(p[ 0 ], p[ 1 ]);
 
 						break;
 
 					case 3: 
 
-						p.push(p[1]);
+						p.push(p[ 1 ]);
 
 						break;
 
 				}
 
 				// get computed values for all four longhand properties
-				if(p.length === 4) {
+				if( p.length === 4 ) {
 
 					// expand full property definition from shorthand
-					for(let y in RR.shorts) {
+					for( let y in RR.shorts ) {
 
-						if(RR.shorts[y] === n) {
+						if( RR.shorts[ y ] === n ) {
 
 							var xt = RR.arguments(n, '-');
 							var fg, df;
@@ -4459,10 +4480,10 @@
 
 							}
 
-							for(let s in fg) {
+							for( let s in fg ) {
 
 								// style, destination, units							
-								yield [ (!df) ? RR.normalizeStyleName(xt[0] +'-'+ fg[q] +'-'+ xt[1]) : RR.normalizeStyleName(xt[0] +'-'+ fg[q]), RR.numberCSS(p[q])[0], RR.numberCSS(p[q])[1] ];
+								yield [ (!df) ? RR.normalizeStyleName(xt[ 0 ] +'-'+ fg[ q ] +'-'+ xt[ 1 ]) : RR.normalizeStyleName(xt[ 0 ] +'-'+ fg[ q ]), RR.numberCSS(p[ q ])[ 0 ], RR.numberCSS(p[ q ])[ 1 ] ];
 
 								q++;
 
@@ -4479,18 +4500,18 @@
 			// Complite to normal values
 			if( !isShort ) {
 
-				yield [RR.normalizeStyleName(n), RR.numberCSS(j[0])[0], RR.numberCSS(j[0])[1]];
+				yield [ RR.normalizeStyleName(n), RR.numberCSS(j[ 0 ])[ 0 ], RR.numberCSS(j[ 0 ])[ 1 ] ];
 
 			}
 
 		},
 
 		// Callback future
-		callback: (e, c, args) => {
+		callback: async ( e, c, args ) => {
 
-			if(RR.isC(c)) {
+			if( RR.isC(c) ) {
 
-				RR.isA(args) ? c.call(e, args) : c.call(e);
+				RR.isA(args) ? await c.call(e, args) : await c.call(e);
 
 			}
 
@@ -4500,7 +4521,7 @@
 		// let canOnlyFireOnce = R.once(function() {
 		// 	console.log('Fired!');
 		// })
-		once: (f, c = null) => { 
+		once: ( f, c = null ) => { 
 
 			let r;
 
@@ -4523,13 +4544,13 @@
 		// MD5 support
 		md5: ( str ) => {
 
-			let RotateLeft = function(lValue, iShiftBits) {
+			let RotateLeft = ( lValue, iShiftBits ) => {
 
 				return ( lValue << iShiftBits ) | (lValue >>> ( 32 - iShiftBits ));
 
 			};
 
-			let AddUnsigned = function(lX, lY) {
+			let AddUnsigned = ( lX, lY ) => {
 
 				let lX4, lY4, lX8, lY8, lResult;
 
@@ -4543,15 +4564,15 @@
 
 				lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
 
-				if (lX4 & lY4) {
+				if( lX4 & lY4 ) {
 
 					return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
 
 				}
 
-				if (lX4 | lY4) {
+				if( lX4 | lY4 ) {
 
-					if (lResult & 0x40000000) {
+					if( lResult & 0x40000000 ) {
 
 						return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
 
@@ -4570,31 +4591,31 @@
 
 			};
 
-			let F = function(x, y, z) { 
+			let F = ( x, y, z ) => { 
 
 				return (x & y) | ((~x) & z); 
 
 			};
 
-			let G = function(x, y, z) { 
+			let G = ( x, y, z ) => { 
 
 				return (x & z) | (y & (~z)); 
 
 			};
 
-			let H = function(x, y, z) { 
+			let H = ( x, y, z ) => { 
 
 				return (x ^ y ^ z); 
 
 			};
 
-			let I = function(x, y, z) { 
+			let I = ( x, y, z ) => { 
 
 				return (y ^ (x | (~z))); 
 
 			};
 
-			let FF = function(a, b, c, d, x, s, ac) {
+			let FF = ( a, b, c, d, x, s, ac ) => {
 
 				a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
 
@@ -4602,7 +4623,7 @@
 
 			};
 
-			let GG = function(a, b, c, d, x, s, ac) {
+			let GG = ( a, b, c, d, x, s, ac ) => {
 
 				a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
 
@@ -4610,7 +4631,7 @@
 
 			};
 
-			let HH = function(a, b, c, d, x, s, ac) {
+			let HH = ( a, b, c, d, x, s, ac ) => {
 
 				a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
 
@@ -4618,7 +4639,7 @@
 
 			};
 
-			let II = function(a, b, c, d, x, s, ac) {
+			let II = ( a, b, c, d, x, s, ac ) => {
 
 				a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
 
@@ -4626,7 +4647,7 @@
 
 			};
 
-			let ConvertToWordArray = function(str) {
+			let ConvertToWordArray = (str) => {
 
 				var lWordCount;
 				var lMessageLength = str.length;
@@ -4663,7 +4684,7 @@
 
 			};
 
-			let WordToHex = function( lValue ) {
+			let WordToHex = ( lValue ) => {
 
 				var WordToHexValue = '', 
 					WordToHexValue_temp = '', 
@@ -4685,7 +4706,7 @@
 			};
 
 			// Encodes an ISO-8859-1 string to UTF-8
-			let utf8_encode = function ( str ) {
+			let utf8_encode = ( str ) => {
 
 				str = str.replace(/\r\n/g,"\n");
 
@@ -4720,7 +4741,7 @@
 
 			};
 
-			var x = Array();
+			var x = [];
 
 			var k, AA, BB, CC, DD, a, b, c, d;
 
@@ -4741,7 +4762,7 @@
 
 			d = 0x10325476;
 
-			for( k=0; k < x.length; k+=16 ) {
+			for( k = 0; k < x.length; k += 16 ) {
 
 				AA = a; BB = b; CC = c; DD = d;
 
@@ -4817,9 +4838,7 @@
 
 			}
 
-			const temp = WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);
-
-			return temp.toLowerCase();
+			return ( WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d) ).toLowerCase();
 
 		},
 
@@ -4852,7 +4871,7 @@
 		atou: (s) => decodeURIComponent(self.atob(s)),
 
 		// Strip string to number
-		stripNum: (v) => +v.replace(/\D+/g, '') - 0,
+		stripNum: (v) => +v.replace(/\D+/g, ''),
 
 		// Check of object is type of html object
 		htmlObj: (e) => RR.isO(e) ? e : RR.sel(e),

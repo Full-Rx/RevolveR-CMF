@@ -80,17 +80,6 @@ final class Menu {
 
 					if( defined('EXTENSIONS_SETTINGS') ) {
 
-						if( ROLE === 'Admin' ) {
-
-							//unset( $v['param_check']['hidden'] );
-
-						} 
-						else {
-
-							//$v['param_check']['hidden'] = 1;
-
-						}
-
 						foreach( EXTENSIONS_SETTINGS as $e ) {
 
 							if( $e['name'] === $v['id'] ) {

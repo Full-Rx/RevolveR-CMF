@@ -38,8 +38,6 @@
 
 if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 
-	set_time_limit(599);
-
 	$url = filter_var('https://'. SV['g']['host']['value'], FILTER_VALIDATE_URL);
 
 	$indexed = [];
@@ -112,7 +110,7 @@ if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 			// Following rules only apply if User-agent matches $useragent or '*'
 			if( preg_match('/^\s*User-agent: (.*)/i', $line, $match) ) {
 
-				$ruleApplies = preg_match('/(\*)/i', $match[1]);
+				$ruleApplies = preg_match('/(\*)/i', $match[ 1 ]);
 
 				continue;
 
@@ -249,7 +247,7 @@ if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 
 				$r = explode(':', $h, 2);
 
-				$xh[ $r[0] ] = trim($r[1]);
+				$xh[ $r[ 0 ] ] = trim($r[1]);
 
 			}
 
@@ -495,7 +493,7 @@ if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 
 						], $meta_body)
 
-				)[0]
+				)[ 0 ]
 
 			)
 
@@ -505,7 +503,7 @@ if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 
 			return [
 
-				'title' => $meta_title[1][0],
+				'title' => $meta_title[ 1 ][ 0 ],
 				'meta'  => getMetaTags($html),
 				'href'  => array_unique($host_links),
 				'text'  => $usefull_text,
@@ -559,16 +557,16 @@ if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 
 						if( $testIndex ) {
 
-							$testIndex = $testIndex[0];
+							$testIndex = $testIndex[ 0 ];
 
-							if( indexingAllowed( $robotstxt, $uri) ) {
+							if( indexingAllowed( $robotstxt, $uri ) ) {
 
 								if( !in_array($uri, $indexed) ) {
 
 									$xinfo = getUri($uri);
 
-									$udata = $xinfo[0];
-									$udate = $xinfo[1];
+									$udata = $xinfo[ 0 ];
+									$udate = $xinfo[ 1 ];
 
 									if( $udata ) {
 
@@ -582,60 +580,59 @@ if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 
 											$hash = md5($xmeta_data['text']);
 
-												$double_check = iterator_to_array(
+											$double_check = iterator_to_array(
 
-													$model::get('index', [
+												$model::get('index', [
 
-															'criterion' => 'hash::'. $hash,
-															'course'    => 'forward',
-															'sort'      => 'id'
+														'criterion' => 'hash::'. $hash,
+														'course'    => 'forward',
+														'sort'      => 'id'
 
-														])
+													])
 
-													)['model::index'];
+												)['model::index'];
 
+											$adate = date('d-m-Y');
+											$idate = explode(' ', $testIndex['date'])[ 1 ]; 
 
-												$adate = date('d-m-Y');
-												$idate = explode(' ', $testIndex['date'])[1]; 
+											if( $hash !== $testIndex['hash'] && !$double_check ) {
 
-												if( $hash !== $testIndex['hash'] && !$double_check ) {
+												if( $adate !== $idate ) {
 
-													if( $adate !== $idate ) {
+													// Intelligent update when uri exist and expired
+													$model::erase('index', [
 
-														// Intelligent update when uri exist and expired
-														$RKI->Model::erase('index', [
+														'criterion'   => 'uri::'. $uri 
 
-															'criterion'   => 'uri::'. $uri 
+													]);
 
-														]);
+													// Intelligent update when uri exist and expired
+													$model::set('index', [
 
-														// Intelligent update when uri exist and expired
-														$model::set('index', [
+														'uri'         => $uri,
+														'host'        => getHost($url, $url),
+														'hash'        => $hash,
+														'date'		  => $udate,
+														'title'       => $xmeta_data['title'],
+														'description' => $xmeta_data['meta']['og:description'] ?? $xmeta_data['meta']['description'] ?? 'null',
+														'content'     => $xmeta_data['text'],
+														'criterion'   => 'uri'
 
-															'uri'         => $uri,
-															'host'        => getHost($url, $url),
-															'hash'        => $hash,
-															'date'		  => $udate,
-															'title'       => $xmeta_data['title'],
-															'description' => $xmeta_data['meta']['og:description'] ?? $xmeta_data['meta']['description'] ?? 'null',
-															'content'     => $xmeta_data['text'],
-															'criterion'   => 'uri'
+													]);
 
-														]);
+												}
 
-													}
+												foreach( $xmeta_data['href'] as $xlnk ) {
 
-													foreach( $xmeta_data['href'] as $xlnk ) {
+													if( indexingAllowed( $robotstxt, $uri) ) {
 
-														if( indexingAllowed( $robotstxt, $uri) ) {
-
-															setIndex( $robotstxt, $uri, $model, $indexed );
-
-														}
+														setIndex( $robotstxt, $uri, $model, $indexed );
 
 													}
 
 												}
+
+											}
 
 
 										}
@@ -672,15 +669,15 @@ if( isset(SV['g']['host']) && in_array(ROLE, ['Admin', 'Writer']) ) {
 
 											$double_check = iterator_to_array(
 
-												$model::get('index', [
+											$model::get('index', [
 
-														'criterion' => 'hash::'. $hash,
-														'course'    => 'forward',
-														'sort'      => 'id'
+													'criterion' => 'hash::'. $hash,
+													'course'    => 'forward',
+													'sort'      => 'id'
 
-													])
+												])
 
-												)['model::index'];
+											)['model::index'];
 
 											if( !$double_check ) {
 

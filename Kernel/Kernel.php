@@ -3,7 +3,7 @@
  /*
   * RevolveR CMF Kernel
   *
-  * v.2.0.1.0
+  * v.2.0.1.2
   *
   *                                            ,   ,                                
   *                                            $,  $,     ,                         
@@ -58,7 +58,10 @@
   */
 
 // Kernel version
-define('rr_version', '2.0.1.0');
+define('rr_version', '2.0.1.2');
+
+// Apply config
+require_once('./private/ksettings.php');
 
 // X64 guest number
 define('BigNumericX64', 9223372036854775806);
@@ -103,15 +106,70 @@ $ipl = 'EN';
 // Templates cache directory
 define('TCache', $_SERVER['DOCUMENT_ROOT'] .'/cache/tplcache/');
 
+function detectSSL(): ?bool {
+
+	// check HTTPS protocol
+	if( isset($_SERVER['HTTPS']) ) {
+
+		if( 'off' !== strtolower($_SERVER['HTTPS']) ) {
+
+			return true;
+
+		}
+
+		if( 1 === (int)$_SERVER['HTTPS'] ) {
+
+			return true;
+
+		}
+
+	}
+
+	if( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ) {
+
+		if( strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https' ) {
+
+			return true;
+
+		}
+
+	}
+
+	if( isset($_SERVER['REQUEST_SCHEME']) ) {
+
+		if( strtolower($_SERVER['REQUEST_SCHEME'] === 'https') ) {
+
+			return true;
+
+		}
+
+	}
+
+	// check server port
+	if( isset($_SERVER['SERVER_PORT']) ) {
+
+		if( 443 === (int)$_SERVER['SERVER_PORT'] ) {
+
+			return true;
+
+		}
+
+	}
+
+	// non-SSL
+	return null;
+
+}
+
 // Set URI prefix
-define('uri_prefix', ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || (int)$_SERVER['SERVER_PORT'] === 443) ? 'https://' : 'http://');
+define('uri_prefix', detectSSL() ? 'https://' : 'http://');
 
 define('site_host', strtolower(uri_prefix . $_SERVER['HTTP_HOST']));
 
 // Check for SSL domain mirror is available
 ini_set('session.cookie_httponly', 1);
 
-if( ( !empty($_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off') || (int)$_SERVER['SERVER_PORT'] === 443 ) {
+if( detectSSL() ) {
 
 	// Enable SSL cookie
 	ini_set('session.cookie_secure', 1);
@@ -123,7 +181,7 @@ else {
 
 	if( is_readable( $License ) ) {
 
-		if( (bool)file_get_contents($License, false, stream_context_create( ['http' => ['timeout' => 1]] )) ) {
+		if( (bool)file_get_contents($License, null, stream_context_create( ['http' => ['timeout' => 1]] )) ) {
 
 			header('Location: https://'. $_SERVER['HTTP_HOST'] );
 
@@ -150,12 +208,6 @@ if( in_array(session_status(), [ PHP_SESSION_DISABLED, PHP_SESSION_NONE ], true)
 	session_start();
 
 }
-
-// Data Base X cache chunks config
-define('dbx_cache_chunks_size', 3);
-
-// Data Base X SQL queries logging to file
-define('dbx_logging', 0);
 
 // Register extensions 
 $extensionsTranslations = [];
@@ -205,13 +257,13 @@ $calendar = new Calendar();
 $notify = new Notifications($ipl);
 
 /* Captcha */
-$captcha = new Captcha($ipl, $notify);
+$captcha = new Captcha($ipl, $notify, detectSSL());
 
 /* Encryption */
 $cipher = new Cipher();
 
 /* Variables dispatch */
-$D = new SecureVariablesDispatcher($notify);
+$D = new SecureVariablesDispatcher($notify, detectSSL());
 
 $V = $D::get();
 
@@ -247,7 +299,6 @@ else {
 
 	define('Auth', 0);
 	define('ACCESS', 'setup');
-	define('default_email', 'service@revolver.team');
 
 	define('main_language', 'en');
 
@@ -663,7 +714,7 @@ define('EXTENSIONS_SETTINGS', !$esettings ? [[null, null, null]] : $esettings);
 /* Authorization */
 if( INSTALLED ) {
 
-	$auth = new Auth( $model, $cipher );
+	$auth = new Auth( $model, $cipher, detectSSL() );
 
 }
 
@@ -1226,7 +1277,7 @@ if( !(bool)$TCache ) {
 	// Add pagination index to title
 	if( isset($uri_segment[ 1 ]) ) {
 
-		$page_number = explode('page=', $uri_segment[1] );
+		$page_number = explode('page=', $uri_segment[ 1 ] );
 
 		$title .= isset( $page_number[ 1 ] ) ? ' '. TRANSLATIONS[ $ipl ]['page'] .' '. $page_number[ 1 ] : '';
 

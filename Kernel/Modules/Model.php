@@ -167,7 +167,7 @@ final class Model {
 
       # Mutual models
       # :: merge different models when expert join queries can't return
-      # result becuase there no data for joint in one of the related tables
+      # becuase there are no data for joint in one of the related tables
 
       default:
 
@@ -182,13 +182,12 @@ final class Model {
 
       case 'category->node->user':
       case 'category->node':
-      
+
       case 'node->comment->user':
       case 'node->comment':
 
       case 'user->subscription':
       case 'user->role':
-      
 
         $istack = self::simplify( $istack );
 
@@ -205,11 +204,10 @@ final class Model {
     // Store iterable array collection
     yield  'model::'. $m => $istack;
 
-
   }
 
   // Model erase
-  public static function erase( string $m = null, iterable $p = null ): void {
+  public static function erase( ?string $m = null, ?iterable $p = null ): void {
 
     // Read Data Base table fields from structure
     $fields = self::fields( $m );
@@ -223,26 +221,26 @@ final class Model {
 
       $args = explode('::', $p['criterion']);
 
-      if( isset($args[0]) ) {
+      if( isset($args[ 0 ]) ) {
 
-        if( (bool)strlen($args[0]) ) {
+        if( strlen($args[ 0 ]) > 0 ) {
 
-          if( !in_array( self::$fprefix . $args[0], $fields ) ) {
+          if( !in_array( self::$fprefix . $args[ 0 ], $fields ) ) {
 
             $passed = null;
 
           }
           else {
 
-            $struct['criterion_field'] = self::$fprefix . $args[0];
+            $struct['criterion_field'] = self::$fprefix . $args[ 0 ];
 
           }
 
-          if( isset( $args[1] ) ) {
+          if( isset( $args[ 1 ] ) ) {
 
-            if( (bool)strlen($args[1]) ) {
+            if( strlen($args[ 1 ]) > 0 ) {
 
-              $struct['criterion_value'] = $args[1];
+              $struct['criterion_value'] = $args[ 1 ];
 
             }
             else {
@@ -384,7 +382,7 @@ final class Model {
 
         $args = explode('::', $params['criterion']);
 
-        $users['where_field'] = self::$tprefix . $args[0] .'::'. self::$fprefix . $args[1] .'::'. $args[2];
+        $users['where_field'] = self::$tprefix . $args[ 0 ] .'::'. self::$fprefix . $args[ 1 ] .'::'. $args[ 2 ];
 
       }
 
@@ -438,7 +436,7 @@ final class Model {
 
         $args = explode('::', $params['criterion']);
 
-        $nodes['where_field'] = self::$tprefix . $args[0] .'::'. self::$fprefix . $args[1] .'::'. $args[2];
+        $nodes['where_field'] = self::$tprefix . $args[ 0 ] .'::'. self::$fprefix . $args[ 1 ] .'::'. $args[ 2 ];
 
       }
 
@@ -501,7 +499,7 @@ final class Model {
 
         $args = explode('::', $params['criterion']);
 
-        $nodes['where_field'] = self::$tprefix . $args[0] .'::'. self::$fprefix . $args[1] .'::'. $args[2];
+        $nodes['where_field'] = self::$tprefix . $args[ 0 ] .'::'. self::$fprefix . $args[ 1 ] .'::'. $args[ 2 ];
 
       }
 
@@ -563,7 +561,7 @@ final class Model {
 
         $args = explode('::', $params['criterion']);
 
-        $comments['where_field'] = self::$tprefix . $args[0] .'::'. self::$fprefix . $args[1] .'::'. $args[2];
+        $comments['where_field'] = self::$tprefix . $args[ 0 ] .'::'. self::$fprefix . $args[ 1 ] .'::'. $args[ 2 ];
 
       }
 
@@ -625,7 +623,7 @@ final class Model {
 
         $args = explode('::', $params['criterion']);
 
-        $subscriptions['where_field'] = self::$tprefix . $args[0] .'::'. self::$fprefix . $args[1] .'::'. $args[2];
+        $subscriptions['where_field'] = self::$tprefix . $args[ 0 ] .'::'. self::$fprefix . $args[ 1 ] .'::'. $args[ 2 ];
 
       }
 
@@ -689,7 +687,7 @@ final class Model {
 
         $args = explode('::', $params['criterion']);
 
-        $roles['where_field'] =  self::$tprefix . $args[0] .'::'. self::$fprefix . $args[1] .'::'. $args[2];
+        $roles['where_field'] =  self::$tprefix . $args[ 0 ] .'::'. self::$fprefix . $args[ 1 ] .'::'. $args[ 2 ];
 
       }
 
@@ -769,9 +767,9 @@ final class Model {
 
         $args = explode('::', $params['criterion']);
 
-        $model['criterion_field'] = self::$fprefix . $args[0];
+        $model['criterion_field'] = self::$fprefix . $args[ 0 ];
 
-        $model[ $pmkey ] = $args[1];
+        $model[ $pmkey ] = $args[ 1 ];
 
       }
 
@@ -799,15 +797,15 @@ final class Model {
 
       if( isset( $params['bound'] ) ) {
 
-        if( (bool)$params['bound'][0] ) {
+        if( (bool)$params['bound'][ 0 ] ) {
 
-          $shift = '|'. $params['bound'][0];
+          $shift = '|'. $params['bound'][ 0 ];
 
-          if( isset($params['bound'][1]) ) {
+          if( isset($params['bound'][ 1 ]) ) {
 
-            if( (bool)$params['bound'][1] ) {
+            if( (bool)$params['bound'][ 1 ] ) {
 
-              $shift .= '|'. $params['bound'][1];
+              $shift .= '|'. $params['bound'][ 1 ];
 
             }
 

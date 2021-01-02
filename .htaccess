@@ -2,7 +2,7 @@
 #
 # RevolveR CMF :: Access configuration
 #
-# v.2.0.0.8
+# v.2.0.1.2
 #
 #
 #                     ^
@@ -40,17 +40,19 @@ AddDefaultCharset utf-8
 
 	php_value upload_max_filesize 200M
 
+	php_value opcache.enable 1
+
+	php_value opcache.enable_cli 1
+
+	php_value opcache.jit_buffer_size 128M
+
+	php_value opcache.jit 1255
+
 </IfModule>
 
 # New protocol headers
 
 php_flag cgi.rfc2616_headers Off
-
-# PCRE
-
-php_value opcache.jit 0
-
-php_value pcre.jit 0
 
 # Start rewrite engine
 
@@ -59,6 +61,16 @@ Options +FollowSymLinks
 RewriteEngine on
 
 RewriteBase /
+
+# SSL schema off
+RewriteCond %{HTTPS} off
+
+RewriteRule .* - [E=REQUEST_SCHEME:http]
+
+# SSL schema
+RewriteCond %{HTTPS} on
+
+RewriteRule .* - [E=REQUEST_SCHEME:https]
 
 # From www to domain
 
@@ -76,7 +88,7 @@ RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
 
 	Header set X-Frame-Options 'deny'
 
-	Header set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data:; font-src 'self' data:; media-src * data: blob:"
+	# Header set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data:; font-src 'self' data:; media-src * data: blob:"
 
 	Header set Referrer-Policy 'strict-origin'
 

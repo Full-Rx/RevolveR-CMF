@@ -37,7 +37,7 @@
   *
   */
 
-if(!empty(SV['p'])) {
+if( isset(SV['p']) ) {
 
   $node = $data = $type = $user = null;
 

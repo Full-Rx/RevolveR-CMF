@@ -71,12 +71,6 @@ final class Notifications {
 
           if( !isset( $duplicate[ $t ] ) ) {
 
-            if( $s !== 'applied' && $s !== 'status' ) {
-
-              //$result .= '<span class="small-number">'. ++$c .'.</span> ';
-
-            }
-
             $result .= $t .'<br />';
 
             $duplicate[ $t ] = true;
@@ -99,7 +93,7 @@ final class Notifications {
 
     if( $translation ) {
 
-      if(defined('ROUTE')) {
+      if( defined('ROUTE') ) {
 
         if( isset(ROUTE['ext'] ) ) {
 

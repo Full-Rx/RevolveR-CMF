@@ -6,7 +6,7 @@
   *
   * make exit and frees resources
   *
-  * v.2.0.0.8
+  * v.2.0.1.2
   *
   *                .,ad88888888baa,
   *            ,d8P"""        ""9888ba.
@@ -62,7 +62,7 @@ final class Conclude {
 
 		$c = '0';
 
-		if( !empty( SV[ 'p' ] ) ) {
+		if( isset( SV[ 'p' ] ) ) {
 
 			return $c;
 
@@ -166,7 +166,7 @@ final class Conclude {
 
 			}
 
-			if( (bool)strlen($src) ) {
+			if( strlen($src) > 0 ) {
 
 				$Name = explode('/', $s['path']); 
 
@@ -176,7 +176,7 @@ final class Conclude {
 
 				if( !is_readable( $root . $dir . $resFile .'-'. $File) ) {
 
-						// Clean static interface files cache
+					// Clean static interface files cache
 					foreach( self::$file::getDir( $root . $dir ) as $cf) {
 
 						if( !is_dir( $root . $dir . $cf ) ) {
@@ -275,7 +275,7 @@ final class Conclude {
 
 			}
 
-			if( (bool)strlen($src) ) {
+			if( strlen($src) > 0 ) {
 
 				$Name = explode('/', $s['path']); 
 
@@ -317,7 +317,7 @@ final class Conclude {
 
 					case 'script':
 
-						$Tag = '<script data-part="'. $s['name'] .'" src="'. site_host . $dir . $resFile .'-'. $File .'"';
+						$Tag = '<script data-part="'. $s['name'] .'" src="'. $dir . $resFile .'-'. $File .'"';
 
 					switch( $s['part'] ) {
 
@@ -347,7 +347,7 @@ final class Conclude {
 
 						}
 
-						$Tag = '<link data-part="'. $s['name'] .'" media="all" '. $attr .' href="'. site_host . $dir . $resFile .'-'. $File .'" />';
+						$Tag = '<link data-part="'. $s['name'] .'" media="all" '. $attr .' href="'. $dir . $resFile .'-'. $File .'" />';
 
 					break;
 
@@ -412,7 +412,7 @@ final class Conclude {
 
 		}
 
-			$l = $length - strlen( $s[ 0 ] );
+		$l = $length - strlen( $s[ 0 ] );
 
 		if( isset( $s[ 1 ] ) ) {
 
@@ -601,7 +601,7 @@ final class Conclude {
 	}
 
 	/* Conclude Kernel with template and store cache */
-	public static function Сonclude( string $type = 'text/html', ?iterable $uri = null ): string {
+	public static function Сonclude( string $type = 'text/html', ?iterable $uri = null ): void {
 
 		header('Content-Type: '. $type .'; charset=utf-8');
 

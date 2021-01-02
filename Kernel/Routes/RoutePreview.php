@@ -36,7 +36,7 @@
   *
   */
 
-if( !empty( SV['p'] ) ) {
+if( isset( SV['p'] ) ) {
 
 	if( isset(SV['p']['revolver_preview_mode']) ) {
 
@@ -165,7 +165,7 @@ if( !empty( SV['p'] ) ) {
 
 						$RKI->Notify::set('notice', 'Node with defined route already exist');
 
-						$RKI->Notify::set('active', '<div><a href="'. $node[0]['route'] .'" title="'. $node[0]['description'] .'">'. $node[0]['title'] .'</a></div>', null);
+						$RKI->Notify::set('active', '<div><a href="'. $node[ 0 ]['route'] .'" title="'. $node[ 0 ]['description'] .'">'. $node[ 0 ]['title'] .'</a></div>', null);
 
 					}
 					else {

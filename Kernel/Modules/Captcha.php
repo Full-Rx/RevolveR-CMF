@@ -60,11 +60,15 @@ final class Captcha {
 
   public static $lang;
 
-  function __construct( string $lang = 'EN', Notifications $notify ) {
+  public static $ssl;
+
+  function __construct( string $lang = 'EN', Notifications $notify, ?bool $ssl ) {
 
     self::$notify = $notify;
 
     self::$lang = $lang;
+
+    self::$ssl = $ssl;
 
   }
 
@@ -107,7 +111,7 @@ final class Captcha {
 
     self::setCookie('SecureHash', $session_hash, time() + 1800, ( $dsp ? $dsp : str_replace(['^', '|'], ['.', '/'], base64_decode( $route ) ) ) );
 
-    return base64_encode( self::$random ).'*'. base64_encode( rtrim($result, '|') ) .'*'. base64_encode( $session_hash );
+    return base64_encode( self::$random ) .'*'. base64_encode( rtrim($result, '|') ) .'*'. base64_encode( $session_hash );
 
   }
 
@@ -115,7 +119,7 @@ final class Captcha {
 
     $cst = 'Set-Cookie: __RevolveR_'. $name .'='. rawurlencode( $value ) .'; Expires='. date('D, d M Y H:i:s', (int)$exp) . 'GMT' .'; Path='. $path .'; Domain='. $_SERVER['HTTP_HOST'] .';';
 
-    header( (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || (int)$_SERVER['SERVER_PORT'] === 443) ? $cst . ' SameSite=Strict; Secure; httpOnly;' : $cst .' httpOnly;') );
+    header( self::$ssl ? $cst . ' SameSite=Strict; Secure; httpOnly;' : $cst .' httpOnly;' );
 
   }
 

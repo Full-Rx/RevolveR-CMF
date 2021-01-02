@@ -69,10 +69,6 @@ final class MMDBDecoder {
 
 	}
 
-	protected function __clone() {
-
-	}
-
 	public static function decode( int $o ): iterable {
 
 		$ctrlByte = ord( self::utilRead($o, 1) );
@@ -170,8 +166,7 @@ final class MMDBDecoder {
 
 				$r = [ 
 
-					self::decodeBoolean($s), 
-					$o
+					self::decodeBoolean($s), $o
 
 				];
 
@@ -183,7 +178,7 @@ final class MMDBDecoder {
 
 		$b = self::utilRead($o, $s);
 
-		switch ($t) {
+		switch( $t ) {
 
 			case 4:
 			case 2:
@@ -198,8 +193,7 @@ final class MMDBDecoder {
 
 				$r = [
 
-					self::decodeDouble($b), 
-					$newOffset
+					self::decodeDouble($b), $newOffset
 
 				];
 
@@ -211,8 +205,7 @@ final class MMDBDecoder {
 
 				$r = [
 
-					self::decodeFloat($b), 
-					$newOffset
+					self::decodeFloat($b), $newOffset
 
 				];
 
@@ -222,8 +215,7 @@ final class MMDBDecoder {
 
 				$r = [
 
-					( !(bool)$s ? 0 : self::decodeInt32($b, $s) ), 
-					$newOffset
+					( !(bool)$s ? 0 : self::decodeInt32($b, $s) ), $newOffset
 
 				];
 
@@ -236,8 +228,7 @@ final class MMDBDecoder {
 
 				$r = [
 
-					self::decodeUint($b, $s), 
-					$newOffset
+					self::decodeUint($b, $s), $newOffset
 
 				];
 
@@ -253,7 +244,7 @@ final class MMDBDecoder {
 
 	private static function verifySize( int $e, int $a ): void {
 
-		if ($e !== $a) {
+		if( $e !== $a ) {
 
 			self::$status[] = 'The MaxMind DB file\'s data section contains bad data (unknown data type or corrupt data)'; 
 
@@ -265,7 +256,7 @@ final class MMDBDecoder {
 
 		$a = [];
 
-		for ($i = 0; $i < $s; ++$i) {
+		for( $i = 0; $i < $s; ++$i ) {
 
 			list($v, $o) = self::decode($o);
 
@@ -290,7 +281,7 @@ final class MMDBDecoder {
 		// 7.0.15 and 7.1.1. As such, we must switch byte order on
 		// little endian machines.
 
-		return unpack('d', self::maybeSwitchByteOrder($b))[1];
+		return unpack('d', self::maybeSwitchByteOrder($b))[ 1 ];
 
 	}
 
@@ -301,13 +292,13 @@ final class MMDBDecoder {
 		// 7.0.15 and 7.1.1. As such, we must switch byte order on
 		// little endian machines.
 
-		return unpack('f', self::maybeSwitchByteOrder($b))[1];
+		return unpack('f', self::maybeSwitchByteOrder($b))[ 1 ];
 
 	}
 
 	protected static function decodeInt32( string $b, int $s ): string {
 
-		switch ($s) {
+		switch( $s ) {
 
 			case 1:
 			case 2:
@@ -327,7 +318,7 @@ final class MMDBDecoder {
 
 		}
 
-		return unpack('l', self::maybeSwitchByteOrder($b))[1];
+		return unpack('l', self::maybeSwitchByteOrder($b))[ 1 ];
 
 	}
 
@@ -335,12 +326,12 @@ final class MMDBDecoder {
 
 		$m = [];
 
-		for ($i = 0; $i < $size; ++$i) {
+		for( $i = 0; $i < $size; ++$i ) {
 
 			list($k, $o) = self::decode($o);
 			list($v, $o) = self::decode($o);
 
-			$m[$k] = $v;
+			$m[ $k ] = $v;
 
 		}
 
@@ -356,24 +347,24 @@ final class MMDBDecoder {
 
 		$o = $o + $pointerSize;
 
-		switch ($pointerSize) {
+		switch( $pointerSize ) {
 
 			case 1:
 
-				$p = unpack('n', chr($ctrlByte & 0x7) . $b)[1] + self::$pointer_1;
+				$p = unpack('n', chr($ctrlByte & 0x7) . $b)[ 1 ] + self::$pointer_1;
 
 				break;
 
 			case 2:
 
-				$p = unpack('N', "\x00" . \chr($ctrlByte & 0x7) . $b)[1] + self::$pointer_1 + 2048;
+				$p = unpack('N', "\x00" . \chr($ctrlByte & 0x7) . $b)[ 1 ] + self::$pointer_1 + 2048;
 
 				break;
 
 			case 3:
 
 				// It is safe to use 'N' here, even on 32 bit machines as the first bit is 0.
-				$p = unpack('N', chr($ctrlByte & 0x7) . $b)[1] + self::$pointer_1 + 526336;
+				$p = unpack('N', chr($ctrlByte & 0x7) . $b)[ 1 ] + self::$pointer_1 + 526336;
 
 				break;
 
@@ -387,12 +378,12 @@ final class MMDBDecoder {
 					$p = $pointerOffset + self::$pointer_1;
 
 				}
-				else if (extension_loaded('gmp')) {
+				else if( extension_loaded('gmp') ) {
 
 					$p = gmp_strval(gmp_add($pointerOffset, self::$pointer_1));
 
 				}
-				else if (extension_loaded('bcmath')) {
+				else if( extension_loaded('bcmath') ) {
 
 					$p = bcadd($pointerOffset, self::$pointer_1);
 
@@ -419,22 +410,22 @@ final class MMDBDecoder {
 
 		$int = 0;
 
-		for ($i = 0; $i < $byteLength; ++$i) {
+		for( $i = 0; $i < $byteLength; ++$i ) {
 
-			$part = ord($bytes[$i]);
+			$part = ord($bytes[ $i ]);
 
 			// We only use gmp or bcmath if the final value is too big
-			if ($byteLength <= self::$maximum) {
+			if( $byteLength <= self::$maximum ) {
 
 				$int = ($int << 8) + $part;
 
 			}
-			else if (extension_loaded('gmp')) {
+			else if( extension_loaded('gmp') ) {
 
 				$int = gmp_strval(gmp_add(gmp_mul($int, 256), $part));
 
 			}
-			else if (extension_loaded('bcmath')) {
+			else if( extension_loaded('bcmath') ) {
 
 				$int = bcadd(bcmul($int, 256), $part);
 
@@ -455,7 +446,7 @@ final class MMDBDecoder {
 
 		$s = $ctrlByte & 0x1f;
 
-		if ($s < 29) {
+		if( $s < 29 ) {
 
 			return [ $s, $o ];
 
@@ -465,19 +456,19 @@ final class MMDBDecoder {
 
 		$b = self::utilRead($o, $bytesToRead);
 
-		if ($s === 29) {
+		if( $s === 29 ) {
 
 			$s = 29 + ord($b);
 
 		}
-		else if ($s === 30) {
+		else if( $s === 30 ) {
 
-			$s = 285 + unpack('n', $b)[1];
+			$s = 285 + unpack('n', $b)[ 1 ];
 
 		}
-		else if ($s > 30) {
+		else if( $s > 30 ) {
 
-			$s = unpack('N', "\x00" . $b)[1] + 65821;
+			$s = unpack('N', "\x00" . $b)[ 1 ] + 65821;
 
 		}
 

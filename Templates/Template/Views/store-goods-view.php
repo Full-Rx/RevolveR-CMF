@@ -107,8 +107,11 @@
 
 	if( (int)$goods['rebate'] > 0 ) {
 
-		$RKI->Template::$b[] = '<span class="revolver__store_rebate-span">'.  $RKV->lang['rebate'] .'</span>';
+		$RKI->Template::$b[] = '<div class="rebate-container">';
+		$RKI->Template::$b[] = '<div class="guilloche"></div>';
+		$RKI->Template::$b[] = '<span class="revolver__store_rebate-span">'. $RKV->lang['rebate'] .'</span>';
 		$RKI->Template::$b[] = '<b class="revolver__store_rebate">'. $goods['rebate'] .'%</b>';
+		$RKI->Template::$b[] = '</div>';
 
 	}
 

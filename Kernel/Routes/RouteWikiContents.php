@@ -41,7 +41,7 @@ if( in_array( ROLE, ['Admin', 'Writer'] ) ) {
 
   $node = null;
 
-  if(!empty(SV['p'])) {
+  if( isset(SV['p']) ) {
 
     $token_explode = explode('|', $RKI->Cipher::crypt('decrypt', SV['c']['usertoken']));
 
@@ -293,43 +293,47 @@ if( $node ) {
 
           }
 
-          if( count(SV['f']) > 0 ) {
+          if( isset( SV['f'] ) ) {
 
-            foreach( SV['f'] as $file ) {
+            if( count(SV['f']) > 0 ) {
 
-              foreach( $file as $f ) {
+              foreach( SV['f'] as $file ) {
 
-                $upload_allow = null;
+                foreach( $file as $f ) {
 
-                if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/wfiles/'. $f['name']) ) {
+                  $upload_allow = null;
 
-                  if( (bool)$f['valid'] ) {
+                  if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/wfiles/'. $f['name']) ) {
 
-                    $upload_allow = true;
+                    if( (bool)$f['valid'] ) {
+
+                      $upload_allow = true;
+
+                    }
 
                   }
 
-                }
+                  if( $upload_allow ) {
 
-                if( $upload_allow ) {
+                    $RKI->Model::set('wiki_files', [
 
-                  $RKI->Model::set('wiki_files', [
+                      'node'      => $node_route,
+                      'name'      => $f['name'],
+                      'criterion' => 'node'
 
-                    'node'      => $node_route,
-                    'name'      => $f['name'],
-                    'criterion' => 'node'
+                    ]);
 
-                  ]);
+                    move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/wfiles/'. $f['name'] );
 
-                  move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/wfiles/'. $f['name'] );
-
-                }
+                 }
 
               }
 
             }
 
           }
+
+        }
 
           header( 'Location: '. $RNV->host . $node_route );
 

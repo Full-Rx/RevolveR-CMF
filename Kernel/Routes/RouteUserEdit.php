@@ -37,7 +37,7 @@
   *
   */
 
-if( !empty(SV['p']) && ROLE === 'Admin' ) { 
+if( isset(SV['p']) && ROLE === 'Admin' ) { 
 
 	if( isset(SV['p']['revolver_user_edit_id']) ) {
 

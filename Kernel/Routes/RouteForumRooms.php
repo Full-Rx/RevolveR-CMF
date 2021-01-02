@@ -41,7 +41,7 @@ if( Auth ) {
 
 	if( in_array(ROLE, ['Admin', 'Writer', 'User'], true) ) {
 
-		if( !empty(SV['p']) ) {
+		if( isset(SV['p']) ) {
 
 			$room_title = $room_content = $room_description = $id = null;
 

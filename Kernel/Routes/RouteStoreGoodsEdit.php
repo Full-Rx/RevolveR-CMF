@@ -41,7 +41,7 @@ if( in_array( ROLE, ['Admin', 'Writer'] ) ) {
 
   $node = null;
 
-  if(!empty(SV['p'])) {
+  if( isset(SV['p']) ) {
 
     $node_rebate = 0;
 
@@ -330,35 +330,39 @@ if( $node ) {
 
           }
 
-          if( count(SV['f']) > 0 ) {
+          if( isset( SV['f'] ) ) {
 
-            foreach( SV['f'] as $file ) {
+            if( count(SV['f']) > 0 ) {
 
-              foreach( $file as $f ) {
+              foreach( SV['f'] as $file ) {
 
-                $upload_allow = null;
+                foreach( $file as $f ) {
 
-                if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/sfiles/'. $f['name']) ) {
+                  $upload_allow = null;
 
-                  if( (bool)$f['valid'] ) {
+                  if( !is_readable($_SERVER['DOCUMENT_ROOT'] .'/public/sfiles/'. $f['name']) ) {
 
-                    $upload_allow = true;
+                    if( (bool)$f['valid'] ) {
+
+                      $upload_allow = true;
+
+                    }
 
                   }
 
-                }
+                  if( $upload_allow ) {
 
-                if( $upload_allow ) {
+                    $RKI->Model::set('store_goods_files', [
 
-                  $RKI->Model::set('store_goods_files', [
+                      'node'      => $node_id,
+                      'name'      => $f['name'],
+                      'criterion' => 'node'
 
-                    'node'      => $node_id,
-                    'name'      => $f['name'],
-                    'criterion' => 'node'
+                    ]);
 
-                  ]);
+                    move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/sfiles/'. $f['name'] );
 
-                  move_uploaded_file( $f['temp'], $_SERVER['DOCUMENT_ROOT'] .'/public/sfiles/'. $f['name'] );
+                  }
 
                 }
 

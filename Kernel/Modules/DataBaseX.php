@@ -4,7 +4,7 @@
   * 
   * MySQLi Data Base X Class
   * 
-  * v.2.9.8.0
+  * v.2.9.8.1
   *
   *
   *
@@ -116,7 +116,7 @@ final class DBX {
 
 		} 
 
-		self::$port = (int)$db[3] ?? (int)self::$port;
+		self::$port = (int)$db[ 3 ] ?? (int)self::$port;
 
 		// Set cache directory path
 		self::$cache_directory_path = $_SERVER['DOCUMENT_ROOT'] .'/cache/dbcache/';
@@ -156,7 +156,7 @@ final class DBX {
 
 				$SQL = 'CREATE TABLE IF NOT EXISTS '. $dbx_t .'(';
 				
-				$SQL .= self::compileListValues( $dbx_f, $dbx_q[0] );
+				$SQL .= self::compileListValues( $dbx_f, $dbx_q[ 0 ] );
 
 				$SQL .= self::compliteIndexes( (string)$dbx_t, $dbx_f );
 
@@ -171,7 +171,7 @@ final class DBX {
 
 				$SQL = 'CREATE TABLE IF NOT EXISTS '. $dbx_t .'(';
 
-				$SQL .= self::compileListValues( $dbx_f, $dbx_q[0] );
+				$SQL .= self::compileListValues( $dbx_f, $dbx_q[ 0 ] );
 
 				$SQL .= self::compliteIndexes( $dbx_t, $dbx_f );
 
@@ -318,11 +318,11 @@ final class DBX {
 
 				if( isset( $dbx_q[1] ) ) {
 
-					$SQL_0 .= ' ORDER BY `'. $dbx_q[1] .'`';
+					$SQL_0 .= ' ORDER BY `'. $dbx_q[ 1 ] .'`';
 
-					if( isset($dbx_q[2]) ) {
+					if( isset($dbx_q[ 2 ]) ) {
 
-						switch( $dbx_q[2] ) {
+						switch( $dbx_q[ 2 ] ) {
 
 							case 'asc':
 
@@ -340,15 +340,15 @@ final class DBX {
 
 					}
 
-					if( isset($dbx_q[3]) ) {
+					if( isset($dbx_q[ 3 ]) ) {
 
-						$SQL_0 .= ' LIMIT ' . (int)$dbx_q[3];
+						$SQL_0 .= ' LIMIT ' . (int)$dbx_q[ 3 ];
 
 					}
 
-					if( isset($dbx_q[4]) ) {
+					if( isset($dbx_q[ 4 ]) ) {
 
-						$SQL_0 .= ' OFFSET ' . (int)$dbx_q[4];
+						$SQL_0 .= ' OFFSET ' . (int)$dbx_q[ 4 ];
 
 					}
 
@@ -437,13 +437,13 @@ final class DBX {
 
 				}
 
-				if( isset($dbx_q[1]) ) {
+				if( isset($dbx_q[ 1 ]) ) {
 
-					$SQL_0 .= ' ORDER BY `'. $dbx_q[1] .'`';
+					$SQL_0 .= ' ORDER BY `'. $dbx_q[ 1 ] .'`';
 
-					if( isset($dbx_q[2]) ) {
+					if( isset($dbx_q[ 2 ]) ) {
 
-						switch( $dbx_q[2] ) {
+						switch( $dbx_q[ 2 ] ) {
 
 							case 'asc':
 
@@ -461,15 +461,15 @@ final class DBX {
 
 					}
 
-					if( isset($dbx_q[3]) ) {
+					if( isset($dbx_q[ 3 ]) ) {
 
-						$SQL_0 .= ' LIMIT ' . (int)$dbx_q[3];
+						$SQL_0 .= ' LIMIT ' . (int)$dbx_q[ 3 ];
 
 					}
 
-					if( isset($dbx_q[4]) ) {
+					if( isset($dbx_q[ 4 ]) ) {
 
-						$SQL_0 .= ' OFFSET ' . (int)$dbx_q[4];
+						$SQL_0 .= ' OFFSET ' . (int)$dbx_q[ 4 ];
 
 					}
 
@@ -497,7 +497,7 @@ final class DBX {
 
 				$SQL = 'INSERT INTO '. $dbx_t .'(';
 
-				$SQL .= self::compileListValues( $dbx_f, $dbx_q[0] );
+				$SQL .= self::compileListValues( $dbx_f, $dbx_q[ 0 ] );
 
 				$SQL .= ') VALUES (';
 
@@ -636,7 +636,7 @@ final class DBX {
 
 					$SQL .= '`'. self::innerEscape($dbx_t[$table]) .'`.*';
 
-					$SQL .= $table < count($dbx_f) - 1 ? ', ' : ' FROM `' . self::innerEscape($dbx_t[0]) .'` USE INDEX(PRIMARY) ';
+					$SQL .= $table < count($dbx_f) - 1 ? ', ' : ' FROM `' . self::innerEscape($dbx_t[ 0 ]) .'` USE INDEX(PRIMARY) ';
 
 				}
 
@@ -731,7 +731,7 @@ final class DBX {
 
 				}
 
-				$SQL .= ' FROM `'. self::innerEscape( $dbx_t[0] ) .'` USE INDEX('. ltrim(implode(', ', $SQL_J), ', ') .') ';
+				$SQL .= ' FROM `'. self::innerEscape( $dbx_t[ 0 ] ) .'` USE INDEX('. ltrim(implode(', ', $SQL_J), ', ') .') ';
 
 				foreach( $dbx_f as $table => $field ) {
 
@@ -753,9 +753,9 @@ final class DBX {
 
 							$where_sql_clause = explode('::', $field['where_field']);
 
-							$SQL_WHERE = ' WHERE `'. self::innerEscape( $where_sql_clause[0] ) . '`.'. self::innerEscape( $where_sql_clause[1] );
+							$SQL_WHERE = ' WHERE `'. self::innerEscape( $where_sql_clause[ 0 ] ) . '`.'. self::innerEscape( $where_sql_clause[ 1 ] );
 
-							$where = $where_sql_clause[2] === '*' ? "<>''" : '=\''. self::innerEscape( $where_sql_clause[2] ) .'\'';
+							$where = $where_sql_clause[ 2 ] === '*' ? "<>''" : '=\''. self::innerEscape( $where_sql_clause[ 2 ] ) .'\'';
 
 							$SQL_WHERE .= $where;
 
@@ -1044,7 +1044,7 @@ final class DBX {
 
 					$length = preg_replace('/[^0-9]/', '', $p);
 
-					if( (bool)strlen($length) ) {
+					if( strlen($length) > 0 ) {
 
 						$struct[ $field_name ]['length'] = $length;
 
@@ -1101,7 +1101,7 @@ final class DBX {
 
 				if( $f === 'auto' ) {
 
-					$nstruct[ $field_name ]['auto'] = strlen($v) ? 1 : 0;
+					$nstruct[ $field_name ]['auto'] = strlen($v) > 0 ? 1 : 0;
 
 				} 
 
@@ -1113,7 +1113,7 @@ final class DBX {
 
 				if( $f === 'fill' ) {
 
-					$nstruct[ $field_name ]['fill'] = strlen($v) ? 1 : 0;
+					$nstruct[ $field_name ]['fill'] = strlen($v) > 0 ? 1 : 0;
 
 				} 
 
@@ -1121,7 +1121,7 @@ final class DBX {
 
 					$field_type = '';
 
-					switch ($v) {
+					switch( $v ) {
 
 						case 'text':
 
@@ -1213,7 +1213,7 @@ final class DBX {
 		self::connect();
 
 		// Store info
-		self::$result['info'] = self::$dbx_lnk[1];
+		self::$result['info'] = self::$dbx_lnk[ 1 ];
 
 		if( (bool)self::$dbx_lnk[ 1 ]['CONNECTION'] ) {
 
@@ -1290,7 +1290,7 @@ final class DBX {
 
 								$fields_count = 0;
 
-								foreach ($row as $field) {
+								foreach( $row as $field ) {
 
 									$row_data[ $fields[ $fields_count ]->table ][ $fields[ $fields_count ]->name ] = $field;
 
@@ -1381,7 +1381,6 @@ final class DBX {
 			// Drop Data Base host connection
 			self::disconnect( self::$dbx_lnk );
 
-
 		}
 
 		if( $m ) {
@@ -1425,7 +1424,7 @@ final class DBX {
 
 			if( !in_array(self::$sql_hash_table, ['revolver__statistics', 'revolver__index']) ) {
 
-				$currentHash = self::getHashes( [self::$sql_hash_table] )[0];
+				$currentHash = self::getHashes( [self::$sql_hash_table] )[ 0 ];
 
 				$hash = (bool)$currentHash ? $currentHash : null;
 
@@ -1440,9 +1439,9 @@ final class DBX {
 
 			}
 
-			if( $cache[1] ) {
+			if( $cache[ 1 ] ) {
 
-				self::$result['result'] = $cache[0];
+				self::$result['result'] = $cache[ 0 ];
 
 			}
 			else {
@@ -1490,9 +1489,9 @@ final class DBX {
 
 				$cache = self::getCache($qhash);
 
-				if( $cache[1] ) {
+				if( $cache[ 1 ] ) {
 
-					self::$result['result'] = $cache[0];
+					self::$result['result'] = $cache[ 0 ];
 
 				}
 				else {
@@ -1531,9 +1530,9 @@ final class DBX {
 
 				$cache = self::getCache($qhash);
 
-				if( $cache[1] ) {
+				if( $cache[ 1 ] ) {
 
-					self::$result['result'] = $cache[0];
+					self::$result['result'] = $cache[ 0 ];
 
 				}
 				else {
@@ -1723,12 +1722,12 @@ final class DBX {
 
 			);
 
-			$diff_match_add = array_intersect_assoc( $diff[0], $diff[1] );
+			$diff_match_add = array_intersect_assoc( $diff[ 0 ], $diff[ 1 ] );
 
-			$diff_match_remove = array_diff_assoc( $diff[0], $diff[1] );
+			$diff_match_remove = array_diff_assoc( $diff[ 0 ], $diff[ 1 ] );
 
 			// Remove fields
-			if( count($diff_match_remove) ) {
+			if( count($diff_match_remove) > 0 ) {
 
 				foreach( $diff_match_remove as $field_name => $fn ) {
 
@@ -1777,7 +1776,7 @@ final class DBX {
 
 					$difference_fields = array_diff_assoc( $diff[ 1 ][ $f ], $diff[ 0 ][ $f ] );
 
-					if( count($difference_fields) ) {
+					if( count($difference_fields) > 0 ) {
 
 						$AUTO = $FILL = $TYPE = $LENGTH = $DROP = '';
 
@@ -1789,7 +1788,7 @@ final class DBX {
 
 								$AUTO = ' AUTO_INCREMENT NOT NULL';
 
-								if( (bool)$diff[2] ) {
+								if( (bool)$diff[ 2 ] ) {
 
 									$DROP = ' DROP PRIMARY KEY,';
 
@@ -1909,7 +1908,7 @@ final class DBX {
 
 				$file = self::getCacheFile( self::$cache_directory_path . $hash .'.cache' );
 
-				if( strlen($file) ) {
+				if( strlen($file) > 0 ) {
 
 					$caches = json_decode(
 
@@ -1930,7 +1929,7 @@ final class DBX {
 
 					$file = self::getCacheFile( self::$cache_directory_path . $hash . $segm );
 
-					if( strlen( $file ) ) {
+					if( strlen( $file ) > 0 ) {
 
 						if( (bool)$chunks ) {
 
@@ -2005,7 +2004,7 @@ final class DBX {
 
 			if( preg_match('/\.chunks/i', $f) ) {
 
-				if( strlen( $cache ) ) {
+				if( strlen( $cache ) > 0 ) {
 
 					self::$queries_cache_counter++;
 
@@ -2029,9 +2028,9 @@ final class DBX {
 
 		foreach( self::getCachesList() as $fnumber => $fname ) {
 
-			$FileName = explode('|', $fname)[0];
+			$FileName = explode('|', $fname)[ 0 ];
 
-			if( preg_match('/'. explode('-', $f)[0] .'/i', $FileName) ) {
+			if( preg_match('/'. explode('-', $f)[ 0 ] .'/i', $FileName) ) {
 
 				unlink( self::$cache_directory_path . $FileName );
 
@@ -2142,7 +2141,7 @@ final class DBX {
 
 		if( count($SQL_I) > 0 ) {
 
-			 $SQL .= ', ';
+			$SQL .= ', ';
 
 		}
 

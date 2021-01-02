@@ -92,7 +92,7 @@ if( $messages ) {
 
 $contents .= '</div>';
 
-if( !empty(SV['p']) ) {
+if( isset(SV['p']) ) {
 
 	$message = null;
 

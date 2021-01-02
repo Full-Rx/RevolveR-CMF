@@ -36,7 +36,7 @@
   *
   */
 
-if( !empty( SV['p'] ) && ROLE === 'Admin' )  {
+if( isset( SV['p'] ) && ROLE === 'Admin' )  {
 
 	$actions = [];
 

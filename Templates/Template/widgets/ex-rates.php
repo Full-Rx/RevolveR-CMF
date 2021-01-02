@@ -1,6 +1,6 @@
 <?php
 
-	$RKI->Template::$b[] = '<ul>';
+	$RKI->Template::$b[] = '<ul><li><span>$:</span></li>';
 
 	$rates = iterator_to_array(
 
@@ -143,57 +143,52 @@
 
 		curl_close($cdata);
 
-		$cdata = @simplexml_load_string($response);
+		$moneys = new SimpleXMLElement($response);
 
-		if( !empty($cdata) ) {
+		foreach( $moneys->item as $v ) {
 
-			foreach( $cdata->item as $v ) {
+			switch( $v->targetCurrency ) {
 
-				switch( $v->targetCurrency ) {
+				case 'USD':
+				case 'EUR':
+				case 'GBP':
+				case 'JPY':
+				case 'CHF':
+				case 'AUD':
+				case 'CAD':
+				case 'CRC':
+				case 'BRL':
+				case 'TMT':
+				case 'DOP':
+				case 'COP':
+				case 'ARS':
+				case 'JMD':
+				case 'TRY':
+				case 'RUB':
+				case 'TWD':
+				case 'BYN':
+				case 'HKD':
+				case 'XCD':
+				case 'CUP':
+				case 'MXN':
+				case 'EGP':
 
-					case 'USD':
-					case 'EUR':
-					case 'GBP':
-					case 'JPY':
-					case 'CHF':
-					case 'AUD':
-					case 'CAD':
-					case 'CRC':
-					case 'BRL':
-					case 'TMT':
-					case 'DOP':
-					case 'COP':
-					case 'ARS':
-					case 'JMD':
-					case 'TRY':
-					case 'RUB':
-					case 'TWD':
-					case 'BYN':
-					case 'HKD':
-					case 'XCD':
-					case 'CUP':
-					case 'MXN':
-					case 'EGP':
+					$xfc = ( trim($r['value']) - (int)$xcur[ $r['currency'] ] ) >= 0 ? 1 : 0;
 
-						$val = round($v->exchangeRate, 3);
+					$RKI->Template::$b[] = '<li title="↻ '. $v->targetName .' x1 USD" class="'. strtolower( $v->targetCurrency ) .'"><span class="exchange-currency">'. $v->targetCurrency .'</span> <span class="exchange-value">'. $v->exchangeRate .'</span>';
 
-						$xfc = ( $val - $xcur[ $v->targetCurrency ] >= 0 ) ? 1 : 0; 
+					$RKI->Template::$b[] = ' <span>'. ((bool)$xfc ? '⬆' : '⬇') .'</span></li>';
 
-						$RKI->Template::$b[] = '<li title="↻ '. $v->targetName .' x1 USD" class="'. strtolower( $v->targetCurrency ) .'"><span class="exchange-currency">'. $v->targetCurrency .'</span> <span class="exchange-value">'. $val .'</span>';
-						$RKI->Template::$b[] = ' <span>'. ((bool)$xfc ? '⬆' : '⬇') .' </span></li>';
+					$model::set('rates', [
 
-						$model::set('rates', [
+						'currency'	=> $v->targetCurrency,
+						'name'		=> $v->targetName,
+						'value'		=> $v->exchangeRate,
+						'date'		=> date('d/m/Y')
 
-							'currency'	=> $v->targetCurrency,
-							'name'		=> $v->targetName,
-							'value'		=> $val,
-							'date'		=> date('d/m/Y'),
-
-						]);
-
-						break;
-
-				}
+					]);
+	
+					break;
 
 			}
 
@@ -270,16 +265,16 @@
 			}
 
 			$RKI->Template::$b[] = '<li title="↻ USD x1 '. $bname .'" class="'. strtolower( $cdata['ticker']['base'] ) .'"><span class="exchange-currency">'. $cdata['ticker']['base'] .'</span>';
-			$RKI->Template::$b[] = ' <span class="exchange-value">'. round($cdata['ticker']['price'], 3) .'</span>';
+			$RKI->Template::$b[] = ' <span class="exchange-value">'. $cdata['ticker']['price'] .'</span>';
 			$RKI->Template::$b[] = ' <span>'. ( (int)$cdata['ticker']['change'] > 0 ? '⬆' : '⬇') .' </span></li>';
 
 			$model::set('rates', [
 
 				'currency'	=> $cdata['ticker']['base'],
 				'name'		=> $bname,
-				'change'	=> round($cdata['ticker']['change'], 3),
-				'value'		=> round($cdata['ticker']['price'], 3),
-				'date'		=> date('d/m/Y'),
+				'change'	=> $cdata['ticker']['change'],
+				'value'		=> $cdata['ticker']['price'],
+				'date'		=> date('d/m/Y')
 
 			]);
 
@@ -289,8 +284,7 @@
 
 	$RKI->Template::$b[] = '</ul>';
 
-	print implode("\n", $RKI->Template::$b);
+	$RKI->Template::print();
 
-	$RKI->Template::$b = [];
 
 ?>
