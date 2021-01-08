@@ -666,11 +666,20 @@ if( defined('ROUTE') ) {
 
 			break;
 
+		case '#info':
+
+			ob_start();
+
+			// PHP Info
+			require_once('./Kernel/Routes/RouteInfo.php');
+
+			break;
+
 		case '#resources':
 
 			ob_start();
 
-			// Manifest
+			// Static resources
 			require_once('./Kernel/Routes/RouteResources.php');
 
 			break;

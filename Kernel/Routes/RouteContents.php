@@ -291,7 +291,7 @@ if( $node ) {
               // Delete from database
               $RKI->Model::erase('files', [
 
-                'criterion' => 'id::'. explode(':', $file_to_delete)[0]
+                'criterion' => 'id::'. explode(':', $file_to_delete)[ 0 ]
 
               ]);
 

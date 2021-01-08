@@ -3,7 +3,7 @@
  /*
   * RevolveR Dashboard Node
   *
-  * v.2.0.0.8
+  * v.2.0.1.3
   *
   *
   *
@@ -211,7 +211,7 @@ if( isset( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('status', '<div>Data Base cache will be updated when using.</div>', null);
 
-								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache/') as $f ) {
+								foreach( $RKI->File::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache/') as $f ) {
 
 									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/dbcache/' . $f );
 
@@ -226,7 +226,7 @@ if( isset( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('status', '<div>Template cache will be updated when using.</div>', null);
 
-								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache/') as $f ) {
+								foreach( $RKI->File::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache/') as $f ) {
 
 									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/tplcache/' . $f );
 
@@ -241,13 +241,13 @@ if( isset( SV['p'] ) && ROLE === 'Admin' )  {
 
 								$RKI->Notify::set('status', '<div>Interface cache refreshed.</div>', null);
 
-								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/scripts/') as $f ) {
+								foreach( $RKI->File::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/scripts/') as $f ) {
 
 									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/scripts/' . $f );
 
 								}
 
-								foreach( $file::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/styles/') as $f ) {
+								foreach( $RKI->File::getDir($_SERVER['DOCUMENT_ROOT'] . '/cache/styles/') as $f ) {
 
 									unlink( $_SERVER['DOCUMENT_ROOT'] . '/cache/styles/' . $f );
 
@@ -698,6 +698,48 @@ if( $settings ) {
 										'type'		=> 'input:checkbox:unchecked',
 										'name'		=> 'revolver_settings_dbalter',
 										'value'		=> 'alter'
+
+									],
+
+								],
+
+							],
+
+						],
+
+					],
+
+				],
+
+			],
+
+			'tab_5' => [
+
+				// Tab title
+				'title'  => 'Info',
+
+				// Include fieldsets
+				'fieldsets' => [
+
+					// Fieldset caches parameters
+					'fieldset_7' => [
+
+						'title' => 'PHP Server info',
+						
+						// Wrap fields into label
+						'labels' => [
+
+							'label_8' => [
+
+								'title'		=> 'PHP Server info',
+								'access'	=> 'preferences',
+								'auth'		=> 1,
+
+								'fields' => [
+
+									0 => [
+
+										'html:contents' => '<p>PHP Info served here: <a target="_blank" href="http://'. $_SERVER['HTTP_HOST'] .'/info/">PHP Info</a></p>'
 
 									],
 

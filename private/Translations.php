@@ -40,6 +40,8 @@ define('TRANSLATIONS', [
 	'EN' => [
 
 		'Setup to home screen'						=> 'Setup to home screen',
+		'Info'										=> 'Info',
+		'PHP Server info'							=> 'PHP Server info',
 
 		/* Descriptions */
 
@@ -692,6 +694,8 @@ define('TRANSLATIONS', [
 	'RU' => [
 
 		'Setup to home screen'						=> 'Добавить ярлык',
+		'Info'										=> 'Инфо',
+		'PHP Server info'							=> 'PHP Server info',
 
 		/* Описания */
 

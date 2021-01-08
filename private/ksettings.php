@@ -42,4 +42,7 @@ define('dbx_cache_chunks_size', 3);
 // Data Base X SQL queries logging to file
 define('dbx_logging', 0);
 
+// PHP Debug :: true || null
+define('DEBUG', null);
+
 ?>

@@ -208,12 +208,12 @@ if( $RNV->auth ) {
           // Delete from database
           $model::erase('blog_files', [
 
-            'criterion' => 'id::'. explode(':', $file_to_delete)[0]
+            'criterion' => 'id::'. explode(':', $file_to_delete)[ 0 ]
 
           ]);
 
           // Delete file from filesystem
-          unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/bfiles/' . explode(':', $file_to_delete)[1] );
+          unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/bfiles/' . explode(':', $file_to_delete)[ 1 ] );
 
         }
 

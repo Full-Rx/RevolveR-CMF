@@ -3,7 +3,7 @@
  /*
   * RevolveR CMF Kernel
   *
-  * v.2.0.1.2
+  * v.2.0.1.3
   *
   *                                            ,   ,                                
   *                                            $,  $,     ,                         
@@ -58,7 +58,7 @@
   */
 
 // Kernel version
-define('rr_version', '2.0.1.2');
+define('rr_version', '2.0.1.3');
 
 // Apply config
 require_once('./private/ksettings.php');
@@ -67,9 +67,17 @@ require_once('./private/ksettings.php');
 define('BigNumericX64', 9223372036854775806);
 
 // Debug mode
-//ini_set('error_reporting', E_WARNING | E_STRICT | E_DEPRECATED | E_USER_DEPRECATED | E_PARSE | E_RECOVERABLE_ERROR);
+if( DEBUG ) {
 
-error_reporting(0);
+	ini_set('error_reporting', E_WARNING | E_STRICT | E_DEPRECATED | E_USER_DEPRECATED | E_PARSE | E_RECOVERABLE_ERROR);
+
+
+}
+else {
+
+	error_reporting(0);
+
+}
 
 // Hide GET parameters for interface and store it
 $uri_segment = explode('?', $_SERVER['REQUEST_URI']);

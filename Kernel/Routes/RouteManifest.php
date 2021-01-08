@@ -44,49 +44,57 @@ $manifest = '{
    {
      "src": "/Interface/logo.png",
      "sizes": "16x16",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
    },
    {
      "src": "/Interface/logo.png",
      "sizes": "32x32",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
    },
    {
      "src": "/Interface/logo.png",
      "sizes": "48x48",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
    },
    {
      "src": "/Interface/logo.png",
      "sizes": "72x72",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
    },
    {
      "src": "/Interface/logo.png",
      "sizes": "96x96",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
    },
    {
      "src": "/Interface/logo.png",
      "sizes": "144x144",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
    },
    {
      "src": "/Interface/logo.png",
      "sizes": "192x192",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
    },
    {
 
      "src": "/Interface/logo.png",
      "sizes": "512x512",
-     "type": "image/png"
+     "type": "image/png",
+     "purpose": "any maskable"
 
    }
  ],
- "start_url": "/",
- "background_color": "#790a61fa",
- "theme_color": "#7ACCE5",
+ "start_url": "'. site_host .'/",
+ "background_color": "#790a61",
+ "theme_color": "#790a61",
  "orientation": "any",
  "display": "standalone"
 }';

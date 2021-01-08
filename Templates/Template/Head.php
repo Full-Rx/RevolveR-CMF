@@ -17,6 +17,10 @@
 
 	<meta property="og:url" content="<?php print $host; ?>" />
 
+	<meta name="theme-color" content="#790a61"/>
+
+	<link rel="apple-touch-icon" href="/Interface/logo.png">
+
 	<title><?php print $title ?></title>
 
 	<?php if( $RKV->installed ): ?>

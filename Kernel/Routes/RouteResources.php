@@ -36,12 +36,20 @@
   *
   */
 
+$cache = [site_host .'/', site_host .'/manifest/'];
+
 print json_encode(
 
-  array_merge(
+  array_merge( 
 
-    $RKI->Template::publicResourcesCacheServerResources('style', styles), 
-    $RKI->Template::publicResourcesCacheServerResources('script', scripts)
+    $cache,
+
+    array_merge(
+
+      $RKI->Template::publicResourcesCacheServerResources('style', styles), 
+      $RKI->Template::publicResourcesCacheServerResources('script', scripts)
+
+    )
 
   )
 

@@ -4197,6 +4197,7 @@
 			let u = [
 
 				'Q',
+				'q',
 				'cap',
 				'ch',
 				'ic',
@@ -4240,6 +4241,42 @@
 
 				if( v.includes(i) ) {
 
+					if( i === 'q' || i === 'Q' ) {
+
+						return [ (100 * (+v.replace(i, '')) * .945) / self.innerWidth, 'vw' ]; // q(*.945px) to vw
+
+					}
+
+					if( i === 'in' ) {
+
+						return [ (100 * (+v.replace(i, '')) * 96) / self.innerWidth, 'vw' ]; // in(*96px) to vw
+
+					}
+
+					if( i === 'cm' ) {
+
+						return [ (100 * (+v.replace(i, '')) * 37.795) / self.innerWidth, 'vw' ]; // cm(*37.795px) to vw
+
+					}
+
+					if( i === 'mm' ) {
+
+						return [ (100 * (+v.replace(i, '')) * 377.95) / self.innerWidth, 'vw' ]; // mm(*377.95px) to vw
+
+					}
+
+					if( i === 'pc' ) {
+
+						return [ (100 * (+v.replace(i, '')) * 16) / self.innerWidth, 'vw' ]; // pc(*16px) to vw
+
+					}
+
+					if( i === 'pt' ) {
+
+						return [ (100 * (+v.replace(i, '')) * 1.333) / self.innerWidth, 'vw' ]; // pt(*1.333px) to vw
+
+					}
+
 					if( i === 'px' ) {
 
 						return [ (100 * +v.replace(i, '')) / self.innerWidth, 'vw' ]; // px to vw
@@ -4251,7 +4288,7 @@
 				}
 				else {
 
-					if( c++ === 34 ) {
+					if( c++ === 35 ) {
 
 						if( i === 'px' ) {
 

@@ -278,7 +278,7 @@ else {
 
 if( $node ) {
 
-  $node = $node[0];
+  $node = $node[ 0 ];
 
   if( defined('form_pass') ) {
 
@@ -319,12 +319,12 @@ if( $node ) {
               // Delete from database
               $RKI->Model::erase('store_goods_files', [
 
-                'criterion' => 'id::'. explode(':', $file_to_delete)[0]
+                'criterion' => 'id::'. explode(':', $file_to_delete)[ 0 ]
 
               ]);
 
               // Delete file from filesystem
-              unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/sfiles/' . explode(':', $file_to_delete)[1] );
+              unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/sfiles/' . explode(':', $file_to_delete)[ 1 ] );
 
             }
 

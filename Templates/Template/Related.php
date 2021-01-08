@@ -47,7 +47,7 @@ if( $RKV->installed ) {
 
 			foreach( $c['items'] as $n ) {
 
-				if( $n['country'] === LANGUAGE ) {
+				//if( $n['country'] === LANGUAGE ) {
 
 					if( (bool)$n['published'] ) {
 
@@ -60,7 +60,7 @@ if( $RKV->installed ) {
 
 					}
 
-				}
+				//}
 			
 			}
 

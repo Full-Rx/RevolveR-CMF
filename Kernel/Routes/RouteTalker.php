@@ -118,7 +118,7 @@ if( isset($_SERVER['HTTP_REFERER']) ) {
 
             ])
 
-        )['model::talk'][0]['audio'];
+        )['model::talk'][ 0 ]['audio'];
 
         unlink($_SERVER['DOCUMENT_ROOT'] .'/public/talk/'. $file_id);
 

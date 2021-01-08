@@ -155,6 +155,31 @@
 			<?php endif;?>
 
 		<?php endif;?>
+
+		<?php
+
+			// Extend breadcrumb with an extension
+			if( defined('ROUTE') && $RKV->installed ) {
+
+				if( isset(ROUTE['ext']) ) {
+
+					if( (bool)ROUTE['ext'] ) {
+
+						$tpl = $_SERVER['DOCUMENT_ROOT'] .'/Extensions/'. PASS[ 1 ] .'/Template/Breadcrumb.php';
+
+						if( file_exists( $tpl ) ) {
+
+							require_once( $tpl );
+
+						} 
+
+					}
+
+				}
+
+			}  
+
+		?>
 		
 		<li>
 			<em><?php print $RKV->title; ?></em>	

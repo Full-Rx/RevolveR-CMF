@@ -279,7 +279,7 @@ if( defined('form_pass') ) {
 
                     ])
 
-                  )['model::store_goods'][0];
+                  )['model::store_goods'][ 0 ];
 
                 $RKI->Model::set('store_goods_files', [
 

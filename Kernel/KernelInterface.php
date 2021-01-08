@@ -5,7 +5,7 @@
   *
   * Reconstruct Kernel Parts to Kernel Interface
   *
-  * v.2.0.0.0
+  * v.2.0.1.3
   *
   *			          ^
   *			         | |
@@ -50,7 +50,8 @@ function KI(
 		eMail $ma,
 		DetectUserAgent $du,
 		HTMLFormBuilder $f,
-		Conclude $cl
+		Conclude $cl,
+		File $fl
 
 	): object {
 
@@ -71,7 +72,8 @@ function KI(
 		'Email'	    => $ma,
 		'UserAgent' => $du,
 		'HTMLForm'	=> $f,
-		'Template'	=> $cl
+		'Template'	=> $cl,
+		'File'		=> $fl
 
 	];
 
@@ -82,7 +84,8 @@ function installerRKI(
 		Markup $m,
 		Menu $mx,
 		Captcha $cp,
-		Conclude $cl
+		Conclude $cl,
+		File $fl
 
 	): object {
 
@@ -91,7 +94,8 @@ function installerRKI(
 		'Menu'	    => $mx,
 		'HTML'    	=> $m,
 		'Captcha'   => $cp,
-		'Template'	=> $cl
+		'Template'	=> $cl,
+		'File'		=> $fl
 
 	];
 
@@ -99,11 +103,11 @@ function installerRKI(
 
 if( INSTALLED ) {
 
-	$RKI = KI($lang, $calendar, $notify, $captcha, $cipher, $D, $markup, $model, $auth, $route, $menu, $node, $mail, $uaInfo, $form, $resolve);
+	$RKI = KI($lang, $calendar, $notify, $captcha, $cipher, $D, $markup, $model, $auth, $route, $menu, $node, $mail, $uaInfo, $form, $resolve, $file);
 
 } 
 else {
 
-	$RKI = installerRKI($markup, $menu, $captcha, $resolve);
+	$RKI = installerRKI($markup, $menu, $captcha, $resolve, $file);
 
 }

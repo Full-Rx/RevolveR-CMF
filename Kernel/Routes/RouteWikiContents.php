@@ -282,12 +282,12 @@ if( $node ) {
               // Delete from database
               $RKI->Model::erase('wiki_files', [
 
-                'criterion' => 'id::'. explode(':', $file_to_delete)[0]
+                'criterion' => 'id::'. explode(':', $file_to_delete)[ 0 ]
 
               ]);
 
               // Delete file from filesystem
-              unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/wfiles/' . explode(':', $file_to_delete)[1] );
+              unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/wfiles/' . explode(':', $file_to_delete)[ 1 ] );
 
             }
 

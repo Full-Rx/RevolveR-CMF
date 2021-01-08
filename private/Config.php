@@ -1157,6 +1157,25 @@ define('main_nodes', array_merge([
 		],
 
 		// Manifest service
+		'info' => [
+
+			'title' => 'Info service',
+
+			'param_check' => [
+
+				'menu' 		=> 0,
+				'hidden' 	=> 1
+
+			],
+
+			'route'  => '/info/',
+			'node'   => '#info',
+			'type'	 => 'service',
+			'id'	 => 'info',
+
+		],
+
+		// Manifest service
 		'resources' => [
 
 			'title' => 'Resources service',

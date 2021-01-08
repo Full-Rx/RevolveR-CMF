@@ -228,19 +228,19 @@ if( defined('ROUTE') ) {
 
 					if( !isset(SV['p'][ 'revolver_process_feedback_'. $i ]) ) {
 
-						$feedback_moderate[ $i ][0] = $i .'::0';
+						$feedback_moderate[ $i ][ 0  ] = $i .'::0';
 
 					}
 					else {
 
 						if( (bool)SV['p'][ 'revolver_process_feedback_'. $i ]['valid'] ) {
 
-							$feedback_moderate[ $i ][0] = $i .'::1';
+							$feedback_moderate[ $i ][ 0 ] = $i .'::1';
 
 						}
 						else {
 
-							$feedback_moderate[ $i ][0] = $i .'::0';
+							$feedback_moderate[ $i ][ 0 ] = $i .'::0';
 
 						}
 
@@ -250,7 +250,7 @@ if( defined('ROUTE') ) {
 
 						if( (bool)SV['p'][ 'revolver_delete_feedback_'. $i ]['valid'] ) {
 
-							$feedback_moderate[ $i ][1] = SV['p'][ 'revolver_delete_feedback_'. $i ]['value'];
+							$feedback_moderate[ $i ][ 1 ] = SV['p'][ 'revolver_delete_feedback_'. $i ]['value'];
 
 						}
 
@@ -399,11 +399,11 @@ if( defined('ROUTE') ) {
 
 								$erased = null;
 
-								if( isset($m[1]) ) {
+								if( isset($m[ 1 ]) ) {
 
 									$RKI->Model::erase('feedback', [
 
-										'criterion' => 'id::'. $m[1]
+										'criterion' => 'id::'. $m[ 1 ]
 
 									]);
 
@@ -413,7 +413,7 @@ if( defined('ROUTE') ) {
 
 										foreach( $feedbacks as $f ) {
 
-											if( (int)$m[1] === (int)$f['id'] ) {
+											if( (int)$m[ 1 ] === (int)$f['id'] ) {
 
 												$files = iterator_to_array(
 
@@ -458,7 +458,7 @@ if( defined('ROUTE') ) {
 
 									}
 
-									$RKI->Notify::set('notice', 'Feedback '. $m[1] .' erased.', null);
+									$RKI->Notify::set('notice', 'Feedback '. $m[ 1 ] .' erased.', null);
 
 								}
 
@@ -468,15 +468,15 @@ if( defined('ROUTE') ) {
 
 										foreach( $feedbacks as $f ) {
 
-											$cmd = explode('::', $m[0]);
+											$cmd = explode('::', $m[ 0 ]);
 
-											if( (int)$f['id'] === (int)$cmd[0] ) {  
+											if( (int)$f['id'] === (int)$cmd[ 0 ] ) {  
 
-												if( $f['message_processed'] !== $cmd[1] ) {
+												if( $f['message_processed'] !== $cmd[ 1 ] ) {
 
 													$update = $f;
 
-													$update['message_processed'] = $cmd[1];
+													$update['message_processed'] = $cmd[ 1 ];
 
 													$update['message_text'] = html_entity_decode( $update['message_text'] );
 
@@ -1169,7 +1169,7 @@ if( defined('ROUTE') ) {
 
 				}
 
-				if( in_array(ROLE, ['Admin', 'Writer']) ) {
+				if( in_array(ROLE, ['Admin', 'Writer']) && $installed ) {
 
 					$feedback = iterator_to_array(
 
@@ -1311,13 +1311,13 @@ if( defined('ROUTE') ) {
 							$processing_feedback_form['fieldsets']['fieldset_0']['labels']['label_0']['access'] = 'preferences';
 							$processing_feedback_form['fieldsets']['fieldset_0']['labels']['label_0']['auth'] = 1;
 
-							$processing_feedback_form['fieldsets']['fieldset_0']['labels']['label_0']['fields'][0]['html:contents'] .= $contents_feedback;
+							$processing_feedback_form['fieldsets']['fieldset_0']['labels']['label_0']['fields'][ 0 ]['html:contents'] .= $contents_feedback;
 
 							$n++;
 
 						}
 
-						$processing_feedback_form['fieldsets']['fieldset_0']['labels']['label_0']['fields'][0]['html:contents'] .= '<input type="hidden" name="revolver_process_action_process" value="1" />';
+						$processing_feedback_form['fieldsets']['fieldset_0']['labels']['label_0']['fields'][ 0 ]['html:contents'] .= '<input type="hidden" name="revolver_process_action_process" value="1" />';
 
 						$contents .= $RKI->HTMLForm::build( $processing_feedback_form, null, etranslations );
 

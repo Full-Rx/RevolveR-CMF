@@ -459,7 +459,6 @@ if( (bool)$file_limit ) {
 
 }
 
-$render_node  = '';
 $RKI->Template::$b[] = '<article class="revolver__article article-id-'. $n['id'] .'-edit">';
 $RKI->Template::$b[] = '<header class="revolver__article-header">'; 
 $RKI->Template::$b[] = '<h2>'. $n['title'] .'<span style="float:right"> &#8226; '. $RKV->lang['language'] .' [ '. $n['language']['code_length_3'] .' :: '. $n['language']['hreflang'] .' ]</span></h2>';

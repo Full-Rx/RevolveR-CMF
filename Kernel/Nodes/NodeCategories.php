@@ -198,7 +198,7 @@ foreach( iterator_to_array(
 
 	if( ROLE !== 'none' ) {
 
-		if( ROLE === 'Admin') {
+		if( ROLE === 'Admin' || ROLE === 'Writer' ) {
 
 			$contents .= '<dt>&#8226; '. $category['title'] .' &#8226; <span style="float:right">[ <a href="/categories/'. $category['id'] .'/edit/">'. $RNV->lang['Edit'] .'</a> ]</span></dt>';
 

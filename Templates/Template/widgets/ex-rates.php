@@ -87,8 +87,6 @@
 
 		foreach( $rates as $r ) {
 
-			$xfc = ( $r['value'] - $xcur[ $r['currency'] ] >= 0 ) ? 1 : 0;
-
 			switch( $r['currency'] ) {
 
 				case 'EUR':
@@ -127,7 +125,12 @@
 
 			}
 
-			$RKI->Template::$b[] = '<li '. $xtitle .' class="'. strtolower( $r['currency'] ) .'"><span class="exchange-currency">'. $r['currency'] .'</span> <span class="exchange-value">'. $r['value'] .'</span>';
+			$val = round(str_replace(',', '.', trim($r['value'])), 4);
+
+			$xfc = $val - (int)$xcur[ $r['currency'] ] >= 0 ? 1 : 0;
+
+			$RKI->Template::$b[] = '<li '. $xtitle .' class="'. strtolower( $r['currency'] ) .'">';
+			$RKI->Template::$b[] = '<span class="exchange-currency">'. $r['currency'] .'</span> <span class="exchange-value">'. $val .'</span>';
 			$RKI->Template::$b[] = ' <span>'. ((bool)$xfc ? '⬆' : '⬇') .'</span></li>';
 
 		}
@@ -173,10 +176,12 @@
 				case 'MXN':
 				case 'EGP':
 
-					$xfc = ( trim($r['value']) - (int)$xcur[ $r['currency'] ] ) >= 0 ? 1 : 0;
+					$val = round(str_replace(',', '.', trim($r['value'])), 4);
 
-					$RKI->Template::$b[] = '<li title="↻ '. $v->targetName .' x1 USD" class="'. strtolower( $v->targetCurrency ) .'"><span class="exchange-currency">'. $v->targetCurrency .'</span> <span class="exchange-value">'. $v->exchangeRate .'</span>';
+					$xfc = $val - (int)$xcur[ $r['currency'] ] >= 0 ? 1 : 0;
 
+					$RKI->Template::$b[] = '<li title="↻ '. $v->targetName .' x1 USD" class="'. strtolower( $v->targetCurrency ) .'">';
+					$RKI->Template::$b[] = '<span class="exchange-currency">'. $v->targetCurrency .'</span> <span class="exchange-value">'. round(str_replace(',', '.', trim($v->exchangeRate)), 4) .'</span>';
 					$RKI->Template::$b[] = ' <span>'. ((bool)$xfc ? '⬆' : '⬇') .'</span></li>';
 
 					$model::set('rates', [
@@ -265,7 +270,7 @@
 			}
 
 			$RKI->Template::$b[] = '<li title="↻ USD x1 '. $bname .'" class="'. strtolower( $cdata['ticker']['base'] ) .'"><span class="exchange-currency">'. $cdata['ticker']['base'] .'</span>';
-			$RKI->Template::$b[] = ' <span class="exchange-value">'. $cdata['ticker']['price'] .'</span>';
+			$RKI->Template::$b[] = ' <span class="exchange-value">'. round(str_replace(',', '.', trim($cdata['ticker']['price'])), 4) .'</span>';
 			$RKI->Template::$b[] = ' <span>'. ( (int)$cdata['ticker']['change'] > 0 ? '⬆' : '⬇') .' </span></li>';
 
 			$model::set('rates', [

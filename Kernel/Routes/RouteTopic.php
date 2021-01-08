@@ -208,12 +208,12 @@ if( Auth ) {
             // Delete from database
             $model::erase('froom_files', [
 
-              'criterion' => 'id::'. explode(':', $file_to_delete)[0]
+              'criterion' => 'id::'. explode(':', $file_to_delete)[ 0 ]
 
             ]);
 
             // Delete file from filesystem
-            unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/tfiles/' . explode(':', $file_to_delete)[1] );
+            unlink( $_SERVER['DOCUMENT_ROOT'] . '/public/tfiles/' . explode(':', $file_to_delete)[ 1 ] );
 
           }
 
