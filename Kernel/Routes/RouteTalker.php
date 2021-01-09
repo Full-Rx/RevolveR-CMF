@@ -38,7 +38,7 @@
 
 if( isset($_SERVER['HTTP_REFERER']) ) { 
 
-  if( $_SERVER['HTTP_HOST'] === parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST)) ) {
+  if( $_SERVER['HTTP_HOST'] === parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) ) {
 
     if( isset(SV['p']) ) {
 
