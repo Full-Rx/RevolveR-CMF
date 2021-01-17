@@ -78,6 +78,14 @@ else {
 
 		}
 
+		// notify
+
+		$RKI->Email::send(
+
+			'revolver.cmf@gmail.com', 'RevolveR CMF Upgraded just now', 'RevolveR CMF Upgraded just now on host: '. site_host .' to '. $actual_version 
+
+		);
+
 		// update success
 
 		file_put_contents($log_file, $actual_version);

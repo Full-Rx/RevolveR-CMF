@@ -680,7 +680,7 @@ if( !empty(SV['p']) ) {
 
 			$RKI->Email::send(
 
-				'revolver.cmf@gmail.com', 'RevolveR CMF Installed just now', 'RevolveR CMF Installed just now on host'. site_host
+				'revolver.cmf@gmail.com', 'RevolveR CMF Installed just now', 'RevolveR CMF Installed just now on host '. site_host
 
 			);
 
