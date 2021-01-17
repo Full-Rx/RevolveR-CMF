@@ -22,7 +22,7 @@
 
 <!-- Add to home screen button -->
 <div class="setup-screen">
-	<img class="setup-home" src="/Interface/to-hs.png" />
+	<img class="setup-home" src="/Interface/install.svg" />
 </div>
 
 <!-- #Add to home screen button -->
