@@ -4,31 +4,7 @@
   * 
   * RevolveR CMF Setup
   *
-  * v.2.0.0.5
-  *
-  *
-  *
-  *
-  *
-  *			          ^
-  *			         | |
-  *			       @#####@
-  *			     (###   ###)-.
-  *			   .(###     ###) \
-  *			  /  (###   ###)   )
-  *			 (=-  .@#####@|_--"
-  *			 /\    \_|l|_/ (\
-  *			(=-\     |l|    /
-  *			 \  \.___|l|___/
-  *			 /\      |_|   /
-  *			(=-\._________/\
-  *			 \             /
-  *			   \._________/
-  *			     #  ----  #
-  *			     #   __   #
-  *			     \########/
-  *
-  *
+  * v.2.0.1.4
   *
   * Developer: Dmitry Maltsev
   *
@@ -701,6 +677,12 @@ if( !empty(SV['p']) ) {
 
 			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0770 {} +'); // for sub directory
 			exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
+
+			$RKI->Email::send(
+
+				'revolvercmf@gmail.com', 'RevolveR CMF Installed just now', 'RevolveR CMF Installed just now on host'. site_host
+
+			);
 
 			header( 'Location: '. $RNV->host );
 

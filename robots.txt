@@ -1,7 +1,7 @@
 # 
 # RevolveR CMF Indexing Rules 
 #
-# v.2.0.0.0
+# v.2.0.1.4
 #
 
 User-agent: *

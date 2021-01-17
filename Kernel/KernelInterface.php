@@ -5,27 +5,7 @@
   *
   * Reconstruct Kernel Parts to Kernel Interface
   *
-  * v.2.0.1.3
-  *
-  *			          ^
-  *			         | |
-  *			       @#####@
-  *			     (###   ###)-.
-  *			   .(###     ###) \
-  *			  /  (###   ###)   )
-  *			 (=-  .@#####@|_--"
-  *			 /\    \_|l|_/ (\
-  *			(=-\     |l|    /
-  *			 \  \.___|l|___/
-  *			 /\      |_|   /
-  *			(=-\._________/\
-  *			 \             /
-  *			   \._________/
-  *			     #  ----  #
-  *			     #   __   #
-  *			     \########/
-  *
-  *
+  * v.2.0.1.4
   *
   * Developer: Dmitry Maltsev
   *
@@ -85,7 +65,8 @@ function installerRKI(
 		Menu $mx,
 		Captcha $cp,
 		Conclude $cl,
-		File $fl
+		File $fl,
+		eMail $e
 
 	): object {
 
@@ -95,7 +76,8 @@ function installerRKI(
 		'HTML'    	=> $m,
 		'Captcha'   => $cp,
 		'Template'	=> $cl,
-		'File'		=> $fl
+		'File'		=> $fl,
+		'Email'		=> $e
 
 	];
 
@@ -108,6 +90,6 @@ if( INSTALLED ) {
 } 
 else {
 
-	$RKI = installerRKI($markup, $menu, $captcha, $resolve, $file);
+	$RKI = installerRKI($markup, $menu, $captcha, $resolve, $file, $mail);
 
 }

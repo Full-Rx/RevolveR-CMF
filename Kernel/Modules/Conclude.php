@@ -6,29 +6,7 @@
   *
   * make exit and frees resources
   *
-  * v.2.0.1.2
-  *
-  *                .,ad88888888baa,
-  *            ,d8P"""        ""9888ba.
-  *         .a8"          ,ad88888888888a
-  *        aP'          ,88888888888888888a
-  *      ,8"           ,88888888888888888888,
-  *    ,8'            (888888888( )888888888,
-  *    ,8'             `8888888888888888888888
-  *    8)               `888888888888888888888,
-  *    8                  "8888888888888888888)
-  *    8                   `888888888888888888)
-  *    8)                    "8888888888888888
-  *    (b                     "88888888888888'
-  *    `8,        (8)          8888888888888)
-  *     "8a                   ,888888888888)
-  *       V8,                 d88888888888"
-  *        `8b,             ,d8888888888P'
-  *          `V8a,       ,ad8888888888P'
-  *             ""88888888888888888P"
-  *                  """"""""""""
-  *
-  *
+  * v.2.0.1.4
   *
   * Developer: Dmitry Maltsev
   *
@@ -120,18 +98,7 @@ final class Conclude {
 
 			if( in_array( $s['part'], ['kernel', 'module'], true ) ) {
 
-				$license = base64_decode(
-
-					'CiAvKgogICogUmV2b2x2ZVIgRnJvbnQtZW5kIGtlcm5lbCBwYXJ0cwogICoKICAqIAogICoJCQkgICAgICAgICAgXgog'.
-					'ICoJCQkgICAgICAgICB8IHwKICAqCQkJICAgICAgIEAjIyMjI0AKICAqCQkJICAgICAoIyMjICAgIyMjKS0uCiAgKgkJ'.
-					'CSAgIC4oIyMjICAgICAjIyMpIFwKICAqCQkJICAvICAoIyMjICAgIyMjKSAgICkKICAqCQkJICg9LSAgLkAjIyMjI0B8'.
-					'Xy0tJwogICoJCQkgL1wgICAgXF98bHxfLyAoXAogICoJCQkoPS1cICAgICB8bHwgICAgLwogICoJCQkgXCAgXC5fX198'.
-					'bHxfX18vCiAgKgkJCSAvXCAgICAgIHxffCAgIC8KICAqCQkJKD0tXC5fX19fX19fX18vXAogICoJCQkgXCAgICAgICAg'.
-					'ICAgICAvCiAgKgkJCSAgIFwuX19fX19fX19fLwogICoJCQkgICAgICMgIC0tLS0gICMKICAqCQkJICAgICAjICAgX18g'.
-					'ICAjCiAgKgkJCSAgICAgXCMjIyMjIyMjLwogICoKICAqCiAgKgogICogTGljZW5zZTogQXBhY2hlIDIuMAogICoKICAq'.
-					'LwoK'
-
-				);
+				$license = base64_decode('CiAvKgogICogUmV2b2x2ZVIgRnJvbnQtZW5kIGtlcm5lbCBwYXJ0cwogICoKICAqIExpY2Vuc2U6IEFwYWNoZSAyLjAKICAqCiAgKi8K');
 
 			}
 			else {
@@ -229,18 +196,7 @@ final class Conclude {
 
 			if( in_array( $s['part'], ['kernel', 'module'], true ) ) {
 
-				$license = base64_decode(
-
-					'CiAvKgogICogUmV2b2x2ZVIgRnJvbnQtZW5kIGtlcm5lbCBwYXJ0cwogICoKICAqIAogICoJCQkgICAgICAgICAgXgog'.
-					'ICoJCQkgICAgICAgICB8IHwKICAqCQkJICAgICAgIEAjIyMjI0AKICAqCQkJICAgICAoIyMjICAgIyMjKS0uCiAgKgkJ'.
-					'CSAgIC4oIyMjICAgICAjIyMpIFwKICAqCQkJICAvICAoIyMjICAgIyMjKSAgICkKICAqCQkJICg9LSAgLkAjIyMjI0B8'.
-					'Xy0tJwogICoJCQkgL1wgICAgXF98bHxfLyAoXAogICoJCQkoPS1cICAgICB8bHwgICAgLwogICoJCQkgXCAgXC5fX198'.
-					'bHxfX18vCiAgKgkJCSAvXCAgICAgIHxffCAgIC8KICAqCQkJKD0tXC5fX19fX19fX18vXAogICoJCQkgXCAgICAgICAg'.
-					'ICAgICAvCiAgKgkJCSAgIFwuX19fX19fX19fLwogICoJCQkgICAgICMgIC0tLS0gICMKICAqCQkJICAgICAjICAgX18g'.
-					'ICAjCiAgKgkJCSAgICAgXCMjIyMjIyMjLwogICoKICAqCiAgKgogICogTGljZW5zZTogQXBhY2hlIDIuMAogICoKICAq'.
-					'LwoK'
-
-				);
+				$license = base64_decode('CiAvKgogICogUmV2b2x2ZVIgRnJvbnQtZW5kIGtlcm5lbCBwYXJ0cwogICoKICAqIExpY2Vuc2U6IEFwYWNoZSAyLjAKICAqCiAgKi8K');
 
 			}
 			else {

@@ -6,31 +6,7 @@
   *
   * Contents Management Framework
   *
-  * v.2.0.0.3
-  * 
-  *
-  *
-  *
-  *
-  *                   ^
-  *                  | |
-  *                @#####@
-  *              (###   ###)-.
-  *            .(###     ###) \
-  *           /  (###   ###)   )
-  *          (=-  .@#####@|_--"
-  *          /\    \_|l|_/ (\
-  *         (=-\     |l|    /
-  *          \  \.___|l|___/
-  *          /\      |_|   /
-  *         (=-\._________/\
-  *          \             /
-  *            \._________/
-  *              #  ----  #
-  *              #   __   #
-  *              \########/
-  *
-  *
+  * v.2.0.1.4
   *
   * Developer: Dmitry Maltsev
   *
@@ -46,6 +22,12 @@
 #
 
 declare( ticks = 0, strict_types = 1 );
+
+ini_set('expose_php', 'Off');
+
+ignore_user_abort(true);
+
+set_time_limit(0);
 
 define('StartTime', microtime(true));
 

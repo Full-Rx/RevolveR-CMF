@@ -3,33 +3,11 @@
   *
   * RevolveR CMF interface :: ECMA Script 7
   *
-  * v.2.0.1.0
+  * v.2.0.1.4
   *
   * RevolveR ECMA Script is a fast, simple and
   *
   * powerfull solution without any third party.
-  * 
-  *
-  *
-  *			          ^
-  *			         | |
-  *			       @#####@
-  *			     (###   ###)-.
-  *			   .(###     ###) \
-  *			  /  (###   ###)   )
-  *			 (=-  .@#####@|_--"
-  *			 /\    \_|l|_/ (\
-  *			(=-\     |l|    /
-  *			 \  \.___|l|___/
-  *			 /\      |_|   /
-  *			(=-\._________/\
-  *			 \             /
-  *			   \._________/
-  *			     #  ----  #
-  *			     #   __   #
-  *			     \########/
-  *
-  *
   *
   * Developer: Dmitry Maltsev
   *
@@ -144,7 +122,7 @@
 		get browser() {
 
 			// Interface application version
-			RR.coreVer = '2.0.1.2';
+			RR.coreVer = '2.0.1.4';
 
 			// Is mobile support available
 			RR.isM = /(Privacy|Android|BackBerry|phone|iPad|iPod|IEMobile|Nokia|Mobile)/.test(navigator.userAgent);
@@ -306,7 +284,7 @@
 
 				let chunks = [];
 
-				let recorder = function(s) {
+				let recorder = (s) => {
 
 					RR.mediaRecorder = new MediaRecorder(s);
 
@@ -635,12 +613,7 @@
 
  		syntax: ( code ) => {
 
-			let comments = [];
-			let strings	 = [];
-			let res		 = [];
-			let all		 = { 'C': comments, 'S': strings, 'R': res };
-			let safe	 = { '<': '<', '>': '>', '&': '&' };
-			let l;
+			let [ comments, strings, res, safe ] = [ [], [], [], { '<': '<', '>': '>', '&': '&' } ], l;
 
 			return code.replace(/[<>&]/g, ( m ) => { 
 			
@@ -775,12 +748,7 @@
 		// Browser events futures support
 		event: ( e, evt, c ) => {
 
-			var e = (e.length) ? RR.htmlObj(e) : [ e ];
-
-			var eMode = evt;
-			var eLock = null;
-
-			var eventsHahses = [];
+			var [ e, eMode, eLock, eventsHahses ] = [ (e.length) ? RR.htmlObj(e) : [ e ], evt, null, [] ];
 
 			if( e ) {
 
@@ -1018,13 +986,10 @@
 
 				if( e.isTrusted ) {
 
-					let action = this.action !== document.location.pathname ? this.action : document.location.pathname;
-					let method = RR.attr(this, 'method')[ 0 ].toUpperCase();
+					let [ action, method ] = [ this.action !== document.location.pathname ? this.action : document.location.pathname, RR.attr(this, 'method')[ 0 ].toUpperCase() ];
 
 					let formInputs = this.querySelectorAll("input[type='text'], input[type='file'], input[type='hidden'], input[type='email'], input[type='number'], input[type='password'], input[type='date'], input[type='time'], input[type='tel'], input[type='url'], input[type='month'], input[type='week'], input[type='search'], input[type='color'], input[type='range']"); 
-					let formRadiosCheckboxes = this.querySelectorAll("input[type='radio'], input[type='checkbox']");
-					let formTextareas = this.querySelectorAll('textarea');
-					let formSelect = this.querySelectorAll('select');
+					let [ formRadiosCheckboxes, formTextareas, formSelect ] = [ this.querySelectorAll("input[type='radio'], input[type='checkbox']"), this.querySelectorAll('textarea'), this.querySelectorAll('select') ];
 
 					let data = new FormData();
 
@@ -1193,7 +1158,7 @@
 
 						for( let block of plax.querySelectorAll('.parallax-1, .parallax-2') ) {
 
-							RR.animate([ block ], ['height:0px:150:linear'], () => {
+							RR.animate([ block ], ['height:0vw:150:linear'], () => {
 
 								RR.animate([ block ], ['height:'+ plax.offsetHeight +'px:2000:elastic', 'width:'+ plax.offsetWidth +'px:2000:elastic']);
 
@@ -1296,9 +1261,7 @@
 		// Perform HTML forms design improvements
 		formBeautifier: () => {
 
-			let checkboxes = RR.sel('input[type="checkbox"], input[type="radio"]');
-
-			let applyed = RR.sel('.checkbox-style, .styled-select:not(.switch-time)');
+			let [ checkboxes, applyed ] = [ RR.sel('input[type="checkbox"], input[type="radio"]'), RR.sel('.checkbox-style, .styled-select:not(.switch-time)') ];
 
 			if( !applyed ) {
 
@@ -1306,8 +1269,7 @@
 
 					for( let i of checkboxes ) {
 
-						let parent = i.parentElement;
-						let checked = RR.attr(i, 'checked')[ 0 ];
+						let [ parent, checked ] = [ i.parentElement, RR.attr(i, 'checked')[ 0 ] ];
 
 						i.outerHTML = '<div class="revolver__form-hidden-input">'+ i.outerHTML +'</div>';
 
@@ -1345,14 +1307,11 @@
 
 						if( evt.isTrusted ) {
 
-							let check = this.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-							let label = this.querySelectorAll('.checkbox-marker'); 
+							let [ check, label ] = [ this.querySelectorAll('input[type="checkbox"], input[type="radio"]'), this.querySelectorAll('.checkbox-marker') ]; 
 
 							if( RR.attr(check[ 0 ], 'type')[ 0 ] === 'radio' ) { 
 
-								let allRadios   = this.closest('fieldset').querySelectorAll('input[type="radio"]');
-								let allLabels   = this.closest('fieldset').querySelectorAll('.checkbox-marker');
-								let allWrappers = this.closest('fieldset').querySelectorAll('.checkbox-style');
+								let [ allRadios, allLabels, allWrappers ] = [ this.closest('fieldset').querySelectorAll('input[type="radio"]'), this.closest('fieldset').querySelectorAll('.checkbox-marker'), this.closest('fieldset').querySelectorAll('.checkbox-style') ];
 
 								let cnt = 0;
 
@@ -1454,10 +1413,7 @@
 
 					for( let u of selects ) {
 
-						let options = u.querySelectorAll('option');
-						let parent  = u.parentElement;
-						let opts    = '';
-						let cnt     = 0;
+						let [ options, parent, opts, cnt ] = [ u.querySelectorAll('option'), u.parentElement, '', 0 ];
 
 						for( let x of options ) {
 
@@ -1529,8 +1485,7 @@
 
 						if( e.isTrusted ) {
 
-							let list = this.closest('label').querySelectorAll('dfn')[ 0 ];
-							let tgtx = this;
+							let [ list, tgtx ] = [ this.closest('label').querySelectorAll('dfn')[ 0 ], this ];
 
 							RR.tick('hint', .02);
 
@@ -1554,9 +1509,7 @@
 							let label = this.closest('label');
 							let list  = label.querySelectorAll('dfn')[ 0 ];
 
-							let tgt   = label.querySelectorAll('.target');
-							let slc   = label.querySelectorAll('option');
-							let cls   = label.querySelectorAll('.styled-option');
+							let [ tgt, slc, cls ] = [ label.querySelectorAll('.target'), label.querySelectorAll('option'), label.querySelectorAll('.styled-option') ];
 
 							label.querySelectorAll('.target')[ 0 ].innerHTML = this.innerText;
 
@@ -1617,9 +1570,7 @@
 		// RevolveR Markup editor 
 		markupEditor: () => {
 
-			let textareas = RR.sel('textarea');
-
-			let editorArea = RR.sel('.revolver__editor-area');
+			let [ textareas, editorArea ] = [ RR.sel('textarea'), RR.sel('.revolver__editor-area') ];
 
 			if( textareas && !editorArea ) {
 
@@ -1788,17 +1739,7 @@
 
 								RR.toggleClass([ e.target ], 'preview-active');
 
-								let diff_values = {};
-
-								let diff_flag = true;
-
-								let first = true;
-
-								let locked = null;
-
-								let tObserver = null;
-
-								let eObserved = RR.sel('.revolver__new-fetch');
+								let [ diff_values, diff_flag, first, locked, tObserver, eObserved ] = [ {}, true, true, null, null, RR.sel('.revolver__new-fetch') ];
 
 								// Type observer future 
 								// prevent preview loading 
@@ -1882,8 +1823,7 @@
 
 											RR.FormData = new FormData();
 
-											let aform = this.closest('form').closest('form');
-											let pmode = null;
+											let [ aform, pmode ] = [ this.closest('form').closest('form'), null ];
 
 											let fiteq = 1;
 
@@ -1941,9 +1881,7 @@
 
 											RR.FormData.append(btoa('revolver_preview_mode'), RR.utoa(pmode +'~:::~text~:::~-1'));
 
-											let inputs = RR.sel('.revolver__content-preview')[ 0 ].closest('form').querySelectorAll('input, textarea');
-
-											let pass = true;
+											let [ inputs, pass ] = [ RR.sel('.revolver__content-preview')[ 0 ].closest('form').querySelectorAll('input, textarea'), true ];
 
 											RR.FormData.delete(btoa('revolver_country_code'));
 
@@ -2062,11 +2000,11 @@
 
 													RR.styleApply(preview, ['margin-bottom:2vw']);
 
-													RR.animate(preview, ['opacity:0:2500:flicker', 'height:0px:3000:wobble', 'margin-bottom:5vw:2500:spring'], () => {
+													RR.animate(preview, ['opacity:0:2500:flicker', 'height:0vw:3000:wobble', 'margin-bottom:5vw:2500:spring'], () => {
 
 														RR.toggle(preview);
 
-														RR.styleApply(preview, ['overflow: hidden', 'height:0px']);
+														RR.styleApply(preview, ['overflow: hidden', 'height:0']);
 
 														RR.rem(preview);
 
@@ -2106,9 +2044,9 @@
 
 																RR.styleApply([ this.parentElement ], ['display:none'], () => {
 
-																	RR.animate(this.parentElement.parentElement.children, ['height:0px:500:elastic']);
+																	RR.animate(this.parentElement.parentElement.children, ['height:0vw:500:elastic']);
 
-																	RR.animate([ this.parentElement.parentElement ], ['height:0px:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1000:harmony']);
+																	RR.animate([ this.parentElement.parentElement ], ['height:0vw:1500:wobble', 'color:rgba(255,255,255,.1):700:elastic', 'opacity:0:1000:harmony']);
 
 																	void setTimeout(() => {
 
@@ -2222,8 +2160,7 @@
 				let modalBox = RR.htmlObj('#mBox')[ 0 ];
 
 				// Centering positions 
-				let CenterTop  = ( RR.currentSizes[ 1 ] - modalBox.offsetHeight ) / 3;
-				let CenterLeft = ( RR.currentSizes[ 0 ] - modalBox.offsetWidth ) / 2;
+				let [ CenterTop, CenterLeft ]  = [ ( RR.currentSizes[ 1 ] - modalBox.offsetHeight ) / 3, ( RR.currentSizes[ 0 ] - modalBox.offsetWidth ) / 2 ];
 
 				// Center modal window
 				setPosition(modalBox, [ CenterLeft, CenterTop ]);
@@ -2243,8 +2180,7 @@
 
 					if( e.isTrusted ) {
 
-						let mFixRealPosL = RR.curxy[0] - RR.stripNum(RR.styleGet(modalBox, 'left'));
-						let mFixRealPosT = RR.curxy[1] - RR.stripNum(RR.styleGet(modalBox, 'top'));
+						let [ mFixRealPosL, mFixRealPosT ] = [ RR.curxy[ 0 ] - RR.stripNum(RR.styleGet(modalBox, 'left')), RR.curxy[ 1 ] - RR.stripNum(RR.styleGet(modalBox, 'top')) ];
 
 						RR.StopMoving = null;
 
@@ -2311,7 +2247,7 @@
 				}
 				else {
 
-					RR.styleApply([ x ], ['display:inline-block', 'overflow:hidden', 'width:0px', 'height:0px', 'line-height:0px']);
+					RR.styleApply([ x ], ['display:inline-block', 'overflow:hidden', 'width:0', 'height:0', 'line-height:0vw']);
 
 				};
 
@@ -2367,7 +2303,7 @@
 
 						RR.toggle([ expander ]);
 
-						RR.styleApply([ expander ], ['width: 100%', 'display: inline-block', 'min-height:'+ expander.offsetHeight +'px', 'opacity: 0', 'transform:scale(.1,.1,.1)']);
+						RR.styleApply([ expander ], ['width: 100%', 'display: inline-block', 'min-height:'+ RR.numberCSS(expander.offsetHeight +'px')[0] +'vw', 'opacity: 0', 'transform:scale(.1,.1,.1)']);
 
 						RR.tick('expand', .05);
 
@@ -2382,13 +2318,13 @@
 					}
 					else {
 
-						RR.styleApply([ expander ], ['display: inline-block', 'min-height: 0', 'height:'+ expander.offsetHeight +'px', 'opacity:1']);
+						RR.styleApply([ expander ], ['display: inline-block', 'min-height: 0', 'height:'+ RR.numberCSS(expander.offsetHeight +'px')[0] +'vw', 'opacity:1']);
 
-						RR.animate([ expander ], ['opacity:0:800:linear', 'height:0px:1500:linear'], () => {
+						RR.animate([ expander ], ['opacity:0:800:linear', 'height:0:1500:linear'], () => {
 
 							RR.toggle([ expander ]);
 
-							RR.styleApply([ expander ], ['overflow: hidden', 'height:0px']);
+							RR.styleApply([ expander ], ['overflow: hidden', 'height:0']);
 
 							R.reParallax();
 
@@ -2508,8 +2444,7 @@
 
 			for( let s of e ) {
 
-				let	sh = s.savedHeight ? s.savedHeight : null; // return stored height
-				let sd = s.savedDisplay ? s.savedDisplay : 'inherit';
+				let	[ sh, sd ] = [ s.savedHeight ? s.savedHeight : null, s.savedDisplay ? s.savedDisplay : 'inherit' ];
 
 				RR.styleApply([ s ], [ 'display:'+ sd ]);
 
@@ -2540,7 +2475,7 @@
 
 			}
 
-			RR.animate(e, ['height:0px:'+ t], () => {
+			RR.animate(e, ['height:0vw:'+ t], () => {
 
 				RR.styleApply([ this ], ['display:none']);
 
@@ -2604,7 +2539,7 @@
 					}
 
 					// Move queue
-					if( (p[ 2 ] - 0) >= (RR.stripNum(LQ) - 0) && callbackCounter < 1 ) {
+					if( ( p[ 2 ] - 0 ) >= RR.stripNum(LQ) && callbackCounter < 1 ) {
 
 						callback = c;
 						callbackCounter++;
@@ -2618,9 +2553,7 @@
 
 					for( let l in z ) {
 
-						let prop = z[ l ][ 0 ];
-						let dest = z[ l ][ 1 ];
-						let unit = z[ l ][ 2 ];
+						let [ prop, dest, unit ] = [ z[ l ][ 0 ], z[ l ][ 1 ], z[ l ][ 2 ] ];
 
 						if( [ 'width', 'height', 'top', 'left', 'bottom', 'right' ].includes(prop) ) {
 
@@ -2664,37 +2597,25 @@
 						}
 						else if ( prop === 'transform' ) {
 
-							// get default matrix defined as 2D
+							// Get default matrix defined as 2D
 							let M2D = RR.arguments(RR.getValFromPropsBrackets('matrix', self.getComputedStyle(x, null)[ prop ] === 'none' ? 'matrix(1, 0, 0, 1, 0, 0)' : self.getComputedStyle(x, null)[ prop ])[ 1 ], ','); 
 
-							// convert 2D matrix to 3D align
+							// Convert 2D matrix to 3D align
 							let M3D = RR.arguments(RR.getValFromPropsBrackets('matrix3d', M2D.length <= 6 ? 'matrix3d('+ M2D[ 0 ] +', '+ M2D[ 1 ] +', 0, 0, '+ M2D[ 2 ] +', '+ M2D[ 3 ] +', 0, 0, 0, 0, 1, 0,'+ M2D[ 4 ] +','+ M2D[ 5 ] +', 0, 1)' : self.getComputedStyle(x, null)['transform'])[ 1 ], ',');
 
-							// get current scale from matrix
-							let scale3d = [ M3D[ 0 ], M3D[ 5 ], M3D[ 10 ] ];
-
-							// get current rotate from matrix in degrees
-							let pi = Math.PI;
-							let sinB = parseFloat(M3D[ 8 ]);
+							// Get current rotate from matrix in degrees
+							let [ scale3d, pi, sinB ] = [ [ M3D[ 0 ], M3D[ 5 ], M3D[ 10 ] ], Math.PI, parseFloat( M3D[ 8 ] ) ];
 
 							let b = Math.round(Math.asin(sinB) * 180 / pi);
+							
 							let cosB = Math.cos(b * pi / 180);
 
-							let a = Math.round(Math.asin(-M3D[ 9 ] / cosB) * 180 / pi);
-							let c = Math.round(Math.acos(M3D[ 0 ] / cosB) * 180 / pi);
+							let [ a, c ] = [ Math.round( Math.asin( -M3D[ 9 ] / cosB ) * 180 / pi), Math.round(Math.acos( M3D[ 0 ] / cosB ) * 180 / pi) ];
 
-							let angle3d = [ a, b, isNaN(c) ? 0 : c ];
+							// Unpack matrix properties
+							let [ angle3d, translate3d, skew3d, perspective3d ] = [ [ a, b, isNaN(c) ? 0 : c ], [ M3D[ 12 ] - 0, M3D[ 13 ] - 0, M3D[ 14 ] - 0 ] ,[ Math.floor( M3D[ 4 ] / 0.0174532925 ),  Math.floor( M3D[ 1 ] / 0.0174532925 ) ], -1 / ( M3D[ 11 ] - 0 ) ];
 
-							// get translate
-							let translate3d = [ M3D[ 12 ] - 0, M3D[ 13 ] - 0, M3D[ 14 ] - 0 ];
-
-							// get skew
-							let skew3d = [ Math.floor(M3D[ 4 ] / 0.0174532925),  Math.floor(M3D[ 1 ] / 0.0174532925) ];
-
-							// get perspective TODO: calculate it
-							let perspective3d = -1 / (M3D[ 11 ] - 0); 
-
-							// compare transforms to animate
+							// Compare transforms to animate
 							var transforms = [];
 
 							function * compareTransformProp( p, s ) {
@@ -3029,10 +2950,7 @@
 		animateMove: ( e, p, v, t, r, c ) => {
 
 			// v arg - [from, dest, unit);
-			let s = performance.now();
-			let m = (v[ 0 ] - v[ 1 ]) / t;
-
-			let cnt = 0;
+			let [ s, m, cnt ] = [ performance.now(), (v[ 0 ] - v[ 1 ]) / t, 0 ];
 
 			void requestAnimationFrame(
 
@@ -3749,7 +3667,7 @@
 						var q = RR.arguments(x, ',');
 						var p = [];
 						
-						for(let w in q) {
+						for( let w in q ) {
 
 							p[ c++ ] = i.getAttribute(q[ w ]);
 
@@ -3804,9 +3722,7 @@
 		// contains nodes or text in document with attributes
 		new: ( e, where, how, p, c = null ) => {
 
-			let t = RR.treeHacks( RR.sel(where) );
-			let n = RR.that.createElement(e);
-			let h = how.split(':');
+			let [ t, n, h ] = [ RR.treeHacks( RR.sel(where) ), RR.that.createElement(e), how.split(':') ];
 
 			if( p.attr ) {
 
@@ -3939,7 +3855,7 @@
 
 					if( RR.isO(p) && p.length > 0 ) {
 
-						for(let i in p) {
+						for( let i in p ) {
 
 							args[ i ] = RR.arguments(p[ i ], '=');
 
@@ -4028,17 +3944,14 @@
 
 				case 'get':
 
-					let name = '__RevolveR_'+ p.trim() +'=';
-
-					let decodedCookie = decodeURIComponent(document.cookie);
-
+					let [ name, decodedCookie ] = [ '__RevolveR_'+ p.trim() +'=', decodeURIComponent(document.cookie) ];
 					let ca = decodedCookie.split(';');
 
 					for( let i = 0; i < ca.length; i++ ) {
 
 						let c = ca[ i ];
 
-						while( c.charAt(0) === ' ' ) {
+						while( c[ 0 ] === ' ' ) {
 
 							c = c.substring(1);
 
@@ -4241,7 +4154,7 @@
 
 				if( v.includes(i) ) {
 
-					if( i === 'q' || i === 'Q' ) {
+					if( [ 'q', 'Q' ].includes(i) ) {
 
 						return [ (100 * (+v.replace(i, '')) * .945) / self.innerWidth, 'vw' ]; // q(*.945px) to vw
 
@@ -4265,15 +4178,15 @@
 
 					}
 
-					if( i === 'pc' ) {
-
-						return [ (100 * (+v.replace(i, '')) * 16) / self.innerWidth, 'vw' ]; // pc(*16px) to vw
-
-					}
-
 					if( i === 'pt' ) {
 
 						return [ (100 * (+v.replace(i, '')) * 1.333) / self.innerWidth, 'vw' ]; // pt(*1.333px) to vw
+
+					}
+
+					if( [ 'em', 'rem', 'pc' ].includes(i) ) {
+
+						return [ (100 * (+v.replace(i, '')) * 15.94) / self.innerWidth, 'vw' ]; // pc\em\rem (*16px) to vw
 
 					}
 
@@ -4309,12 +4222,7 @@
 		// CSS parameters shorthands helper
 		shortToFull: function * f( e, p ) {
 
-			let isShort = null;
-
-			let isTransformShort = null;
-
-			let n = p[ 0 ] + '';
-			let w = p[ 1 ];
+			let [ isShort, isTransformShort, n, w ] = [ null, null, p[ 0 ] + '', p[ 1 ] ];
 
 			var p = RR.arguments( p[ 1 ].replace(/\(.*?\)/g, s => s.replace(/\s+/g,'')  ), ' ');
 			
@@ -4589,17 +4497,7 @@
 
 			let AddUnsigned = ( lX, lY ) => {
 
-				let lX4, lY4, lX8, lY8, lResult;
-
-				lX8 = (lX & 0x80000000);
-
-				lY8 = (lY & 0x80000000);
-
-				lX4 = (lX & 0x40000000);
-
-				lY4 = (lY & 0x40000000);
-
-				lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+				let [ lX8, lY8, lX4, lY4, lResult ] = [ (lX & 0x80000000), (lY & 0x80000000), (lX & 0x40000000), (lY & 0x40000000), (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF) ];
 
 				if( lX4 & lY4 ) {
 
@@ -4691,7 +4589,7 @@
 				var lNumberOfWords_temp1 = lMessageLength + 8;
 				var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
 				var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
-				var lWordArray= Array( lNumberOfWords - 1 );
+				var lWordArray = Array( lNumberOfWords - 1 );
 				var lBytePosition = 0;
 				var lByteCount = 0;
 
@@ -4782,10 +4680,7 @@
 
 			var k, AA, BB, CC, DD, a, b, c, d;
 
-			var S11 = 7, S12 = 12, S13 = 17, S14 = 22;
-			var S21 = 5, S22 = 9 , S23 = 14, S24 = 20;
-			var S31 = 4, S32 = 11, S33 = 16, S34 = 23;
-			var S41 = 6, S42 = 10, S43 = 15, S44 = 21;
+			var [ S41, S42, S43, S44, S31, S32, S33, S34, S21, S22, S23, S24, S11, S12, S13, S14 ] = [ 6, 10, 15, 21, 4, 11, 16, 23, 5, 9, 14, 20, 7, 12, 17, 22 ];
 
 			str = utf8_encode(str);
 
@@ -4938,7 +4833,10 @@
 		isU: (v) => typeof(v) === 'undefined' ? true : null,
 
 		// Is number
-		isN: (v) => typeof(v) === 'number' ? true : null
+		isN: (v) => typeof(v) === 'number' ? true : null,
+
+		// Is number 2
+		isNum: (n) => !isNaN(parseFloat(v)) && isFinite(v),
 
 	};
 
