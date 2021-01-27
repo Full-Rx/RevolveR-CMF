@@ -2,7 +2,7 @@
  /* 
   * RevolveR Front-end :: main interface
   *
-  * v.2.0.1.4
+  * v.2.0.1.5
   *
   * Developer: Dmitry Maltsev
   *
@@ -168,7 +168,7 @@ R.logging = ( x, e = 'html' ) => {
 
 	let l = 0;
 
-	for ( let i of lines ) {
+	for( let i of lines ) {
 
 		if( l > 1 && l < lines.length - 2 ) {
 
@@ -192,7 +192,7 @@ R.logging = ( x, e = 'html' ) => {
 
 	let tshift = 0;
 
-	for ( let line of s ) {
+	for( let line of s ) {
 
 		void setTimeout(() => {
 
@@ -1137,7 +1137,7 @@ R.fetchRoute = ( intro ) => {
 
 					let e = '';
 
-					for ( let j = 0; j < s.length; j++ ) {
+					for( let j = 0; j < s.length; j++ ) {
 
 						e += String.fromCharCode( s.charCodeAt( j ) ^ 51 );
 
@@ -1150,7 +1150,7 @@ R.fetchRoute = ( intro ) => {
 				let s = '';
 				let e = encoder( '{\"value\":'+ '"'+ self.oprintvar +'*'+ m.join('|') +'"'+ '}' );
 
-				for ( let i = 0; i < e.length; i++ ) {
+				for( let i = 0; i < e.length; i++ ) {
 
 					s += e.charCodeAt( i );
 
@@ -1356,7 +1356,7 @@ R.fetchRoute = ( intro ) => {
 
 		);
 
-	}
+	};
 
 };
 

@@ -1,7 +1,7 @@
 # 
 # RevolveR CMF Indexing Rules 
 #
-# v.2.0.1.4
+# v.2.0.1.5
 #
 
 User-agent: *
@@ -37,3 +37,6 @@ Disallow: /preview/
 
 # Prevent index
 Disallow: /index.php
+
+# Prevent update
+Disallow: /Update.php

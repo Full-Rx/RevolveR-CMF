@@ -505,9 +505,9 @@ if( Auth ) {
 				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['access'] = 'node';
 				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['auth'] = 1;
 
-				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['fields'][0]['type']  = 'input:radio:'. ( $c['cipher'] === $index_language ? 'checked' : 'unchecked' ); 
-				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['fields'][0]['name']  = 'revolver_country_code';
-				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['fields'][0]['value'] = $c['cipher'];
+				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['fields'][ 0 ]['type']  = 'input:radio:'. ( $c['cipher'] === $index_language ? 'checked' : 'unchecked' ); 
+				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['fields'][ 0 ]['name']  = 'revolver_country_code';
+				$form_parameters['tabs']['tab_4']['fieldsets']['fieldset_4']['labels']['label_'. $labels_count]['fields'][ 0 ]['value'] = $c['cipher'];
 
 			}
 

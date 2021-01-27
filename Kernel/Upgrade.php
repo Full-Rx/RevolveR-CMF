@@ -17,8 +17,8 @@ else {
 
 		// Fix Files and directories permissons
 
-		exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0775 {} +'); // for sub directory
-		exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
+		shell_exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type d -exec chmod 0775 {} +'); // for sub directory
+		shell_exec('find '. $_SERVER['DOCUMENT_ROOT'] .' -type f -exec chmod 0644 {} +'); // for files inside directory
 
 		// Total clean
 
@@ -92,8 +92,6 @@ else {
 
 	}
 
-
 }
-
 
 ?>

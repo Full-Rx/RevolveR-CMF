@@ -12,7 +12,7 @@ if( in_array( ACCESS['role'], ['Admin', 'Writer', 'User'], true ) ) {
 
 			])
 
-		)['model::store_comments'][0];
+		)['model::store_comments'][ 0 ];
 
 	$comment_user = iterator_to_array(
 
@@ -22,7 +22,7 @@ if( in_array( ACCESS['role'], ['Admin', 'Writer', 'User'], true ) ) {
 
 			])
 
-		)['model::users'][0];
+		)['model::users'][ 0 ];
 
 	$form_parameters = [
 
@@ -140,7 +140,7 @@ if( in_array( ACCESS['role'], ['Admin', 'Writer', 'User'], true ) ) {
 
 								'type' 			=> 'input:hidden',
 								'name' 			=> 'revolver_node_route',
-								'value'			=> explode('/comment/', RQST)[0] .'/'
+								'value'			=> explode('/comment/', RQST)[ 0 ] .'/'
 
 							],
 

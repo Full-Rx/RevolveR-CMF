@@ -12,14 +12,6 @@ RR.timeFutures = () => {
 	// Morning Sound
 	if( hours > 5 && hours <= 11 ) {
 
-		if( !RR.morningSound ) {
-
-			RR.tick('morning-come', .7);
-
-			RR.morningSound = true;
-
-		}
-
 		if( !R.morning ) {
 
 			if( timeStyle ) {
@@ -43,14 +35,6 @@ RR.timeFutures = () => {
 	// Day Sound
 	if( hours > 11 && hours <= 16 ) {
 
-		if( !RR.daySound ) {
-
-			RR.tick('day-come', .7);
-
-			RR.daySound = true;
-
-		}
-
 		if( timeStyle ) {
 
 			RR.rem(timeStyle);
@@ -69,14 +53,6 @@ RR.timeFutures = () => {
 
 	// Evening Sound
 	if( hours > 17 && hours <= 20 ) {
-
-		if( !R.eveningSound ) {
-
-			RR.tick('evening-come', .07);
-
-			RR.eveningSound = true;
-
-		}
 
 		if( !R.evening ) {
 
@@ -102,14 +78,6 @@ RR.timeFutures = () => {
 
 	// Night Sound
 	if( hours > 20 || hours <= 5 ) {
-
-		if( !RR.nightSound ) {
-
-			RR.tick('night-come', .07);
-
-			RR.nightSound = true;
-
-		}
 
 		if( !R.night ) {
 

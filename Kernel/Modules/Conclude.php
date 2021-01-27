@@ -6,7 +6,7 @@
   *
   * make exit and frees resources
   *
-  * v.2.0.1.4
+  * v.2.0.1.5
   *
   * Developer: Dmitry Maltsev
   *

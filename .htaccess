@@ -2,7 +2,7 @@
 #
 # RevolveR CMF :: Access configuration
 #
-# v.2.0.1.4
+# v.2.0.1.5
 #
 # License: Apache 2.0
 #
@@ -56,8 +56,6 @@ RewriteRule ^(.*)$ http://%1/$1 [L,R=301]
 	# Header set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data:; font-src 'self' data:; media-src * data: blob:"
 
 	Header set Referrer-Policy 'strict-origin'
-
-	Header set Permissions-Policy "camera=();"
 
 </IfModule>
 
@@ -270,6 +268,12 @@ RewriteRule ^(.*)/$ $1 [R=301,L]
 	Order Deny,Allow
 
 	Deny from all
+
+</Files>
+
+<Files Update.php>
+
+    Allow from all
 
 </Files>
 

@@ -2,31 +2,7 @@
  /*
   * RevolveR Front-end :: main CSS
   *
-  * v.2.0.0.0
-  *
-  *
-  *
-  *
-  *
-  *			          ^
-  *			         | |
-  *			       @#####@
-  *			     (###   ###)-.
-  *			   .(###     ###) \
-  *			  /  (###   ###)   )
-  *			 (=-  .@#####@|_--"
-  *			 /\    \_|l|_/ (\
-  *			(=-\     |l|    /
-  *			 \  \.___|l|___/
-  *			 /\      |_|   /
-  *			(=-\._________/\
-  *			 \             /
-  *			   \._________/
-  *			     #  ----  #
-  *			     #   __   #
-  *			     \########/
-  *
-  *
+  * v.2.0.1.4
   *
   * Developer: Dmitry Maltsev
   *
@@ -261,25 +237,6 @@ b#mBoxClose:hover {
 	height: 100%;
 	width: 100%;
 	top: 0;
-
-}
-
-/* Rotation :: simple slider */
-.rotate {
-
-	position: relative;
-	margin: 2vw 0;
-	height: 9vw;
-	width: 95%;
-
-}
-
-.rotate div {
-
-	background: #dcdcdc;
-	position: absolute;
-	height: 100%;
-	width: 100%;
 
 }
 
@@ -855,12 +812,6 @@ form select {
 
 }
 
-.greenProgress::-ms-progress-bar {
-
-	background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(125, 217, 171, .7) 32%, rgba(124, 212, 164, 1) 38%, rgba(114, 163, 93, 1)  95%, rgba(181, 181, 181, 0.26) 100%);
-
-}
-
 #screen-position::-webkit-progress-bar {
 
 	background: transparent;
@@ -885,11 +836,6 @@ form select {
 
 }
 
-.yellowProgress::-ms-progress-bar {
-
-	background: linear-gradient(to right, rgba(254, 252, 234, 0) 0%, rgba(241, 218, 54, 1)  95%, rgba(181, 181, 181, 0.26) 100%);
-
-}
 
 /* RevolveR Editor */
 .revolver__editor-revolver_node_edit_contents output,

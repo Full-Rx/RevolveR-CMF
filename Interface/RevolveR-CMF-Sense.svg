@@ -1,7 +1,6 @@
-<svg lang="en" data-xhash="revolver:sense-protection" viewBox="0 0 512 512" role="banner" width="512px" height="512px" xmlns="http://www.w3.org/2000/svg">
+<svg lang="en" viewBox="0 0 512 512" role="banner" width="512px" height="512px" xmlns="http://www.w3.org/2000/svg">
   <title>RevolveR CMF Sense</title>
   <desc>RevolveR Contents Management Framework with Sense</desc>
-  <script>console.log('RevolveR CMF :: [ https:/revolver.team ]');</script>
   <defs>
     <filter id="inner-shadow-filter-0" x="-500%" y="-500%" width="1000%" height="1000%">
       <feOffset dx="0" dy="0"/>

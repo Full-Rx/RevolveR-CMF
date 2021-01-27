@@ -3,31 +3,7 @@
  /* 
   * Max Mind Data Base Decoder
   *
-  * v.2.0.0.0
-  *
-  *
-  *
-  *
-  *
-  *			          ^
-  *			         | |
-  *			       @#####@
-  *			     (###   ###)-.
-  *			   .(###     ###) \
-  *			  /  (###   ###)   )
-  *			 (=-  .@#####@|_--"
-  *			 /\    \_|l|_/ (\
-  *			(=-\     |l|    /
-  *			 \  \.___|l|___/
-  *			 /\      |_|   /
-  *			(=-\._________/\
-  *			 \             /
-  *			   \._________/
-  *			     #  ----  #
-  *			     #   __   #
-  *			     \########/
-  *
-  *
+  * v.2.0.1.4
   *
   * Developer: { 1 } Dmitry Maltsev; 
   * .......... { 2 } Max Mind Developers.
@@ -83,11 +59,11 @@ final class MMDBDecoder {
 
 			list($p, $o) = self::decodePointer($ctrlByte, $o);
 
-			return [ self::decode($p)[0], $o ];
+			return [ self::decode($p)[ 0 ], $o ];
 
 		}
 
-		if( !(bool)$t ) {
+		if( $t === 0 ) {
 
 			$n = ord( self::utilRead($o, 1) );
 
@@ -111,7 +87,7 @@ final class MMDBDecoder {
 
 	private static function utilRead( int $o, int $n ): string {
 
-		if( !(bool)$n ) {
+		if( $n === 0 ) {
 
 			return '';
 
@@ -119,7 +95,7 @@ final class MMDBDecoder {
 
 		if( is_resource( self::$resource ) ) {
 
-			if( !(bool)fseek( self::$resource, $o ) ) {
+			if( fseek( self::$resource, $o ) === 0 ) {
 
 				$v = fread( self::$resource, $n );
 
@@ -215,7 +191,7 @@ final class MMDBDecoder {
 
 				$r = [
 
-					( !(bool)$s ? 0 : self::decodeInt32($b, $s) ), $newOffset
+					( $s === 0 ? 0 : self::decodeInt32($b, $s) ), $newOffset
 
 				];
 
@@ -270,7 +246,7 @@ final class MMDBDecoder {
 
 	protected static function decodeBoolean( int $s ): ?bool {
 
-		return (bool)$s ? true : null;
+		return $s > 0 ? true : null;
 
 	}
 
@@ -402,7 +378,7 @@ final class MMDBDecoder {
 
 	protected static function decodeUint( string $bytes, int $byteLength ): int {
 
-		if( !(bool)$byteLength ) {
+		if( $byteLength === 0 ) {
 
 			return 0;
 

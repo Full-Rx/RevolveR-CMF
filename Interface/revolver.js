@@ -3,7 +3,7 @@
   *
   * RevolveR CMF interface :: ECMA Script 7
   *
-  * v.2.0.1.4
+  * v.2.0.1.5
   *
   * RevolveR ECMA Script is a fast, simple and
   *
@@ -34,7 +34,6 @@
 
 		xhint: null,
 
-		// Allow Sense
 		setAllow: async function( k ) {
 
 			await (async ( _k, _this, _f ) => {
@@ -64,7 +63,7 @@
 
 			const keyChain_ = void setInterval(() => {
 
-				const xPrivacy = RR.sel('.revolver__privacy-key')[0].dataset.xprivacy;
+				const xPrivacy = RR.sel('.revolver__privacy-key')[ 0 ].dataset.xprivacy;
 
 				if( !_that.hasOwnProperty('launch') ) {
 
@@ -543,7 +542,7 @@
 
 				case 'expand':
 
-					path += 'expand.mp3';
+					path += 'expand.wav';
 
 					break;
 
@@ -574,30 +573,6 @@
 				case 'cart':
 
 					path += 'cart.wav';
-
-					break;
-
-				case 'morning-come':
-
-					path += 'morning.mp3';
-
-					break;
-
-				case 'day-come':
-
-					path += 'day.wav';
-
-					break;
-
-				case 'evening-come':
-
-					path += 'evening.mp3';
-
-					break;
-
-				case 'night-come':
-
-					path += 'night.mp3';
 
 					break;
 
@@ -2119,11 +2094,15 @@
 		// c - is a callback
 		location: ( title, url, c = null ) => {
 
-			document.title = title;
+			if( !url.includes('http:') ) {
 
-			self.history.pushState({'title': title, 'url': url}, '', url);
+				document.title = title;
 
-			RR.callback(c, [ title, url ]);
+				self.history.pushState({'title': title, 'url': url, xkey: RR._privacyKeys[ RR._privacyKeys.length - 1 ]}, title, url);
+
+				RR.callback(c, [ title, url ]);
+
+			}
 
 		},
 
@@ -2297,6 +2276,7 @@
 					}
 
 					RR.toggleClass([ this ], 'collapse-expanded');
+
 					RR.toggleClass([ expander ], 'expander-expanded');
 
 					if( RR.hasClass([ this ], 'collapse-expanded') ) {
@@ -2407,12 +2387,12 @@
 
 						if( RR.isset(sets[ 1 ]) ) {
 
-							t.style[RR.normalizeStyleName(sets[ 0 ])] = sets[ 1 ];
+							t.style[ RR.normalizeStyleName(sets[ 0 ]) ] = sets[ 1 ];
 
 						}
 						else {
 
-							t.style[RR.normalizeStyleName(sets[ 0 ])] = 'inherit';
+							t.style[ RR.normalizeStyleName(sets[ 0 ]) ] = 'inherit';
 
 						}
 
@@ -2984,7 +2964,7 @@
 					// Animation time is over? If not perform next frame
 					if( g < t ) {
 
-						requestAnimationFrame(frame);
+						void requestAnimationFrame(frame);
 
 					} 
 					else {
@@ -2993,7 +2973,7 @@
 
 							RR.animate(c, ['opacity:1:700:easeInBack']);
 
-						} 
+						}
 						else {
 
 							// Hard fix CSS to prevent escaping ranges
@@ -3077,7 +3057,7 @@
 								// Animation time is over? if not perform next frame
 								if( g < t ) {
 
-									requestAnimationFrame(frame);
+									void requestAnimationFrame(frame);
 
 								} 
 								else {
@@ -3590,7 +3570,7 @@
 						// Is animation time over? if not do next frame
 						if( d < t ) {
 
-							requestAnimationFrame(frame);
+							void requestAnimationFrame(frame);
 
 						} 
 						else {
@@ -4796,6 +4776,22 @@
 
 		},
 
+		decodeHTML: (s) => {
+
+			let e = document.createElement('div');
+			
+				e.innerHTML = s;
+			
+			return e.childNodes.length === 0 ? '' : e.childNodes[ 0 ].nodeValue;
+
+		},
+
+		encodeHTML: (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'),
+
+		cleanHTML: (s) => s.replace(/(<([^>]+)>)/gi, ''),
+
+		pathExplode: (url) => url.split('/'),
+
 		// Multilaguage support of BTOA
 		utoa: (s) => btoa(encodeURIComponent(s)),
 
@@ -4860,7 +4856,7 @@ const R_CMF_i = [
 			const loader = 
 
 				( typeof R_CMF_i[ 1 ] === 'undefined' || cntext.self !== cntext.top ) ?	
-				( x = z +' Senses allready not there ...' ) => x : 
+				( x = z +' Script not start ...' ) => x : 
 				( o = 1 ) => {
 
 					eval(
@@ -4893,7 +4889,7 @@ const R_CMF_i = [
 					}
 
 					// [ Console Message ]
-					return a +' Senses here ... [ domain: '+ document.location.hostname +' ]';
+					return a +' Script start ... [ domain: '+ document.location.hostname +' ]';
 
 				};
 

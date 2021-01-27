@@ -99,7 +99,7 @@ final class Auth {
 
       }
 
-    } 
+    }
 
   }
 
@@ -111,7 +111,7 @@ final class Auth {
 
       $s .= ' SameSite=Strict; Secure; httpOnly;';
 
-    } 
+    }
 
     return $s;
 

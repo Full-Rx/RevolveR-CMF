@@ -539,7 +539,7 @@ if( Auth ) {
 
 		}
 
-		$form_parameters['tabs']['tab_2']['fieldsets']['fieldset_2']['labels']['label_6']['fields'][0]['value:html'] = $categories_options_list;
+		$form_parameters['tabs']['tab_2']['fieldsets']['fieldset_2']['labels']['label_6']['fields'][ 0 ]['value:html'] = $categories_options_list;
 
 		$render_node_html_files .= '<dl>';
 
@@ -558,7 +558,7 @@ if( Auth ) {
 
 			)['model::store_goods_files'];
 
-		if( isset( $files_list[0] ) ) {
+		if( isset( $files_list[ 0 ] ) ) {
 
 			foreach( $files_list as $file ) {
 
@@ -595,7 +595,7 @@ if( Auth ) {
 			$form_parameters['tabs']['tab_3']['fieldsets']['fieldset_3']['labels']['label_9']['title'] = 'Attachements';
 			$form_parameters['tabs']['tab_3']['fieldsets']['fieldset_3']['labels']['label_9']['access'] = 'node';
 			$form_parameters['tabs']['tab_3']['fieldsets']['fieldset_3']['labels']['label_9']['auth'] = 1;
-			$form_parameters['tabs']['tab_3']['fieldsets']['fieldset_3']['labels']['label_9']['fields'][0]['html:contents'] = $render_node_html_files;	
+			$form_parameters['tabs']['tab_3']['fieldsets']['fieldset_3']['labels']['label_9']['fields'][ 0 ]['html:contents'] = $render_node_html_files;	
 
 		}
 

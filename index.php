@@ -6,22 +6,13 @@
   *
   * Contents Management Framework
   *
-  * v.2.0.1.4
+  * v.2.0.1.5
   *
   * Developer: Dmitry Maltsev
   *
   * License: Apache 2.0
   *
   */
-
-#
-# Allow strict
-#
-# To run framework with developers
-# use strict_types = 1 bellow
-#
-
-declare( ticks = 0, strict_types = 1 );
 
 ini_set('expose_php', 'Off');
 

@@ -3,31 +3,7 @@
  /* 
   * Max Mind format Data Base Reader
   *
-  * v.2.0.0.0
-  *
-  *
-  *
-  *
-  *
-  *                   ^
-  *                  | |
-  *                @#####@
-  *              (###   ###)-.
-  *            .(###     ###) \
-  *           /  (###   ###)   )
-  *          (=-  .@#####@|_--"
-  *          /\    \_|l|_/ (\
-  *         (=-\     |l|    /
-  *          \  \.___|l|___/
-  *          /\      |_|   /
-  *         (=-\._________/\
-  *          \             /
-  *            \._________/
-  *              #  ----  #
-  *              #   __   #
-  *              \########/
-  *
-  *
+  * v.2.0.1.4
   *
   * Developer: { 1 } Dmitry Maltsev; 
   * .......... { 2 } Max Mind Developers.
@@ -154,7 +130,7 @@ final class Reader {
 
   protected static function utilRead( string $m, int $o, int $numberOfBytes ): string {
 
-    if( !(bool)$numberOfBytes ) {
+    if( $numberOfBytes === 0 ) {
 
       return '';
 
@@ -192,7 +168,7 @@ final class Reader {
 
     list($p, $prefixLen) = self::findAddressInTree($ip, $m);
 
-    if ( !(bool)$p ) {
+    if ( (int)$p === 0 ) {
 
       return [ null, $prefixLen ];
 
@@ -200,13 +176,13 @@ final class Reader {
 
     $xbytes = self::resolveDataPointer($p, $m);
 
-    self::$status = array_merge(self::$status, $xbytes[1]);
+    self::$status = array_merge(self::$status, $xbytes[ 1 ]);
 
-    return [ $xbytes[0], $prefixLen ];
+    return [ $xbytes[ 0 ], $prefixLen ];
 
   }
 
-  private static function findAddressInTree( string $ip, string $m): iterable {
+  private static function findAddressInTree( string $ip, string $m ): iterable {
 
     $rawAddress = unpack('C*', inet_pton($ip));
 
@@ -294,14 +270,14 @@ final class Reader {
 
         $bytes = self::utilRead($m, $baseOffset + 3 * $i, 4);
 
-        if ( !(bool)$i ) {
+        if ( $i === 0 ) {
 
-            $middle = (0xF0 & ord($bytes[3])) >> 4;
+            $middle = (0xF0 & ord($bytes[ 3 ])) >> 4;
 
         } 
         else {
 
-            $middle = 0x0F & ord($bytes[0]);
+            $middle = 0x0F & ord($bytes[ 0 ]);
 
         }
 

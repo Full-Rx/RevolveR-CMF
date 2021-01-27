@@ -3,7 +3,7 @@
  /*
   * RevolveR CMF Kernel
   *
-  * v.2.0.1.4
+  * v.2.0.1.5
   *
   * Developer: Dmitry Maltsev
   *
@@ -12,7 +12,7 @@
   */
 
 // Kernel version
-define('rr_version', '2.0.1.4');
+define('rr_version', '2.0.1.5');
 
 // Apply config
 require_once('./private/ksettings.php');
@@ -87,6 +87,26 @@ function detectSSL(): ?bool {
 
 	}
 
+	if( isset($_SERVER['HTTP_X_FORWARDED_SSL']) ) {
+
+		if( 'on' === $_SERVER['HTTP_X_FORWARDED_SSL'] ) {
+
+			return true;
+
+		}
+
+	}
+
+	if( isset($_SERVER['HTTP_X_FORWARDED_PORT']) ) {
+
+		if( 443 === (int)$_SERVER['HTTP_X_FORWARDED_PORT'] ) {
+
+			return true;
+
+		}
+
+	}
+
 	if( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ) {
 
 		if( strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https' ) {
@@ -141,13 +161,9 @@ else {
 
 	$License = 'https://'. $_SERVER['HTTP_HOST'] .'/License.txt';
 
-	if( is_readable( $License ) ) {
+	if( (int)file_get_contents( $License, null, stream_context_create( [ 'http' => [ 'timeout' => 1 ] ] ) ) > 0 ) {
 
-		if( (bool)file_get_contents($License, null, stream_context_create( ['http' => ['timeout' => 1]] )) ) {
-
-			header('Location: https://'. $_SERVER['HTTP_HOST'] );
-
-		}
+		header('Location: https://'. $_SERVER['HTTP_HOST'] );
 
 	}
 
@@ -271,7 +287,7 @@ else {
 }
 
 /* Is framework installed */
-if( (bool)strlen( $db_config ) ) {
+if( strlen( $db_config ) > 0 ) {
 
 	require_once('./private/SSLConfig.php');
 
@@ -1045,18 +1061,6 @@ if( !defined('ROUTE') ) {
 
 }
 
-# __ Upgrade futures __ #
-
-if( INSTALLED ) {
-
-	// performs automatic database modification, 
-	// caches clean and fix rights 
-	// when Kernel version upgrades
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/Kernel/Upgrade.php');
-
-}
-
 // 404
 define('N', $not_found);
 
@@ -1252,6 +1256,16 @@ if( !(bool)$TCache ) {
 
 // RKV :: RevolveR Kernel Variables Model
 require_once( $_SERVER['DOCUMENT_ROOT'] .'/Kernel/KernelVariables.php' );
+
+if( INSTALLED ) {
+
+	// performs automatic database modification, 
+	// caches clean and fix rights 
+	// when Kernel version upgrades
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/Kernel/Upgrade.php');
+
+}
 
 if( defined('ROUTE') ) {
 

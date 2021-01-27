@@ -29,7 +29,7 @@ final class Minifier {
       '/\t/',                           // 4 :: trim tabulations
       '/\R/',                           // 5 :: trim line breaks
 
-    ], ['', '', ' ', '', ''], 
+    ], ['', '', ' ', '', ''],
 
     $source);
 

@@ -4,7 +4,7 @@
   * 
   * RevolveR Kernel configuration
   *
-  * v.2.0.1.4
+  * v.2.0.1.5
   *
   * License: Apache 2.0
   *
@@ -26,15 +26,6 @@ define('scripts', array_merge([
 			'path' => '/Interface/revolver.js',
 			'name' => 'revolver kernel',
 			'part' => 'kernel',
-			'min'  => 1
-
-		],
-
-		[
-
-			'path' => '/Interface/renderer.js',
-			'name' => 'revolver renderer futures',
-			'part' => 'module',
 			'min'  => 1
 
 		],
